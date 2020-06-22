@@ -1,0 +1,29 @@
+#page_container {
+  position: absolute;
+  top: 0;
+  height: 100vh;
+  margin-left: 70px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: top 1.8s ease-out;
+}
+
+#section-circles {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 5px;
+  z-index: 100;
+}
+.section-circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 100px;
+  border: 1px solid #fff;
+  margin-bottom: 8px;
+  transition: background .2s;
+}
+.section-circle.active {
+  background: #fff;
+}
