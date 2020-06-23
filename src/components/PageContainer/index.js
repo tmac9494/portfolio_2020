@@ -3,31 +3,79 @@ import './styles.css';
 import {BrowserRouter, Route} from 'react-router-dom';
 import pageSettings from './pageSettings';
 import Home from '../Pages/Home';
+import Work from '../Pages/Work';
+import Contact from '../Pages/Contact';
+import Skills from '../Pages/Skills';
+import Resume from '../Pages/Resume';
 
 
 const PageContainer = props => {
-  const [currentPage, setCurrentPage] = React.useState('home');
-  const [scroll, setScroll] = React.useState(0);
-  const [scrolling, setScrolling] = React.useState(false);
-
+  // page settings
+  const {currentPage} = props;
   const currentSettings = pageSettings[currentPage];
   const {total, color} = currentSettings;
+  const gradient = 'linear-gradient(55deg, ' + color + ')';
+  // state
+  const [scroll, setScroll] = React.useState(0);
+  const [nextScroll, setNextScroll] = React.useState(scroll);
+  const lastScroll = React.useRef(scroll);
+  const [scrolling, setScrolling] = React.useState(false);
+  const pageRef = React.useRef(currentPage);
 
+  // requirements before shifting to next scroll position
+  const requirements = React.useRef({
+    animations: 0,
+    content: 0,
+  })
+  const updateRequirement = (property, increment) => {
+    requirements.current[property] += increment;
+    if (
+      requirements.current.animations === currentPage.animations
+      && requirements.current.content === currentPage.content
+      && nextScroll !== scroll
+    ) setScroll(scroll);
+  }
+
+  // scroll function
   const handleScroll = e => {
-    console.log(e.deltaY)
     if (e.deltaY < 0 && scroll === 0) {return;}
     if (e.deltaY > 0 && scroll === total - 1) {return;}
     setScrolling(true);
+    // setNextScroll(e.deltaY > 0 ? scroll + 1 : scroll - 1);
     setScroll(e.deltaY > 0 ? scroll + 1 : scroll - 1);
+    lastScroll.current = scroll;
   }
 
+  // change on circle nav click
+  const handleIndexChange = index => {
+    // setNextScroll(index);
+    setScroll(index);
+    setScrolling(true);
+    lastScroll.current = scroll;
+  }
+
+  // circle nav
   let sectionCircs = [];
-  for(let i = 0;i < total;i++) {
-    sectionCircs.push(<div className={'section-circle' + (scroll === i ? ' active' : '')}></div>)
+  for(let i = 0;i < total;i++) {sectionCircs.push(
+    <div
+      className={'section-circle' + (scroll === i ? ' active' : '')}
+      key={i}
+      onClick={() => handleIndexChange(i)}
+    ></div>
+  )}
+
+  // page change catch
+  if (pageRef.current !== currentPage) {
+    setScrolling(false);
+    setScroll(0);
+    lastScroll.current = 0;
+    pageRef.current = currentPage;
+    requirements.current = {
+      animations: 0,
+      content: 0,
+    }
   }
 
-
-  let gradient = 'linear-gradient(55deg, ' + color + ')';
   return(
     <div
       id='page_container'
@@ -41,11 +89,16 @@ const PageContainer = props => {
       onWheel={!scrolling ? handleScroll : null}
       onTransitionEnd={() => setScrolling(false)}
     >
-      <BrowserRouter>
-        <Route exact path='/' component={(props) => <Home {...props} setCurrentPage={setCurrentPage} />} />
-
-      </BrowserRouter>
-      <div id='section-circles'>
+      {currentPage === 'home' ? <Home updateRequirement={updateRequirement} scroll={scroll} nextScroll={nextScroll} />
+    : currentPage === 'work' ? <Work updateRequirement={updateRequirement} scroll={scroll} nextScroll={nextScroll} />
+  : currentPage === 'skills' ? <Skills updateRequirement={updateRequirement} scroll={scroll} nextScroll={nextScroll} />
+: currentPage === 'resume' ? <Resume updateRequirement={updateRequirement} scroll={scroll} nextScroll={nextScroll} />
+      : currentPage === 'contact' ? <Contact updateRequirement={updateRequirement} scroll={scroll} nextScroll={nextScroll} />
+      : null}
+      <div
+        id='section-circles'
+        onTransitionEnd={(e) => e.stopPropagation()}
+      >
         {sectionCircs}
       </div>
     </div>

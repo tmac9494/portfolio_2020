@@ -5,10 +5,11 @@ import PageContainer from './components/PageContainer';
 import './styles/App.css';
 
 function App() {
+  const [currentPage, setCurrentPage] = React.useState('home');
   return (
     <div id='app-container'>
-      <Navigation />
-      <PageContainer />
+      <Navigation currentPage={currentPage} setCurrentPage={setCurrentPage} />
+      <PageContainer currentPage={currentPage} />
     </div>
   );
 }

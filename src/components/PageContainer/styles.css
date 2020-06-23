@@ -13,7 +13,7 @@
   right: 0;
   top: 50%;
   transform: translateY(-50%);
-  padding: 5px;
+  padding-right: 5px;
   z-index: 100;
 }
 .section-circle {
@@ -22,7 +22,7 @@
   border-radius: 100px;
   border: 1px solid #fff;
   margin-bottom: 8px;
-  transition: background .2s;
+  transition: background .5s;
 }
 .section-circle.active {
   background: #fff;
