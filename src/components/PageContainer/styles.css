@@ -1,3 +1,10 @@
+@keyframes pop-in {
+  0% {width: 0%;height:0%;}
+  60% {width: 75%; height: 75%}
+  90% {width: 58%; height: 58%}
+  100% {width: 65%; height: 65%}
+}
+
 #page_container {
   position: absolute;
   top: 0;
@@ -17,13 +24,37 @@
   z-index: 100;
 }
 .section-circle {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   border-radius: 100px;
-  border: 1px solid #fff;
+  border: 1px solid;
   margin-bottom: 8px;
   transition: background .5s;
+  position: relative;
 }
-.section-circle.active {
+.section-circle.light {
+  border-color: #fff;
+}
+.section-circle.dark {
+  border-color: #16161C;
+}
+
+.section-circle div {
+  position: absolute;
+  display: block;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 0px;
+  height: 0px;
+  border-radius: 100px;
+}
+.section-circle.light div {
   background: #fff;
+}
+.section-circle.dark div {
+  background: #16161C;
+}
+.section-circle.active div {
+  animation: pop-in .36s ease-out forwards;
 }

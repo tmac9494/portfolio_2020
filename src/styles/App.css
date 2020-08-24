@@ -1,0 +1,8 @@
+@import './normalize.css';
+* {
+  box-sizing: border-box;
+}
+body {
+  position: relative;
+  overflow: hidden;
+}

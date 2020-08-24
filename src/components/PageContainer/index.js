@@ -58,10 +58,12 @@ const PageContainer = props => {
   let sectionCircs = [];
   for(let i = 0;i < total;i++) {sectionCircs.push(
     <div
-      className={'section-circle' + (scroll === i ? ' active' : '')}
+      className={'section-circle light ' + (scroll === i ? ' active' : '')}
       key={i}
       onClick={() => handleIndexChange(i)}
-    ></div>
+    >
+      <div></div>
+    </div>
   )}
 
   // page change catch
@@ -90,11 +92,12 @@ const PageContainer = props => {
       onTransitionEnd={() => setScrolling(false)}
     >
       {currentPage === 'home' ? <Home updateRequirement={updateRequirement} scroll={scroll} nextScroll={nextScroll} />
-    : currentPage === 'work' ? <Work updateRequirement={updateRequirement} scroll={scroll} nextScroll={nextScroll} />
-  : currentPage === 'skills' ? <Skills updateRequirement={updateRequirement} scroll={scroll} nextScroll={nextScroll} />
-: currentPage === 'resume' ? <Resume updateRequirement={updateRequirement} scroll={scroll} nextScroll={nextScroll} />
-      : currentPage === 'contact' ? <Contact updateRequirement={updateRequirement} scroll={scroll} nextScroll={nextScroll} />
+        : currentPage === 'work' ? <Work updateRequirement={updateRequirement} scroll={scroll} nextScroll={nextScroll} />
+        : currentPage === 'skills' ? <Skills updateRequirement={updateRequirement} scroll={scroll} nextScroll={nextScroll} />
+        : currentPage === 'resume' ? <Resume updateRequirement={updateRequirement} scroll={scroll} nextScroll={nextScroll} />
+        : currentPage === 'contact' ? <Contact updateRequirement={updateRequirement} scroll={scroll} nextScroll={nextScroll} />
       : null}
+      {/* floating nav right*/}
       <div
         id='section-circles'
         onTransitionEnd={(e) => e.stopPropagation()}
