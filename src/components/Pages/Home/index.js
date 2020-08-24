@@ -1,16 +1,14 @@
 import React from 'react';
-import './styles.css';
-import {homePage} from '../../../data';
-import {InOutAnimation as Animation} from '../../General'
-
+import './styles.scss';
+import {Top, SetsApart, MyStory} from './Sections';
 
 const Home = props => {
-  console.log(homePage)
   return(
-    <div id='home_page'>
-      <h1>Trent McDole</h1>
-      <p>test test test test 2</p>
-    </div>
+  <div id='home_page'>
+    <Top index={1} />
+    <SetsApart index={2} />
+    <MyStory index={3} />
+  </div>
   )
 }
 

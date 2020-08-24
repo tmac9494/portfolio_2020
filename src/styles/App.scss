@@ -1,0 +1,90 @@
+@import './normalize.css';
+* {
+  box-sizing: border-box;
+}
+body {
+  position: relative;
+  overflow: hidden;
+}
+a {
+  text-decoration: none;
+}
+.c2a-btn {
+  color: #fff;
+  padding: 10px 24px;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  min-width: 140px;
+  border: 0;
+  outline: 0;
+  border-radius: 200px;
+}
+.cool-btn {
+  background: linear-gradient(to top right, #0596D5, #00FF99);
+}
+.warm-btn {
+  background: linear-gradient(to top right, #FF005F, #FFD500);
+}
+.svg-outline {
+  fill:none;
+  stroke:#16161C;
+  stroke-miterlimit:10;
+  stroke-width:28px;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  &.light {stroke: #fff}
+}
+.svg {
+  fill:#16161C;
+  &.light {fill: #fff}
+}
+
+// positioning/layout
+.relative {
+  position: relative;
+}
+.abs-center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  margin-right: -50%;
+}
+.fixed-fill {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.clearfix {
+  clear: both;
+  display: table;
+  content: '';
+}
+.one-half, .one-fourth {
+  float: left;
+  padding: 0 10px;
+}
+.one-half {
+  width: 50%;
+}
+.one-fourth {
+  width: 25%;
+}
+
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: none;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.35);
+  border-radius: 1.2rem;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(0,0,0,0.5);
+}

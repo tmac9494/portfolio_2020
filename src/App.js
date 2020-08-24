@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import Navigation from './components/Navigation';
 import PageContainer from './components/PageContainer';
 import {BrowserRouter} from 'react-router-dom';
-import './styles/App.css';
+import './styles/App.scss';
 
 function App() {
   return (

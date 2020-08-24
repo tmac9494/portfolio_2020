@@ -1,0 +1,93 @@
+@keyframes pop-in {
+  0% {width: 0%;height:0%;}
+  60% {width: 75%; height: 75%}
+  90% {width: 58%; height: 58%}
+  100% {width: 65%; height: 65%}
+}
+// wrapper
+#page_container {
+  position: absolute;
+  top: 0;
+  height: 100vh;
+  margin-left: 70px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  &.scrolling {
+    transition: top 1.8s ease-in-out;
+  }
+}
+// floating circle nav right
+#section-circles {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  padding-right: 5px;
+  z-index: 100;
+}
+.section-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 100px;
+  border: 1px solid;
+  margin-bottom: 8px;
+  transition: background .5s;
+  position: relative;
+  &.light {
+    border-color: #fff;
+    div {
+      background: #fff;
+    }
+  }
+  &.dark {
+    border-color: #16161C;
+    div {
+      background: #16161C;
+    }
+  }
+  &.active {
+    div {
+      animation: pop-in .36s ease-out forwards;
+    }
+  }
+  div {
+    position: absolute;
+    display: block;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0px;
+    height: 0px;
+    border-radius: 100px;
+  }
+}
+
+// page classes
+.section-container {
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+  z-index: 5;
+  &:not(:first-child) {
+    transform: translateY(50vh);
+  }
+}
+.section-title {
+  color: #fff;
+  font-size: 54px;
+  &.tl {
+    position: absolute;
+    top: 2%;
+    margin: 0;
+    left: 5%;
+    width: 95%;
+  }
+}
+
+#floating_svg_container {
+  transition: transform  1.8s ease-in-out;
+  z-index: 1;
+  svg {
+    display: block;
+  }
+}

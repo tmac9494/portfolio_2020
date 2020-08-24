@@ -1,11 +1,12 @@
 import React from 'react';
-import './styles.css';
-
+import './styles.scss';
+import {Intro, Projects} from './Sections';
 
 const Work = props => {
   return(
     <div id='work_page'>
-
+      <Intro />
+      <Projects />
     </div>
   )
 }
