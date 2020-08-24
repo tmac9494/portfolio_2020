@@ -8,7 +8,7 @@ const Home = props => {
   console.log(homePage)
   return(
     <div id='home_page'>
-      <h1>Test</h1>
+      <h1>Trent McDole</h1>
       <p>test test test test 2</p>
     </div>
   )

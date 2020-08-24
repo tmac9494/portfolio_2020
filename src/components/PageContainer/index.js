@@ -1,6 +1,6 @@
 import React from 'react';
 import './styles.css';
-import {BrowserRouter, Route} from 'react-router-dom';
+import {Route, useLocation} from 'react-router-dom';
 import pageSettings from './pageSettings';
 import Home from '../Pages/Home';
 import Work from '../Pages/Work';
@@ -11,7 +11,8 @@ import Resume from '../Pages/Resume';
 
 const PageContainer = props => {
   // page settings
-  const {currentPage} = props;
+  const location = useLocation();
+  const currentPage = location.pathname === '/' ? 'home' : location.pathname.replace('/', '');
   const currentSettings = pageSettings[currentPage];
   const {total, color} = currentSettings;
   const gradient = 'linear-gradient(55deg, ' + color + ')';
@@ -91,12 +92,11 @@ const PageContainer = props => {
       onWheel={!scrolling ? handleScroll : null}
       onTransitionEnd={() => setScrolling(false)}
     >
-      {currentPage === 'home' ? <Home updateRequirement={updateRequirement} scroll={scroll} nextScroll={nextScroll} />
-        : currentPage === 'work' ? <Work updateRequirement={updateRequirement} scroll={scroll} nextScroll={nextScroll} />
-        : currentPage === 'skills' ? <Skills updateRequirement={updateRequirement} scroll={scroll} nextScroll={nextScroll} />
-        : currentPage === 'resume' ? <Resume updateRequirement={updateRequirement} scroll={scroll} nextScroll={nextScroll} />
-        : currentPage === 'contact' ? <Contact updateRequirement={updateRequirement} scroll={scroll} nextScroll={nextScroll} />
-      : null}
+      <Route path='/' exact component={() => <Home updateRequirement={updateRequirement} scroll={scroll} nextScroll={nextScroll} />} />
+      <Route path='/work' exact component={() => <Work updateRequirement={updateRequirement} scroll={scroll} nextScroll={nextScroll} />} />
+      <Route path='/skills' exact component={() => <Skills updateRequirement={updateRequirement} scroll={scroll} nextScroll={nextScroll} />} />
+      <Route path='/resume' exact component={() => <Resume updateRequirement={updateRequirement} scroll={scroll} nextScroll={nextScroll} />} />
+      <Route path='/contact' exact component={() => <Contact updateRequirement={updateRequirement} scroll={scroll} nextScroll={nextScroll} />} />
       {/* floating nav right*/}
       <div
         id='section-circles'
