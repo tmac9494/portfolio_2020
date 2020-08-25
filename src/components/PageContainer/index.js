@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useMemo} from 'react';
 import './styles.scss';
 import {Route, useLocation} from 'react-router-dom';
 import pageSettings from './pageSettings';
@@ -91,6 +91,12 @@ const PageContainer = props => {
 
   const heightVar = window.innerHeight * 1.5;
 
+  const floatingSvgs = useMemo(() => (
+    <div id='floating_svg_container' className='fixed-fill' style={{transform: `translateY(${((total - 1) * 50) - (scroll * 50)}px)`}}>
+      {pageSettings[currentPage].svgs}
+    </div>
+  ), [currentPage, scroll])
+
   return(
     <div
       id='page_container'
@@ -112,9 +118,7 @@ const PageContainer = props => {
       <Route path='/resume' exact component={() => <Resume {...pageProps} />} />
       <Route path='/contact' exact component={() => <Contact {...pageProps} />} />
       {/* Background svgs */}
-      <div id='floating_svg_container' className='fixed-fill' style={{transform: `translateY(${((total - 1) * 50) - (scroll * 50)}px)`}}>
-        {currentSettings.svgs}
-      </div>
+      {floatingSvgs}
       {/* floating nav right*/}
       <div
         id='section-circles'

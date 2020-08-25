@@ -3,6 +3,8 @@ import {ReactComponent as LargeRect} from '../../assets/rect-lg.svg';
 import {ReactComponent as SmallRect} from '../../assets/rect-sm.svg';
 import {ReactComponent as WorkLargeRect} from '../../assets/work-rect-lg.svg';
 import {ReactComponent as WorkSmallRect} from '../../assets/work-rect-sm.svg';
+import {ReactComponent as SkillsLargeBlob} from '../../assets/skill-blob-lg.svg';
+import {ReactComponent as SkillsSmallBlob} from '../../assets/skill-blob-sm.svg';
 
 export default {
   home: {
@@ -36,6 +38,12 @@ export default {
     floatingColor: '#16161C',
     color: '#FF005F, #FFD500',
     total: 4,
+    svgs: <React.Fragment>
+      <SkillsLargeBlob key='lg1' id='skill_blob_lg_1' className='skill-blob-lg' />
+      <SkillsLargeBlob key='lg2' id='skill_blob_lg_2' className='skill-blob-lg' />
+      <SkillsLargeBlob key='lg3' id='skill_blob_lg_3' className='skill-blob-lg' />
+      <SkillsSmallBlob key='sm1' id='skill_blob_sm_1' className='skill-blob-sm' />
+    </React.Fragment>
   },
   resume: {
     floatingColor: '#16161C',

@@ -1,8 +1,9 @@
 import InOutAnimation from './AnimationWrap/InOutAnimation';
 import Animation from './AnimationWrap';
+import FancyButton from './FancyButton';
 
-
-export default {
+export {
   InOutAnimation,
-  Animation
+  Animation,
+  FancyButton
 }

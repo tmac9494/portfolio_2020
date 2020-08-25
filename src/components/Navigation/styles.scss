@@ -31,6 +31,9 @@
   color: #727272;
   cursor: pointer;
   transition: all .1s ease-out;
+  &:focus {
+    background: #0d0d0d;
+  }
   &:hover, &.active {
     background: #0D0D0D;
     color: #fff;

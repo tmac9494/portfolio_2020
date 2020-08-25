@@ -97,16 +97,15 @@
     border-bottom: 1px solid rgba(0,0,0,0.2);
     background: #fff;
     padding: 8px;
-    button {
-      cursor: pointer;
-      background: none;
+    .fancy-button {
       border: none;
       outline: none;
       padding: 8px;
+      border-radius: 2px;
     }
     span {
       display: inline-block;
-      margin-top: 1px;
+      margin: 1px 8px 0 0;
     }
     svg {
       width: 24px;

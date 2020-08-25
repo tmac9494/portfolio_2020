@@ -1,0 +1,51 @@
+.fancy-button-wrap {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  background: #fff;
+}
+
+.fancy-button {
+  position: relative;
+  display: block;
+  background: none;
+  padding: 18px 28px;
+  text-align: center;
+  outline: none;
+  border: none;
+  z-index: 8;
+}
+
+.fbtn-text {
+}
+@keyframes hover {
+  0% {transform: translate(-50%, -50%) scale(0);opacity: .2;}
+  100% {transform: translate(-50%, -50%) scale(2.5);opacity: 1;}
+}
+
+.active-effect, .hover-effect {
+  display: block;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.hover-effect {
+  background: #00f;
+  &.active {
+    animation: hover .4s ease-out forwards;
+  }
+  &.inactive {
+    animation: hover .4s ease-out reverse;
+  }
+}
+
+.active-effect {
+  background: #f00;
+  &.active {
+    animation: hover .4s ease-out forwards;
+  }
+  &.inactive {
+    animation: hover .4s ease-out reverse;
+  }
+}

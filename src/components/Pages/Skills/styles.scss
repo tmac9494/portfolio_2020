@@ -1,0 +1,52 @@
+
+
+@keyframes grow {
+  0% {transform: scale(1.1, .6)}
+  50% {transform: scale(1, 1.1)}
+  100% {transform: scale(1.1, .6)}
+}
+
+//svgs
+#floating_svg_container {
+  .skill-blob-lg, .skill-blob-sm {
+    position: absolute;
+    top: auto;
+    bottom: auto;
+    left: auto;
+    right: auto;
+  }
+  .skill-blob-sm {
+    animation: grow;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-out;
+    width: 140px;
+    height: 280px;
+  }
+  .skill-blob-lg {
+    animation: grow;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-out;
+    width: 250px;
+    height: 400px;
+  }
+  #skill_blob_lg_1 {
+    animation-duration: 10 + random(10) + s;
+    bottom: 30%;
+    left: 50%;
+  }
+  #skill_blob_lg_2 {
+    animation-duration: 10 + random(10) + s;
+    bottom: 34%;
+    left: 55%;
+  }
+  #skill_blob_lg_3 {
+    animation-duration: 10 + random(10) + s;
+    bottom: 40%;
+    left: 65%;
+  }
+  #skill_blob_sm_1 {
+    animation-duration: 10 + random(10) + s;
+    bottom: 25%;
+    left: 60%;
+  }
+}
