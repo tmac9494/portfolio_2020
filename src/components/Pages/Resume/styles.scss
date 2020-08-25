@@ -1,0 +1,59 @@
+@keyframes bubble {
+  0% {transform: scale(1)}
+  25% {transform: scale(.8)}
+  50% {transform: scale(1)}
+  75% {transform: scale(.5)}
+  100% {transform: scale(1)}
+}
+
+//svgs
+#floating_svg_container {
+  .res-circ {
+    position: absolute;
+    top: auto;
+    bottom: auto;
+    left: auto;
+    right: auto;
+  }
+  .res-circ {
+    animation: bubble;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-out;
+  }
+  #res_circ_btm {
+    animation-duration: 14 + random(10) + s;
+    position: absolute;
+    width: 80vw;
+    height: 55vw;
+    bottom: -24vw;
+    right: 5%;
+  }
+  #res_circ_top {
+    animation-duration: 14 + random(10) + s;
+    width: 20vw;
+    height: 20vw;
+    left: 60%;
+    top: -20vw;
+  }
+  #res_circ_tl {
+    animation-duration: 14 + random(10) + s;
+    top: 5%;
+    left: -1vw;
+    width: 20vw;
+    height: 20vw;
+  }
+  #res_circ_ml {
+    animation-duration: 14 + random(10) + s;
+    top: 12%;
+    left: -2vw;
+    width: 24vw;
+    height: 30vw;
+  }
+  #res_circ_md {
+    animation-duration: 14 + random(10) + s;
+    width: 18vw;
+    height: 18vw;
+    top: 20vh;
+    left: 40vw;
+  }
+}

@@ -1,6 +1,5 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
-import {FancyButton} from '../../../General';
 
 const Top = props => {
   return(

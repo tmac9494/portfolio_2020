@@ -1,3 +1,5 @@
+@import '../../../styles/mixins.scss';
+
 #work_page {
   height: 100%;
   color: #16161C;
@@ -19,6 +21,15 @@
   }
 }
 
+#projects_header {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 110px;
+  width: auto;
+  display: block;
+}
+
 #projects_content, #expanded_view_container {
   position: absolute;
   left: 0;
@@ -30,8 +41,16 @@
   bottom: 0;
 }
 
+#projects_content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
 .work-block {
+  display: flex;
   cursor: pointer;
+  margin-bottom: 20px;
   .block-content {
     background: #fff;
     box-shadow: 0 4px 10px -6px #210846;
@@ -41,7 +60,10 @@
     border-top: 1px solid #e2e2e2;
     h4 {
       margin: 5px 0 16px 0;
-      font-size: 24px;
+      font-size: 18px;
+      @include lgscreen {
+        font-size: 24px;
+      }
     }
     p {
       height: 110px;

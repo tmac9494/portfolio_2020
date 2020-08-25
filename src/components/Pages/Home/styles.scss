@@ -71,7 +71,7 @@
   100% {transform: translateX(-10%)}
 }
 #floating_svg_container {
-  svg {
+  .small-rect-home, .large-rect-home {
     animation: shift;
     animation-iteration-count: infinite;
     animation-timing-function: ease-out;

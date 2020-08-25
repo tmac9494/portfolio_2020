@@ -1,4 +1,7 @@
 @import './normalize.css';
+@import './mixins.scss';
+
+
 * {
   box-sizing: border-box;
 }
@@ -41,6 +44,12 @@ a {
 }
 
 // positioning/layout
+.f-right {
+  float: right;
+}
+.f-left {
+  flaot: left;
+}
 .relative {
   position: relative;
 }
@@ -63,18 +72,35 @@ a {
   display: table;
   content: '';
 }
-.one-half, .one-fourth {
+.one-half, .one-fourth, .one-fifth, .one-third {
   float: left;
   padding: 0 10px;
 }
 .one-half {
   width: 50%;
 }
+.one-third {
+  width: 33.333%;
+}
 .one-fourth {
+  width: 33.333%;
+  @include desktop {
+    width: 25%;
+  }
+}
+.one-fifth {
   width: 25%;
+  @include tablet {
+    width: 20%;
+  }
 }
 
 
+.scrollable {
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: block;
+}
 .custom-scrollbar::-webkit-scrollbar {
   width: 8px;
 }
@@ -87,4 +113,11 @@ a {
 }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: rgba(0,0,0,0.5);
+}
+
+.custom-scrollbar.white-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.8);
+}
+.custom-scrollbar.white-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #fff;
 }

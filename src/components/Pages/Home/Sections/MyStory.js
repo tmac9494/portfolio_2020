@@ -2,7 +2,7 @@ import React from 'react';
 
 const MyStory = props => {
   return(
-    <section className='section-container'style={{transform: 'translateY(100vh)'}}>
+    <section className='section-container' style={{transform: 'translateY(100vh)'}}>
       <div className='abs-center clearfix' id='my_story_container' >
         <div className='one-half scrollable'>
           <h2 className='section-title'>My Story</h2>

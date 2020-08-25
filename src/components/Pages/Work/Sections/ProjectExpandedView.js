@@ -26,7 +26,7 @@ const ProjectExpandedView = props => {
           </div>
         </div>
         <div className='content'>
-          <div className='inner-content custom-scrollbar'>
+          <div className='inner-content custom-scrollbar white-scrollbar'>
           <h4>{expandedData.title}</h4>
           <p>{expandedData.brief_description}</p>
           </div>

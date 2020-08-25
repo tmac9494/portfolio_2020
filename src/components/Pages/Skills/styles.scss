@@ -1,4 +1,95 @@
+#skills_page {
+  height: 100%;
+  color: #fff;
+  .top-content {
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    max-width: 80%;
+    width: 650px;
+    .description {
+      font-size: 22px;
+      margin: 24px 0 32px 0;
+    }
+  }
+  .skill-circ {
+    padding: 0 4px;
+  }
+  .skill-circ div {
+    border-radius: 100px;
+    width: 100%;
+    max-width: 25px;
+    max-height: 25px;
+    margin: 0 auto;
+    background: #303030;
+    box-shadow: inset 0px 1px 4px rgba(0,0,0,0.3);
+  }
+  div.beginner, div.familiar, div.intermediate, div.skilled, div.mastered {
+    box-shadow: none;
+  }
+  div.beginner, .beginner {
+    background: #ff4d00;
+    color: #ff4d00
+  }
+  div.familiar, .familiar {
+    background: #dfbb00;
+    color: #dfbb00;
+  }
+  div.intermediate, .intermediate {
+    background: #c2e900;
+    color: #c2e900;
+  }
+  div.skilled, .skilled {
+    background: #73f500;
+    color: #73f500;
+  }
+  div.mastered, .mastered {
+    background: #00f662;
+    color: #00f662;
+  }
+}
 
+#skills_wrapper {
+  width: 90%;
+  max-width: 1140px;
+  margin-left: -35px;
+}
+
+.skill-container {
+  .content {
+    background: #16161C;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px -6px rgba(0,0,0,0.5);
+    padding: 16px 8px;
+    margin-bottom: 20px;
+  }
+  img {
+    margin: 0 auto;
+    display: block;
+    height: 60px;
+    width: auto;
+    background: #fff;
+    padding: 8px;
+    border-radius: 200px;
+    box-shadow: 0 3px 8px #000;
+  }
+  h3 {
+    color: #fff;
+    text-align: center;
+    font-size: 24px;
+  }
+  .skill-level {
+    width: 100%;
+    padding: 8px;
+    max-width: 220px;
+    margin: 0 auto;
+  }
+  .skill-level-text {
+    display: block;
+    margin-top: 8px;
+    text-align: center;
+  }
+}
 
 @keyframes grow {
   0% {transform: scale(1.1, .6)}
@@ -31,22 +122,47 @@
   }
   #skill_blob_lg_1 {
     animation-duration: 10 + random(10) + s;
-    bottom: 30%;
-    left: 50%;
+    bottom: 34%;
+    left: 55%;
   }
   #skill_blob_lg_2 {
     animation-duration: 10 + random(10) + s;
-    bottom: 34%;
-    left: 55%;
+    bottom: 30%;
+    left: 50%;
   }
   #skill_blob_lg_3 {
     animation-duration: 10 + random(10) + s;
     bottom: 40%;
     left: 65%;
   }
+  #skill_blob_lg_4 {
+    animation-duration: 10 + random(10) + s;
+    bottom: 45%;
+    left: 40%;
+  }
   #skill_blob_sm_1 {
     animation-duration: 10 + random(10) + s;
     bottom: 25%;
     left: 60%;
+  }
+  #skill_blob_sm_2 {
+    animation-duration: 10 + random(10) + s;
+    bottom: 23%;
+    left: 56%;
+  }
+  #skill_blob_sm_3 {
+    animation-duration: 10 + random(10) + s;
+    bottom: 20%;
+    left: 65%;
+  }
+  #skill_blob_sm_4 {
+    animation-duration: 10 + random(10) + s;
+    bottom: 38%;
+    left: 40%;
+  }
+  #skill_blob_sm_5 {
+    animation-duration: 10 + random(10) + s;
+    bottom: 40%;
+    left: 36%;
   }
 }
