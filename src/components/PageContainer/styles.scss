@@ -1,3 +1,5 @@
+@import '../../styles/mixins';
+
 @keyframes pop-in {
   0% {width: 0%;height:0%;}
   60% {width: 75%; height: 75%}
@@ -9,30 +11,45 @@
   position: absolute;
   top: 0;
   height: 100vh;
-  margin-left: 70px;
   overflow-y: auto;
   overflow-x: hidden;
   &.scrolling {
     transition: top 1.8s ease-in-out;
+  }
+  @include tablet {
+    margin-left: 70px;
   }
 }
 // floating circle nav right
 #section-circles {
   position: fixed;
   right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  padding-right: 5px;
+  bottom: 0;
+  top: auto;
+  left: 50%;
+  width: 100%;
+  transform: translateX(-50%);
+  padding-bottom: 5px;
   z-index: 100;
+  text-align: center;
+  @include tablet {
+    width: auto;
+    padding-right: 5px;
+    left: auto;
+    bottom: auto;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 }
 .section-circle {
   width: 24px;
   height: 24px;
   border-radius: 100px;
   border: 1px solid;
-  margin-bottom: 8px;
+  margin-right: 8px;
   transition: background .5s;
   position: relative;
+  display: inline-block;
   &.light {
     border-color: #fff;
     div {
@@ -60,27 +77,59 @@
     height: 0px;
     border-radius: 100px;
   }
+  @include tablet {
+    display: block;
+    margin-bottom: 8px;
+  }
 }
 
 // page classes
 .section-container {
   height: 100vh;
+  padding-top: 50px;
   width: 100vw;
   position: relative;
   z-index: 5;
+  .top-content {
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    max-width: 80%;
+    width: 650px;
+  }
   &:not(:first-child) {
     transform: translateY(50vh);
+  }
+  .content-wrap {
+    width: 90%;
+    text-align: center;
+    margin-top: 50px;
+    &.pull-left {
+      margin-left: -35px;
+    }
+  }
+  @include tablet {
+    padding-top: 0;
+    .content-wrap {
+      margin-left: 35px;
+    }
   }
 }
 .section-title {
   color: #fff;
-  font-size: 54px;
+  font-size: 32px;
   &.tl {
     position: absolute;
-    top: 2%;
+    top: 60px;
     margin: 0;
     left: 5%;
     width: 95%;
+  }
+  @include tablet {
+    font-size: 54px;
+    &.tl {
+      top: 2%;
+    }
   }
 }
 

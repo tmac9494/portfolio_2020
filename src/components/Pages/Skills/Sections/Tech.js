@@ -11,7 +11,7 @@ const Technology = props => {
   return(
     <section className='section-container' style={{transform: 'translateY(250vh)'}}>
       <h2 className='section-title tl'>My Technologies</h2>
-      <div id='skills_wrapper' className='clearfix abs-center'>
+      <div onWheel={e => e.stopPropagation()} id='skills_wrapper' className='clearfix abs-center scrollable custom-scrollbar content-wrap'>
         <SkillContainer
           title='MongoDB'
           img={mongoImg}

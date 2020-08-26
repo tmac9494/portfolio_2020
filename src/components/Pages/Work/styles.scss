@@ -9,10 +9,10 @@
     left: 10%;
     max-width: 80%;
     width: 650px;
+    color: #16161C;
     h1 {
       font-size: 54px;
       margin: 0;
-      color: #16161C;
     }
     .description {
       font-size: 18px;
@@ -24,21 +24,32 @@
 #projects_header {
   position: absolute;
   left: 0;
-  top: 0;
-  right: 110px;
+  top: 55px;
+  right: 0;
+  padding-right: 8px;
   width: auto;
   display: block;
+  @include tablet {
+    right: 110px;
+    top: 0;
+  }
 }
 
 #projects_content, #expanded_view_container {
   position: absolute;
   left: 0;
-  right: 110px;
+  right: 0;
   width: 100%;
-  top: 85px;
+  top: 110px;
   padding: 0 12px;
   width: auto;
   bottom: 0;
+  height: 80%;
+  @include tablet {
+    top: 85px;
+    right: 110px;
+    height: auto;
+  }
 }
 
 #projects_content {
@@ -50,9 +61,11 @@
 .work-block {
   display: flex;
   cursor: pointer;
+  color: #16161C;
   margin-bottom: 20px;
   .block-content {
     background: #fff;
+    width: 100%;
     box-shadow: 0 4px 10px -6px #210846;
   }
   .content {
@@ -119,11 +132,15 @@
     border-bottom: 1px solid rgba(0,0,0,0.2);
     background: #fff;
     padding: 8px;
-    .fancy-button {
-      border: none;
-      outline: none;
+    .goBack-btn, .arrow-btn {
       padding: 8px;
       border-radius: 2px;
+    }
+    .f-right .fancy-button-wrap:first-child {
+      margin-right: 5px;
+    }
+    .arrow-btn svg {
+      margin-right: 0;
     }
     span {
       display: inline-block;
@@ -135,6 +152,27 @@
       dislpay: block;
       float: left;
       margin-right: 5px;
+    }
+  }
+  .sidebar-list {
+    padding-top: 60px;
+    height: 100%;
+  }
+  .sidebar-list-item {
+    display: block;
+    padding: 8px;
+    border: 0;
+    background: none;
+    outline: none;
+    border-bottom: 1px solid rgba(0,0,0,0.16);
+    &.active {
+      background: #e0f7f0
+    }
+    &:not(.active):hover {
+      background: #f6f6f6;
+    }
+    h4 {
+      margin: 6px 0 12px 6px;
     }
   }
 }
@@ -182,6 +220,14 @@
       padding: 18px;
     }
   }
+  .description {
+    max-width: 90%;
+  }
+  .description-list {
+    .description-list-item {
+      margin-bottom: 10px;
+    }
+  }
 }
 
 
@@ -210,15 +256,26 @@
     animation: small-shift;
     animation-iteration-count: infinite;
     animation-timing-function: ease-out;
-    width: 300px;
-    height: 600px;
+    width: 100px;
+    height: 200px;
   }
   .work-rect-lg {
     animation: shift;
     animation-iteration-count: infinite;
     animation-timing-function: ease-out;
-    width: 400px;
-    height: 800px;
+    width: 300px;
+    height: 600px;
+  }
+  @include tablet {
+    .work-rect-sm {
+      width: 300px;
+      height: 600px;
+    }
+    .work-rect-lg {
+      width: 400px;
+      height: 800px;
+
+    }
   }
   #work_rect_lg_1 {
     animation-duration: 10 + random(10) + s;

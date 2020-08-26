@@ -56,11 +56,10 @@ export default {
     </React.Fragment>
   },
   resume: {
-    floatingColor: '#fff',
     color: '#0414EE, #08CAF2',
-    total: 4,
+    total: 3,
     svgs: <React.Fragment>
-    <ResCircBtm className='res-circ' id='res_circ_btm' />
+      <ResCircBtm className='res-circ' id='res_circ_btm' />
       <ResCircTl className='res-circ' id='res_circ_tl' />
       <ResCircMl className='res-circ' id='res_circ_ml' />
       <ResCircTop className='res-circ' id='res_circ_top' />

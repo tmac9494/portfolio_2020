@@ -1,27 +1,31 @@
+@import '../../../styles/mixins';
+
 #home_page {
   height: 100%;
   color: #fff;
   p {color: #DFD8FC}
   .top-content {
-    position: absolute;
-    top: 10%;
-    left: 10%;
-    max-width: 80%;
-    width: 650px;
     h1 {
-      font-size: 54px;
       margin: 0;
     }
     .pos-title {
       display: block;
-      margin-left: 10px;
-      font-size: 20px;
+      margin-left: 6px;
       font-weight: bold;
+      font-size: 16px;
       color: #B6B0F1;
     }
     .description {
-      font-size: 18px;
       margin: 24px 0 32px 0;
+    }
+  }
+  @include tablet {
+    .pos-title {
+      font-size: 20px;
+      margin-left: 10px;
+    }
+    .description {
+      font-size: 18px;
     }
   }
 }
@@ -29,24 +33,29 @@
 .home-btn {
   display: inline-block;
   margin-right: 12px;
+  margin-bottom: 12px;
 }
 
 
 #info_block_container, #my_story_container {
   width: 90%;
-  height: 60%;
-  overflow: visible;
+  height: 70%;
   text-align: center;
-  margin-left: -35px;
   margin-top: 50px;
+  @include tablet {
+    margin-left: -35px;
+    height: auto;
+    max-height: 85%;
+    width: 85%;
+  }
 }
 
 .info-block {
   display: inline-block;
-  width: 50%;
   padding: 0 10px;
   vertical-align: top;
   margin-bottom: 24px;
+  width: 100%;
   .icon-wrap {
     position: relative;
     display: inline-block;
@@ -59,9 +68,18 @@
     width: 45px;
     height: 45px;
   }
+  @include tablet {
+    width: 50%;
+  }
+  @include desktop {
+    width: 33.333%
+  }
 }
 
 #my_story_container {
+  &, h2 {
+    margin-top: 0;
+  }
   text-align: left;
 }
 
@@ -77,63 +95,67 @@
     animation-timing-function: ease-out;
   }
   .small-rect-home {
-    width: 800px;
-    height: 32px;
+    width: 200px;
+    height: 25px;
     position: absolute;
     bottom: auto;
     left: auto;
     right: auto;
     top: auto;
   }
+  #gradient_rect_lg, #gradient_rect_lg_2 {
+    width: 300px;
+    height: 150px;
+  }
+  @include tablet {
+    .small-rect-home {
+      width: 800px;
+      height: 32px;
+    }
+    #gradient_rect_lg, #gradient_rect_lg_2 {
+      width: 800px;
+      height: 200px;
+    }
+  }
   #home_sm_rect_1 {
     animation-duration: 10 + random(10) + s;
-    top: 8%;
-    left: -8%;
+    top: 8vh;
+    left: -8vw;
   }
   #home_sm_rect_2 {
     animation-duration: 10 + random(10) + s;
-    top: 14%;
-    left: -12%;
+    top: 14vh;
+    left: -12vw;
   }
   #home_sm_rect_3 {
     animation-duration: 10 + random(10) + s;
-    top: 45%;
-    left: -5%;
+    top: 45vh;
+    left: -5vw;
   }
   #home_sm_rect_4 {
     animation-duration: 10 + random(10) + s;
-    bottom: 22%;
-    left: -15%;
+    bottom: 22vh;
+    left: -15vw;
   }
   #home_sm_rect_5 {
     animation-duration: 10 + random(10) + s;
-    bottom: 24%;
-    left: -12%;
-  }
-  #gradient_rect_lg, #gradient_rect_lg_2 {
-    width: 800px;
-    height: 200px;
+    bottom: 24vh;
+    left: -12vw;
   }
   #gradient_rect_lg {
     animation-duration: 10 + random(10) + s;
     position: absolute;
-    right: -20%;
+    right: -20vw;
     left: auto;
     top: auto;
-    bottom: 20%;
+    bottom: 20vh;
   }
   #gradient_rect_lg_2 {
     animation-duration: 10 + random(10) + s;
     position: absolute;
-    right: -14%;
+    right: -14vw;
     left: auto;
     top: auto;
-    bottom: 10%;
-  }
-}
-
-@media screen and (min-width: 768px) {
-  .info-block {
-    width: 33.333%;
+    bottom: 10vh;
   }
 }

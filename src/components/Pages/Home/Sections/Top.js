@@ -15,10 +15,10 @@ const Top = props => {
           Show Me Your Work
         </NavLink>
         <NavLink
-          to='/contact'
+          to='/skills'
           className='warm-btn c2a-btn home-btn'
         >
-          How do I Reach You?
+          What Are You Good At?
         </NavLink>
       </div>
     </section>

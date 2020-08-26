@@ -10,7 +10,7 @@ const Languages = props => {
   return(
     <section className='section-container'>
       <h2 className='section-title tl'>My Languages</h2>
-      <div id='skills_wrapper' className='clearfix abs-center'>
+      <div onWheel={e => e.stopPropagation()} id='skills_wrapper' className='clearfix abs-center content-wrap custom-scrollbar scrollable'>
         <SkillContainer
           title='HTML'
           img={htmlImg}

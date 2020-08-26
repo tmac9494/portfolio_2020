@@ -1,16 +1,23 @@
 @import './normalize.css';
 @import './mixins.scss';
 
-
+// general configuration
 * {
   box-sizing: border-box;
 }
+button, a {cursor: pointer}
 body {
   position: relative;
   overflow: hidden;
 }
 a {
   text-decoration: none;
+}
+
+// common buttons/elements
+.gen-img {
+  width: 100%;
+  height: auto;
 }
 .c2a-btn {
   color: #fff;
@@ -30,13 +37,15 @@ a {
   background: linear-gradient(to top right, #FF005F, #FFD500);
 }
 .svg-outline {
-  fill:none;
-  stroke:#16161C;
-  stroke-miterlimit:10;
-  stroke-width:28px;
-  stroke-linecap:round;
-  stroke-linejoin:round;
-  &.light {stroke: #fff}
+  &, line, circle, path, polyline {
+    fill:none !important;
+    stroke:#16161C !important;
+    stroke-miterlimit:10 !important;
+    stroke-width:30px !important;
+    stroke-linecap:round !important;
+    stroke-linejoin:round !important;
+    &.light {stroke: #fff !important}
+  }
 }
 .svg {
   fill:#16161C;
@@ -48,7 +57,7 @@ a {
   float: right;
 }
 .f-left {
-  flaot: left;
+  float: left;
 }
 .relative {
   position: relative;
@@ -95,7 +104,7 @@ a {
   }
 }
 
-
+// custom scrollbars
 .scrollable {
   overflow-x: hidden;
   overflow-y: auto;

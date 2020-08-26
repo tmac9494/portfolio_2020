@@ -1,6 +1,8 @@
 import React, {useCallback, useState} from 'react';
+import {useDevice} from '../../../General';
 
 const SkillContainer = props => {
+  const device = useDevice();
 
   const [circHeight, setCircHeight] = useState(null);
 
@@ -17,24 +19,24 @@ const SkillContainer = props => {
   const circInlineStyle = {height: circHeight + 'px'};
 
   return(
-    <div className='skill-container one-fourth'>
+    <div className={`skill-container ${device === 'mobile' ? '' : 'one-fourth'}`}>
       <div className='content'>
         <img src={props.img} alt={props.title} />
         <h3>{props.title}</h3>
         <div className='skill-level clearfix'>
-          <div className={'skill-circ one-fifth'}>
+          <div className={`skill-circ one-fifth`}>
             <div className={props.level >= 1 ? 'beginner' : ''} style={circInlineStyle} ref={handleMeasure}></div>
           </div>
-          <div className={'skill-circ one-fifth'}>
+          <div className={`skill-circ one-fifth`}>
             <div className={props.level >= 2 ? 'familiar' : ''} style={circInlineStyle}></div>
           </div>
-          <div className={'skill-circ one-fifth'}>
+          <div className={`skill-circ one-fifth`}>
             <div className={props.level >= 3 ? 'intermediate' : ''} style={circInlineStyle}></div>
           </div>
-          <div className={'skill-circ one-fifth'}>
+          <div className={`skill-circ one-fifth`}>
             <div className={props.level >= 4 ? 'skilled' : ''} style={circInlineStyle}></div>
           </div>
-          <div className={'skill-circ one-fifth'}>
+          <div className={`skill-circ one-fifth`}>
             <div className={props.level >= 5 ? 'mastered' : ''} style={circInlineStyle}></div>
           </div>
         </div>

@@ -1,13 +1,25 @@
+@import '../../styles/mixins';
+
 #navigation {
   position: fixed;
-  left: 0; right: auto;
+  left: 0;
   top: 0;
-  bottom: 0;
+  right: 0;
   background: #16161C;
-  width: 70px;
-  height: 100vh;
-  box-shadow: 4px 0 12px rgba(0,0,0,0.36);
+  width: 100%;
+  height: 50px;
   z-index: 100;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.36);
+  overflow: hidden;
+  font-size: 12px;
+  @include tablet {
+    font-size: 16px;
+    right: auto;
+    bottom: 0;
+    width: 70px;
+    height: 100vh;
+    box-shadow: 4px 0 12px rgba(0,0,0,0.36);
+  }
 }
 
 .nav-btn {
@@ -20,11 +32,12 @@
 }
 
 .nav-btn {
-  display: block;
-  padding: 8px 0 16px;
-  width: 100%;
+  display: inline-block;
+  padding: 4px 0 12px;
   border: 0;
   text-align: center;
+  height: 100%;
+  width: 25%;
   background: none;
   fill: #727272;
   stroke: #727272;
@@ -37,6 +50,12 @@
   &:hover, &.active {
     background: #0D0D0D;
     color: #fff;
+  }
+  @include tablet {
+    display: block;
+    padding: 8px 0 16px;
+    width: 100%;
+    height: auto;
   }
 }
 
@@ -77,7 +96,13 @@
   svg {
     margin: 2px auto;
     display: block;
-    width: 38px;
-    height: 38px;
+    width: 24px;
+    height: 24px;
+  }
+  @include tablet {
+    svg {
+      width: 38px;
+      height: 38px;
+    }
   }
 }

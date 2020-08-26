@@ -57,7 +57,7 @@ const FancyButton = props => {
     <div className='fancy-button-wrap' style={props.background && {background: props.background}}>
       <button
         ref={measureButton}
-        className='fancy-button'
+        className={'fancy-button' + (` ${props.className}`)}
         onMouseEnter={handleHoverIn}
         onMouseLeave={handleHoverOut}
         onClick={props.onClick}

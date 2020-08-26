@@ -28,6 +28,7 @@ export default {
       company: 'XpertDox LLC',
       brief_description: "Application I designed and developed almost entirely alone. This app allows for easy single-sign on experience across the suite of XpertDox applications. It replicates the standards used by companies such as Google. It also integrates with client originzation's Azure Active Desktop for seamless signup experiences.",
       tech: ['Js', 'css', 'react', 'node', 'express'],
+      role: 'Designer, Architect, Lead Developer'
     },
     {
       title: 'XpertScreen',
@@ -36,6 +37,7 @@ export default {
       company: 'XpertDox LLC',
       brief_description: "Application I designed and led development on. This application is meant to replicate some of the functionalities of a traditional EMR system but tailored for clinical trials. It allows quick referrals based on a patient's criteria, and filtering of trials based on criteria. The app also has integrated with the Epic EMR system.",
       tech: ['Js', 'css', 'react', 'node', 'express'],
+      role: 'Designer, Architect, Lead Developer'
     },
     {
       title: 'XpertConsole',
@@ -44,6 +46,7 @@ export default {
       company: 'XpertDox LLC',
       brief_description: 'Application I designed and led development on. The application puropse is to provide an admin panel for clinical trial primary investigators and administrators to manage & edit the clinical trials provided by their orginazation and manage user/applicant information.',
       tech: ['Js', 'css', 'react', 'node', 'express'],
+      role: 'Designer, Architect, Lead Developer'
     },
     {
       title: 'XpertTrial',
@@ -52,6 +55,7 @@ export default {
       company: 'XpertDox LLC',
       brief_description: 'Application I redesigned and managed during development. It is a clinical trial recruitment platform and is used by multiple high-profile orginizations around the US such as UAB and Stanford Medical College.',
       tech: ['Js', 'css', 'react', 'redux', 'node'],
+      role: 'Designer, Project Manager, Developer'
     },
     {
       title: 'Standard Furniture',
@@ -60,6 +64,7 @@ export default {
       company: 'Standard Furniture',
       brief_description: 'E-Commerce website built for standard furniture. I mainly played a managment role in this website, advising company leaders on decisions to be made for the website while contracting out much of the work to a prominent development firm.',
       tech: ['Magento', 'Sass', 'js', 'C#'],
+      role: 'Project Manager, Developer'
     },
     {
       title: 'Safety First Pest Control',
@@ -68,6 +73,7 @@ export default {
       company: 'Southern View Media',
       brief_description: 'Website I designed and built using custom wordpress theme. It was for a company called Safety First Pest Control in Baldwin County, AL.',
       tech: ['Wordpress', 'Sass', 'Js', 'PHP'],
+      role: 'Designer, Lead Developer'
     },
     {
       title: 'Boogies Grill & Chill',
@@ -76,6 +82,7 @@ export default {
       company: 'Southern View Media',
       brief_description: 'Website I developed and paritally designed using custom wordpress theme. It was for a new restaraunt called Boogies Grill and Chill Control in Baldwin County, AL. This site makes effective use of animations and color contrasting to provide a high quality user experience.',
       tech: ['Wordpress', 'Sass', 'Js', 'PHP'],
+      role: 'Lead Developer'
     },
     {
       title: 'Drayton Homes',
@@ -83,7 +90,8 @@ export default {
       type: 'Website',
       company: 'Trent McDole',
       brief_description: 'A website I personally contracted. The site is for a home builder in Baldwin County who specializes in Foritified Homes. The site showcases properties built by the owner, a blog section to boost SEO performance, and a custom user login system built using Wordpress native functionality.',
-      tech: ['Magento', 'Sass', 'js', 'C#'],
+      tech: ['Wordpress', 'Sass', 'Js', 'PHP'],
+      role: 'Designer, Lead Developer, Architect, Client Manager'
     },
     {
       title: 'Alliance Senior Services',
@@ -92,6 +100,7 @@ export default {
       company: 'Southern View Media',
       brief_description: 'Website I designed and developed using custom wordpress theme. It was for a senior retirement center called Alliance Senior Services. The goal was to provide a nice UX/UI but not to complicated for older users.',
       tech: ['Wordpress', 'Sass', 'Js', 'PHP'],
+      role: 'Designer, Lead Developer'
     }
   ],
   techdegree: [

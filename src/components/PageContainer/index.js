@@ -1,6 +1,8 @@
-import React, {useEffect, useMemo} from 'react';
+import React, {useEffect, useMemo, useCallback, useState} from 'react';
 import './styles.scss';
 import {Route, useLocation} from 'react-router-dom';
+import {addToCache, getCache} from '../General/CacheManager';
+import {useDevice} from '../General';
 import pageSettings from './pageSettings';
 import Home from '../Pages/Home';
 import Work from '../Pages/Work';
@@ -10,17 +12,31 @@ import Resume from '../Pages/Resume';
 
 
 const PageContainer = props => {
+  const device = useDevice();
+
   // page settings
+  const cache = getCache();
   const location = useLocation();
   const currentPage = location.pathname === '/' ? 'home' : location.pathname.replace('/', '');
   const currentSettings = pageSettings[currentPage];
   const {total, color} = currentSettings;
   const gradient = 'linear-gradient(70deg, ' + color + ')';
+  const storedScrollPosition = cache[currentPage + '_scroll']
+    ? parseInt(cache[currentPage + '_scroll']) : 0;
+
   // state
-  const [scroll, setScroll] = React.useState(0);
-  const [nextScroll, setNextScroll] = React.useState(scroll);
-  const lastScroll = React.useRef(scroll);
-  const [scrolling, setScrolling] = React.useState(false);
+  const [scrollState, setScrollState] = useState({
+    scroll: storedScrollPosition,
+    scrolling: false,
+    nextScroll: storedScrollPosition,
+  })
+  const handleScrollUpdate = useCallback(update => {
+    if (update.scroll !== undefined) addToCache(currentPage + '_scroll', update.scroll)
+    setScrollState({
+      ...scrollState,
+      ...update
+    })
+  }, [scrollState, setScrollState, currentPage])
   const pageRef = React.useRef(currentPage);
 
   // requirements before shifting to next scroll position
@@ -28,38 +44,40 @@ const PageContainer = props => {
     animations: 0,
     content: 0,
   })
-  const updateRequirement = (property, increment) => {
-    requirements.current[property] += increment;
-    if (
-      requirements.current.animations === currentPage.animations
-      && requirements.current.content === currentPage.content
-      && nextScroll !== scroll
-    ) setScroll(scroll);
-  }
+
+  // const updateRequirement = (property, increment) => {
+  //   requirements.current[property] += increment;
+  //   if (
+  //     requirements.current.animations === currentPage.animations
+  //     && requirements.current.content === currentPage.content
+  //     && nextScroll !== scroll
+  //   ) setScroll({scroll: scrollState.scroll});
+  // }
 
   // scroll function
   const handleScroll = e => {
-    if (e.deltaY < 0 && scroll === 0) {return;}
-    if (e.deltaY > 0 && scroll === total - 1) {return;}
-    lastScroll.current = scroll;
-    setScrolling(true);
-    // setNextScroll(e.deltaY > 0 ? scroll + 1 : scroll - 1);
-    setScroll(e.deltaY > 0 ? scroll + 1 : scroll - 1);
+    if (e.deltaY < 0 && scrollState.scroll === 0) {return;}
+    if (e.deltaY > 0 && scrollState.scroll === total - 1) {return;}
+    handleScrollUpdate({
+      scrolling: true,
+      scroll: e.deltaY > 0 ? scrollState.scroll + 1 : scrollState.scroll - 1
+    })
   }
 
   // change on circle nav click
   const handleIndexChange = index => {
     // setNextScroll(index);
-    lastScroll.current = scroll;
-    setScroll(index);
-    setScrolling(true);
+    handleScrollUpdate({
+      scroll: index,
+      scrolling: true,
+    })
   }
 
   // circle nav
   let sectionCircs = [];
   for(let i = 0;i < total;i++) {sectionCircs.push(
     <div
-      className={'section-circle light ' + (scroll === i ? ' active' : '')}
+      className={'section-circle light ' + (scrollState.scroll === i ? ' active' : '')}
       style={{borderColor: currentSettings.floatingColor || '#fff'}}
       key={currentPage + i}
       onClick={() => handleIndexChange(i)}
@@ -71,46 +89,47 @@ const PageContainer = props => {
   // page change catch
   useEffect(() => {
     if (pageRef.current !== currentPage) {
-      setScroll(0);
-      setNextScroll(1);
-      setScrolling(false);
-      lastScroll.current = 0;
+      handleScrollUpdate({
+        scroll: 0,
+        nextScroll: 1,
+        scrolling: false,
+      })
       pageRef.current = currentPage;
       requirements.current = {
         animations: 0,
         content: 0,
       }
     }
-  }, [currentPage, setScroll, setNextScroll, setScrolling])
+  }, [currentPage, handleScrollUpdate])
 
   const pageProps = {
-    nextScroll,
-    scroll,
-    updateRequirement,
+    nextScroll: scrollState.nextScroll,
+    scroll: scrollState.scroll,
+    // updateRequirement,
   }
 
   const heightVar = window.innerHeight * 1.5;
 
   const floatingSvgs = useMemo(() => (
-    <div id='floating_svg_container' className='fixed-fill' style={{transform: `translateY(${((total - 1) * 50) - (scroll * 50)}px)`}}>
+    <div id='floating_svg_container' className='fixed-fill' style={{transform: `translateY(${((total - 1) * 50) - (scrollState.scroll * 50)}px)`}}>
       {pageSettings[currentPage].svgs}
     </div>
-  ), [currentPage, scroll])
+  ), [currentPage, scrollState.scroll, total])
 
   return(
     <div
       id='page_container'
-      className={scrolling ? 'scrolling' : null}
+      className={scrollState.scrolling ? 'scrolling' : null}
       key={currentPage}
       style={{
-        width: window.innerWidth - 70 + 'px',
+        width: device !== 'mobile' ? window.innerWidth - 70 + 'px' : '100%',
         height: heightVar * (total) + 'px',
-        top: -heightVar * (scroll) + 'px',
+        top: -heightVar * (scrollState.scroll) + 'px',
         background: gradient,
         ...props.containerStyles
       }}
-      onWheel={!scrolling ? handleScroll : null}
-      onTransitionEnd={() => setScrolling(false)}
+      onWheel={!scrollState.scrolling ? handleScroll : null}
+      onTransitionEnd={() => handleScrollUpdate({scrolling: false})}
     >
       <Route path='/' exact component={() => <Home {...pageProps} />} />
       <Route path='/work' exact component={() => <Work {...pageProps} />} />

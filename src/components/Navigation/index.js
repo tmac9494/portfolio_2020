@@ -1,6 +1,5 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
-
 import './styles.scss';
 
 
@@ -38,14 +37,6 @@ const Navigation = props => {
       >
         <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><rect x="96" y="48" width="320" height="416" rx="48" ry="48"/><line x1="176" y1="128" x2="336" y2="128"/><line x1="176" y1="208" x2="336" y2="208"/><line x1="176" y1="288" x2="256" y2="288"/></svg>
         <span>Resume</span>
-      </NavLink>
-      <NavLink
-        className={'nav-btn contact-nav-btn'}
-        to='/contact'
-        exact
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><rect x="128" y="16" width="256" height="480" rx="48" ry="48"/><path d="M176,16h24a8,8,0,0,1,8,8h0a16,16,0,0,0,16,16h64a16,16,0,0,0,16-16h0a8,8,0,0,1,8-8h24"/></svg>
-        <span>Contact</span>
       </NavLink>
     </div>
   )

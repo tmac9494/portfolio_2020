@@ -11,7 +11,7 @@ const FrameWorks = props => {
   return(
     <section className='section-container' style={{transform: 'translateY(0)'}}>
       <h2 className='section-title tl'>My Frameworks</h2>
-      <div id='skills_wrapper' className='clearfix abs-center'>
+      <div onWheel={e => e.stopPropagation()} id='skills_wrapper' className='clearfix abs-center scrollable custom-scrollbar content-wrap'>
         <SkillContainer
           title='React'
           img={reactImg}

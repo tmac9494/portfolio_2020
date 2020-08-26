@@ -1,3 +1,5 @@
+@import '../../../styles/mixins';
+
 #skills_page {
   height: 100%;
   color: #fff;
@@ -14,6 +16,7 @@
   }
   .skill-circ {
     padding: 0 4px;
+    width: 20%
   }
   .skill-circ div {
     border-radius: 100px;
@@ -51,8 +54,12 @@
 
 #skills_wrapper {
   width: 90%;
+  height: 75%;
   max-width: 1140px;
-  margin-left: -35px;
+  @include tablet {
+    margin-left: -35px;
+    height: auto;
+  }
 }
 
 .skill-container {

@@ -19,6 +19,7 @@ const Projects = props => {
           : <ProjectListView
               setExpanded={setExpanded}
               projects={projects}
+              headerTitle='Work Projects'
             />
         }
     </section>

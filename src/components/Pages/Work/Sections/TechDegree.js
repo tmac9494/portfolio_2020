@@ -9,6 +9,7 @@ const TechDegree = props => {
       <ProjectListView
         headerTitle='Techdegree Projects'
         projects={techdegree}
+        type='techdegree'
       />
     </section>
   )
