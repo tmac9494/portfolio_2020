@@ -1,12 +1,15 @@
 import React from 'react';
 import {useDevice} from '../../../General';
+import scrollHandler from '../../scrollPropagationHandler';
+
+
 const Jobs = props => {
 
   const device = useDevice();
 
   return(
     <section className='section-container'>
-      <div onWheel={e => e.stopPropagation()} className='resume-content-wrap abs-center content-wrap scrollable custom-scrollbar white-scrollbar'>
+      <div onWheel={e => scrollHandler(e, 'resume_container')} id='resume_container' className='resume-content-wrap abs-center content-wrap scrollable custom-scrollbar white-scrollbar'>
         {props.data.map(data =>
           <div className='resume-content' key={data.title}>
             <div className='header clearfix'>
