@@ -6,12 +6,13 @@ import angImg from '../../../../assets/angular.png';
 import nodeImg from '../../../../assets/nodejs.png';
 import threeImg from '../../../../assets/3js.png';
 import SkillContainer from './SkillContainer';
+import scrollHandler from '../../scrollPropagationHandler';
 
 const FrameWorks = props => {
   return(
     <section className='section-container' style={{transform: 'translateY(0)'}}>
       <h2 className='section-title tl'>My Frameworks</h2>
-      <div onWheel={e => e.stopPropagation()} id='skills_wrapper' className='clearfix abs-center scrollable custom-scrollbar content-wrap'>
+      <div onWheel={e => scrollHandler(e, 'skills_wrapper')} id='skills_wrapper' className='clearfix abs-center scrollable custom-scrollbar content-wrap'>
         <SkillContainer
           title='React'
           img={reactImg}

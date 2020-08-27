@@ -1,4 +1,5 @@
 import React from 'react';
+import scrollHandler from '../../scrollPropagationHandler';
 
 const InfoBlock = props => {
   const {icon, background, description, title} = props;
@@ -18,7 +19,7 @@ const SetsApart = props => {
   return(
     <section className='section-container'>
       <h2 className='section-title tl'>What Sets Me Apart</h2>
-      <div id='info_block_container' className='abs-center clearfix content-wrap scrollable custom-scrollbar white-scrollbar' onWheel={e => e.stopPropagation()}>
+      <div id='info_block_container' className='abs-center clearfix content-wrap scrollable custom-scrollbar white-scrollbar' onWheel={e => scrollHandler(e, 'info_block_container')}>
         <InfoBlock
           background='linear-gradient(to bottom left, #FF00A1, #65009F)'
           icon={<svg className='svg-outline light abs-center' xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><title>ionicons-v5-m</title><circle className='svg-outline light' cx="256" cy="184" r="120"/><circle className='svg-outline light' cx="344" cy="328" r="120"/><circle className='svg-outline light' cx="168" cy="328" r="120"/></svg>}

@@ -108,7 +108,7 @@ const PageContainer = props => {
     // updateRequirement,
   }
 
-  const heightVar = window.innerHeight * 1.5;
+  // const heightVar = window.innerHeight * 1.5;
 
   const floatingSvgs = useMemo(() => (
     <div id='floating_svg_container' className='fixed-fill' style={{transform: `translateY(${((total - 1) * 50) - (scrollState.scroll * 50)}px)`}}>
@@ -120,22 +120,21 @@ const PageContainer = props => {
     <div
       id='page_container'
       className={scrollState.scrolling ? 'scrolling' : null}
-      key={currentPage}
       style={{
         width: device !== 'mobile' ? window.innerWidth - 70 + 'px' : '100%',
-        height: heightVar * (total) + 'px',
-        top: -heightVar * (scrollState.scroll) + 'px',
+        height: 150 * (total) + 'vh',
+        top: -150 * (scrollState.scroll) + 'vh',
         background: gradient,
         ...props.containerStyles
       }}
       onWheel={!scrollState.scrolling ? handleScroll : null}
       onTransitionEnd={() => handleScrollUpdate({scrolling: false})}
     >
-      <Route path='/' exact component={() => <Home {...pageProps} />} />
-      <Route path='/work' exact component={() => <Work {...pageProps} />} />
-      <Route path='/skills' exact component={() => <Skills {...pageProps} />} />
-      <Route path='/resume' exact component={() => <Resume {...pageProps} />} />
-      <Route path='/contact' exact component={() => <Contact {...pageProps} />} />
+      <Route path='/' exact component={Home} />
+      <Route path='/work' exact component={Work} />
+      <Route path='/skills' exact component={Skills} />
+      <Route path='/resume' exact component={Resume} />
+      <Route path='/contact' exact component={Contact} />
       {/* Background svgs */}
       {floatingSvgs}
       {/* floating nav right*/}

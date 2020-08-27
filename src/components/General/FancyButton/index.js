@@ -28,7 +28,6 @@ const FancyButton = props => {
     }
   }
 
-
   const handleHoverIn = e => {
     const {left, top} = roundDims(e.target.getBoundingClientRect());
     action(e.clientY - top, e.clientX - left, 'entrance')

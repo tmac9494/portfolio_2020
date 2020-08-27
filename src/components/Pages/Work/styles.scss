@@ -35,7 +35,7 @@
   }
 }
 
-#projects_content, #expanded_view_container {
+#projects_content_techdegree, #projects_content_projects, #expanded_view_container {
   position: absolute;
   left: 0;
   right: 0;
@@ -52,7 +52,7 @@
   }
 }
 
-#projects_content {
+#projects_content_techdegree, #projects_content_projects {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

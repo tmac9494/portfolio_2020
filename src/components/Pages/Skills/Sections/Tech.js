@@ -6,12 +6,13 @@ import mongoImg from '../../../../assets/mongo.png';
 import wpImg from '../../../../assets/webpack.svg';
 import wordpressImg from '../../../../assets/wordpress.png';
 import SkillContainer from './SkillContainer';
+import scrollHandler from '../../scrollPropagationHandler';
 
 const Technology = props => {
   return(
     <section className='section-container' style={{transform: 'translateY(250vh)'}}>
       <h2 className='section-title tl'>My Technologies</h2>
-      <div onWheel={e => e.stopPropagation()} id='skills_wrapper' className='clearfix abs-center scrollable custom-scrollbar content-wrap'>
+      <div onWheel={e => scrollHandler(e, 'tech_wrapper')} id='tech_wrapper' className='clearfix abs-center scrollable custom-scrollbar content-wrap'>
         <SkillContainer
           title='MongoDB'
           img={mongoImg}

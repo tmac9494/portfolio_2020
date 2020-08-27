@@ -20,6 +20,7 @@ const Projects = props => {
               setExpanded={setExpanded}
               projects={projects}
               headerTitle='Work Projects'
+              type='projects'
             />
         }
     </section>

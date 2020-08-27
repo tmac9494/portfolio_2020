@@ -20,8 +20,12 @@
 }
 @keyframes hover {
   0% {transform: translate(-50%, -50%) scale(0);opacity: .2;}
-  100% {transform: translate(-50%, -50%) scale(2.5);opacity: 1;}
+  100% {transform: translate(-50%, -50%) scale(3);opacity: 1;}
 }
+// @keyframes active {
+//   0% {transform: translate(-50%, -50%) scale(0);opacity: 1;}
+//   100% {transform: translate(-50%, -50%) scale(2.5);opacity: 0;}
+// }
 
 .active-effect, .hover-effect {
   display: block;

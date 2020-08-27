@@ -5,12 +5,14 @@ import jsImg from '../../../../assets/javascript.png';
 import jqImg from '../../../../assets/jquery.png';
 import phpImg from '../../../../assets/php.png';
 import SkillContainer from './SkillContainer';
+import scrollHandler from '../../scrollPropagationHandler';
+
 
 const Languages = props => {
   return(
     <section className='section-container'>
       <h2 className='section-title tl'>My Languages</h2>
-      <div onWheel={e => e.stopPropagation()} id='skills_wrapper' className='clearfix abs-center content-wrap custom-scrollbar scrollable'>
+      <div onWheel={e => scrollHandler(e, 'lang_wrapper')} id='lang_wrapper' className='clearfix abs-center content-wrap custom-scrollbar scrollable'>
         <SkillContainer
           title='HTML'
           img={htmlImg}

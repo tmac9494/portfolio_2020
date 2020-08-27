@@ -1,6 +1,7 @@
 import React from 'react';
 import ImageFill from './ImageFill';
 import {useDevice} from '../../../General';
+import scrollHandler from '../../scrollPropagationHandler';
 
 const ProjectListView = props => {
 
@@ -11,7 +12,7 @@ const ProjectListView = props => {
       <div id='projects_header'>
         {props.headerTitle && <h2 className='section-title f-right' style={{margin: 0}}>{props.headerTitle}</h2>}
       </div>
-      <div id='projects_content' onWheel={e => e.stopPropagation()} className='custom-scrollbar scrollable no-bg clearfix'>
+      <div id={'projects_content_' + props.type} onWheel={(e) => scrollHandler(e, 'projects_content_' + props.type)} key='expanded' className='custom-scrollbar scrollable no-bg clearfix'>
         {props.projects.map((data, i) =>
           React.createElement(
             props.type === 'techdegree' ? 'a' : 'div',
@@ -33,9 +34,7 @@ const ProjectListView = props => {
                 </div>
                 <div className='content'>
                   <h4>{data.title}</h4>
-                  <p className='custom-scrollbar' onWheel={e => {
-                      e.stopPropagation()
-                    }}>{data.brief_description}</p>
+                  <p className='custom-scrollbar' id={'projects_content_item_' + props.type + i} onWheel={(e) => scrollHandler(e, 'projects_content_item_' + props.type + i)}>{data.brief_description}</p>
                 </div>
               </div>
             </React.Fragment>
