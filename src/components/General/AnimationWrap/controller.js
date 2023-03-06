@@ -55,12 +55,12 @@ class Animation {
         Math.min((calcRuntime - this.prevRuntime) / duration, 1)
       );
       const distance = thisStep.from > thisStep.to
-      ? thisStep.from - thisStep.to
-      : thisStep.to - thisStep.from;
+        ? thisStep.from - thisStep.to
+        : thisStep.to - thisStep.from;
       const currentDistance = distance * progress;
       const progression = thisStep.from > thisStep.to
-      ? thisStep.from - currentDistance
-      : thisStep.from + currentDistance;
+        ? thisStep.from - currentDistance
+        : thisStep.from + currentDistance;
       this.nextUpdate = progression.toFixed(2);
       if (thisStep.duration <= calcRuntime && nextStep) {
         this.step++;

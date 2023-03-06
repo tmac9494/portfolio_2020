@@ -44,26 +44,24 @@ const AnimationWrap = props => {
       const runtime = timeStamp - started.current;
       let update = {};
       let setFixed = false;
+
       for (let i = 0;i < animationHandlers.current.length;i++) {
         const handler = animationHandlers.current[i];
+
         if (handler.running) handler.logic(runtime);
 
-        // update = {...update, ...handler.value()}
-
         if (update.transform && handler.value().transform) {
-          update.transform += ' ' + handler.value().transform
-          // console.log(update.transform, handler.value())
-        }
-        else update = {...update, ...handler.value()};
+          update.transform += ' ' + handler.value().transform;
+        } else update = {...update, ...handler.value()};
+
         if (props.fixedTransform && update.transform && !setFixed) {
           update.transform += ' ' + props.fixedTransform;
           setFixed = true;
         }
-        // if (update.transform) {
-        //   console.log(update)
-        // }
+
         handler.updated();
       }
+      
       setAnimationValue(update);
     }
   }

@@ -11,7 +11,7 @@ const Intro = props => {
         <span className='title'>Full-Stack Javascript Engineer</span>
         <br/>
         <div className='info'>
-          <span>Calera, AL 35040</span>
+          <span>Daphne, AL 36526</span>
           <span>TrentMcdole94@gmail.com</span>
           <span>251-753-1816</span>
         </div>

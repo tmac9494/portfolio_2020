@@ -1,11 +1,7 @@
 import Intro from './Intro';
-import Languages from './Languages';
-import Technology from './Tech';
-import FrameWorks from './FrameWorks';
+import { ExperimentalSection } from './ExperimentalSection';
 
 export {
   Intro,
-  Languages,
-  Technology,
-  FrameWorks
+  ExperimentalSection
 }

@@ -8,7 +8,7 @@ const ProjectListView = props => {
   const device = useDevice();
 
   return(
-    <React.Fragment>
+    <>
       <div id='projects_header'>
         {props.headerTitle && <h2 className='section-title f-right' style={{margin: 0}}>{props.headerTitle}</h2>}
       </div>
@@ -22,7 +22,7 @@ const ProjectListView = props => {
               onClick: props.type !== 'techdegree' ? () => props.setExpanded(i) : null,
               href: props.type === 'techdegree' ? data.url : null
             },
-            <React.Fragment>
+            <>
               <div className='block-content'>
                 <div className='image-container relative'>
                   <ImageFill
@@ -37,11 +37,11 @@ const ProjectListView = props => {
                   <p className='custom-scrollbar' id={'projects_content_item_' + props.type + i} onWheel={(e) => scrollHandler(e, 'projects_content_item_' + props.type + i)}>{data.brief_description}</p>
                 </div>
               </div>
-            </React.Fragment>
+            </>
           )
         )}
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

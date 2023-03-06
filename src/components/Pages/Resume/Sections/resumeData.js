@@ -1,17 +1,51 @@
 import xdLogo from '../../../../assets/xd-logo.svg';
 import standardLogo from '../../../../assets/standard-logo.svg';
+import evernoteLogo from '../../../../assets/evernote.svg';
 import svmLogo from '../../../../assets/svm.png';
 import afmLogo from '../../../../assets/afm.png';
 import psLogo from '../../../../assets/plussum.png';
+import gcioLogo from '../../../../assets/gcio.jpg';
 
 export default {
   jobs: [
+    {
+      company: 'Evernote',
+      logo: evernoteLogo,
+      cityState: 'Redwood City, CA',
+      startDate: 'April 2022',
+      endDate: 'February 2023',
+      title: 'Software Engineer II',
+      description: '',
+      bullets: [
+        'Member of the Growth/Monetization team.',
+        'Architect and develop new apps and features.',
+        'Take designs, analytic configurations, and direction from product team and translate that into AB experiments on the component level.',
+        'Implement code in React Native for mobile application.',
+        'Implement code in React+Typescript for web/desktop application.',
+        'Fastest on the team to finish an entire epic alone after start date.',
+        'Spearheaded New Years Campaign monetization goals.',
+      ]
+    },
+    {
+      company: 'GovernementCIO',
+      logo: gcioLogo,
+      cityState: 'Washington, DC',
+      startDate: 'September 2021',
+      endDate: 'April 2022',
+      title: 'Senior Software Engineer',
+      description: '',
+      bullets: [
+        'Work with veterans and stakeholders to deliver useful features for va.gov.',
+        'Use Javascript and Liquid templates to generate VA location information across the US.',
+        'Follow strict protocols for handling/accessing sensitive information.',
+      ]
+    },
     {
       company: 'XpertDox LLC',
       logo: xdLogo,
       cityState: 'Birmingham, AL',
       startDate: 'June 2019',
-      endDate: 'Present',
+      endDate: 'September 2021',
       title: 'Lead Developer',
       description: '',
       bullets: [

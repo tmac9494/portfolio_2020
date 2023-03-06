@@ -12,7 +12,7 @@ const FancyButton = props => {
 
   const [buttonWidth, setButtonWidth] = useState(null);
 
-  const action = (top, left, type) => {
+  const handleMouseEvent = (top, left, type) => {
     setMouseState(Object.assign({},
       mouseState,
       {[type]: [top, left]},
@@ -21,26 +21,19 @@ const FancyButton = props => {
     ));
   }
 
-  const roundDims = dims => {
-    return {
-      left: Math.floor(dims.left),
-      top: Math.floor(dims.top)
-    }
+  const roundDims = dims => ({
+    left: Math.floor(dims.left),
+    top: Math.floor(dims.top)
+  })
+
+  const mouseAction = (e, event) => {
+    const {left, top} = roundDims(e.target.getBoundingClientRect());
+    handleMouseEvent(e.clientY - top, e.clientX - left, event);
   }
 
-  const handleHoverIn = e => {
-    const {left, top} = roundDims(e.target.getBoundingClientRect());
-    action(e.clientY - top, e.clientX - left, 'entrance')
-  }
-  const handleHoverOut = e => {
-    const {left, top} = roundDims(e.target.getBoundingClientRect());
-    if (!mouseState.action) action(e.clientY - top, e.clientX - left, 'exit');
-  }
-
-  const handleClick = e => {
-    const {left, top} = roundDims(e.target.getBoundingClientRect());
-    action(e.clientY - top, e.clientX - left, 'action')
-  }
+  const handleHoverIn = e => mouseAction(e, 'entrance');
+  const handleHoverOut = e => { if (!mouseState.action) mouseAction(e, 'exit'); }
+  const handleClick = e => mouseAction(e, 'action');
 
   const measureButton = React.useCallback(node => {
     if (node && buttonWidth === null) setButtonWidth(node.clientWidth);
@@ -61,8 +54,8 @@ const FancyButton = props => {
         onMouseLeave={handleHoverOut}
         onClick={props.onClick}
         onMouseDown={handleClick}
-        onFocus={() => action('50%', '50%', 'entrance')}
-        onBlur={() => action('50%', '50%', 'exit')}
+        onFocus={() => handleMouseEvent('50%', '50%', 'entrance')}
+        onBlur={() => handleMouseEvent('50%', '50%', 'exit')}
       >
         {props.children
           ? props.children

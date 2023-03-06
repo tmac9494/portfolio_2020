@@ -1,5 +1,7 @@
 @import './normalize.css';
 @import './mixins.scss';
+@import './colors.scss';
+@import './animations.scss';
 
 // general configuration
 * {
@@ -36,6 +38,10 @@ a {
 .warm-btn {
   background: linear-gradient(to top right, #FF005F, #FFD500);
 }
+.normalize-btn {
+  outline: none;
+  border: none;
+}
 .svg-outline {
   &, line, circle, path, polyline {
     fill:none !important;
@@ -51,6 +57,14 @@ a {
   fill:#16161C;
   &.light {fill: #fff}
 }
+
+.company-icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
 
 // positioning/layout
 .f-right {

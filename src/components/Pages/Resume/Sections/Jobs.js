@@ -11,7 +11,7 @@ const Jobs = props => {
     <section className='section-container'>
       <div onWheel={e => scrollHandler(e, 'resume_container')} id='resume_container' className='resume-content-wrap abs-center content-wrap scrollable custom-scrollbar white-scrollbar'>
         {props.data.map(data =>
-          <div className='resume-content' key={data.title}>
+          <div className='resume-content' id={data.company.replace(/\s/g, '')} key={data.title}>
             <div className='header clearfix'>
               <img src={data.logo} alt={data.company} className={(device !== 'mobile' ? 'f-right ' : '') + (data.logoClass ? data.logoClass : '')} />
               <div className='f-left'>

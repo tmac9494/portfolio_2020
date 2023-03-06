@@ -1,8 +1,9 @@
 @import '../../../styles/mixins';
+@import '../../../styles/colors';
 
 #skills_page {
   height: 100%;
-  color: #fff;
+  color: $white;
   .top-content {
     position: absolute;
     top: 10%;
@@ -10,49 +11,69 @@
     max-width: 80%;
     width: 650px;
     .description {
-      font-size: 22px;
+      font-size: 20px;
       margin: 24px 0 32px 0;
     }
   }
   .skill-circ {
-    padding: 0 4px;
+    padding: 0 1px;
     width: 20%
   }
+  .skill-circ-alt {
+    width: 20%;
+    padding: 0 1px 0 0;
+  }
   .skill-circ div {
-    border-radius: 100px;
     width: 100%;
-    max-width: 25px;
-    max-height: 25px;
+    max-width: 100%;
+    // max-height: 20px;
     margin: 0 auto;
-    background: #303030;
+    background: $charcoal;
     box-shadow: inset 0px 1px 4px rgba(0,0,0,0.3);
+  }
+  .skill-circ-alt div {
+    width: 100%;
+    height: 10px;
+    max-width: 100%;
+    // max-height: 20px;
+    margin: 0 auto;
+    background: $charcoal;
+    box-shadow: inset 0px 1px 4px rgba(0,0,0,0.3);
+  }
+  .skill-circ:first-child div, .skill-circ-alt:first-child div {
+    border-top-left-radius: 200px;
+    border-bottom-left-radius: 200px;
+  }
+  .skill-circ:last-child div, .skill-circ-alt:last-child div {
+    border-top-right-radius: 200px;
+    border-bottom-right-radius: 200px;
   }
   div.beginner, div.familiar, div.intermediate, div.skilled, div.mastered {
     box-shadow: none;
   }
   div.beginner, .beginner {
-    background: #ff4d00;
-    color: #ff4d00
+    background: $red-beginner;
+    color: $red-beginner
   }
   div.familiar, .familiar {
-    background: #dfbb00;
-    color: #dfbb00;
+    background: $orange-familiar;
+    color: $orange-familiar;
   }
   div.intermediate, .intermediate {
-    background: #c2e900;
-    color: #c2e900;
+    background: $green-intermediate;
+    color: $green-intermediate;
   }
   div.skilled, .skilled {
-    background: #73f500;
-    color: #73f500;
+    background: $green-skilled;
+    color: $green-skilled;
   }
   div.mastered, .mastered {
-    background: #00f662;
-    color: #00f662;
+    background: $green-mastered;
+    color: $green-mastered;
   }
 }
 
-#skills_wrapper, #lang_wrapper, #tech_wrapper {
+#skills_wrapper, #lang_wrapper, #tech_wrapper, #skills_table {
   width: 90%;
   height: 75%;
   max-width: 1140px;
@@ -62,41 +83,460 @@
   }
 }
 
-.skill-container {
+
+
+.skill-container-alt {
+  width: 100%;
+  padding: 8px;
+  position: relative;
+  @include tablet {
+    width: 33.333%
+  }
+  @include desktop {
+    width: 25%;
+  }
   .content {
-    background: #16161C;
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: start;
+    background: $black-surface;
     border-radius: 4px;
     box-shadow: 0 4px 12px -6px rgba(0,0,0,0.5);
-    padding: 16px 8px;
-    margin-bottom: 20px;
-  }
-  img {
-    margin: 0 auto;
-    display: block;
-    height: 60px;
-    width: auto;
-    background: #fff;
-    padding: 8px;
-    border-radius: 200px;
-    box-shadow: 0 3px 8px #000;
+    padding: 28px 8px 12px;
+    position: relative;
+    border-bottom: 1px solid $black;
+    box-shadow: 0px 0px 0px $black;
+    transform: scale(1);
+    transition: all .28s;
+    &:hover {
+      background: $black;
+      cursor: pointer;
+      h3 {
+        color: $white;
+      }
+    }
+    &.active {
+      background: $skills-highlight-surface;
+      box-shadow: 0px 6px 8px -4px $black;
+      transform: scale(1.1);
+    }
   }
   h3 {
-    color: #fff;
+    transition: color .16s;
+    color: $text-dark-primary;
     text-align: center;
-    font-size: 24px;
-  }
-  .skill-level {
-    width: 100%;
-    padding: 8px;
-    max-width: 220px;
-    margin: 0 auto;
-  }
-  .skill-level-text {
-    display: block;
-    margin-top: 8px;
-    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    position: absolute;
+    top: 6px;
+    left: 15px;
+    margin: 0;
+    z-index: 1;
   }
 }
+
+.skill-level-badge img {
+  margin: 0 auto;
+  display: block;
+  height: 38px;
+  width: auto;
+  background: transparent;
+  margin: 0 10px 0 6px;
+}
+
+.skill-level-stat {
+  position:relative;
+  z-index: 2;
+  width: 80%;
+  margin: 0 auto;
+}
+.skill-level {
+  width: 90%;
+  padding: 8px;
+  // max-width: 140px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+.skill-level-text {
+  display: block;
+  text-align: center;
+  font-size: 12px
+}
+
+#skills_table {
+  height: 80%;
+  padding: 12px;
+}
+
+#skill-toolbar {
+  background: $black-surface;
+  padding: 6px 8px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: row;
+  box-shadow: 0px 6px 6px -4px $black;
+  border-bottom: 1px solid $black;
+  .skill-table-control {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    margin-right: 22px;
+    z-index: 10;
+  }
+  .skill-control-value-container {
+    width: 100px;
+  }
+  .skill-control-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-right: 8px;
+  }
+  .skill-control-value {
+    background: $shadow-mid;
+    transition: all .2s;
+    border: none;
+    outline: none;
+    display: block;
+    width: 100%;
+    color: $gray-mid;
+    padding: 8px 0;
+    font-size: 14px;
+    border-radius: 4px;
+    border: 1px solid $gray-dark;
+    &:hover, &.active {
+      background: $charcoal;
+    }
+  }
+  .skill-control-options {
+    position: absolute;
+    top: 100%;
+    left: auto;
+    right: 0;
+    width: 120px;
+    background: $black;
+    &.in {
+      animation: fadeInSlideUp ease-out .28s;
+    }
+    &.out {
+      animation: fadeOutSlideDown ease-in .28s;
+    }
+  }
+  .skill-control-option {
+    width: 100%;
+    display: block;
+    font-size: 14px;
+    background: none;
+    outline: none;
+    border: none;
+    transition: .2s;
+    padding: 6px 0;
+    color: $gray-mid;
+    border-bottom: 1px solid $charcoal;
+    &:hover {
+      background: $charcoal;
+      color: $white;
+    }
+    &.active {
+      color: $skills-highlight;
+    }
+  }
+  .filter-btn {
+    background: none;
+    position: relative;
+    &:hover, &.active {
+      background: $charcoal;
+    }
+    .filter-svg {
+      width: 25px;
+      height: 25px;
+      display: block;
+      color: $white;
+    }
+    &:after {
+      content: '';
+      background: $gray-dark;
+      border-radius: 3px;
+      display: block;
+      width: 2px;
+      position: absolute;
+      right: -8px;
+      left: auto;
+      top: 2px;
+      bottom: 2px;
+    }
+  }
+  .skill-filter-count {
+    position: absolute;
+    font-size: 11px;
+    background: $skills-highlight;
+    color: $skills-floating;
+    font-weight: bold;
+    border-radius: 100%;
+    top: 0;
+    right: 0;
+    left: auto;
+    width: 15px;
+    height: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 1px 3px 6px $black;
+  }
+}
+
+#skill_table_search {
+  flex-grow: 2;
+  text-align: right;
+  input {
+    background: $shadow-mid;
+    border: 1px solid $gray-dark;
+    outline: 0;
+    padding: 0 8px;
+    color: $text-dark-primary;
+    border-radius: 2px;
+    height: 100%;
+    vertical-align: top;
+  }
+  .close-icon-container, .search-icon-container {
+    display: inline-block;
+    position: absolute;
+    right: 234px;
+    top: 19px;
+    &.in {
+      animation: scaleIn .32s ease-out;
+      animation-fill-mode: forwards;
+    }
+    &.out {
+      animation: fadeOutLeft .32s ease-in;
+    }
+  }
+  .close-icon, .search-icon {
+    width: 28px;
+    height: 28px;
+    color: $gray-mid;
+    padding-top: 4px;
+    transition: color .2s;
+  }
+  .search-icon {
+    width: 28px;
+    height: 28px;
+    padding: 1px;
+    padding-top: 5px;
+    margin-right: 1px;
+  }
+  .close-btn {
+    background: none;
+    padding: 0;
+    fill: $gray-mid;
+    &:hover {
+      fill: $white;
+    }
+  }
+}
+
+
+
+.skill-column {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.companies-list {
+  width: 100%;
+  .company-icon-container {
+    display: inline-block;
+    transition: margin-left .2s;
+    position: relative;
+    &:not(:first-child) {
+      margin-left: -24px;
+    }
+    &:hover {
+      .company-icon-tooltip-wrap {
+        z-index: 600 !important;
+      }
+    }
+  }
+  // .company-icon-container:not(:first-child) {
+  //   transform: translateX(-12px);
+  // }
+  &:hover {
+    .company-icon-container {
+      margin-left: 0px !important;
+    }
+  }
+}
+
+.company-icon-tooltip-wrap {
+  position: absolute;
+  top: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 500;
+}
+
+.company-icon-tooltip {
+  padding: 2px 8px;
+  background: $black;
+  color: $text-dark-primary;
+  border-radius: 25px;
+  white-space: nowrap;
+  font-size: 10px;
+  &.in {
+    animation: scaleIn .2s ease-out;
+  }
+  &.out {
+    animation: scaleOut .1s ease-in;
+  }
+}
+
+.skill-star {
+  position: absolute;
+  right: 8px;
+  top: 5px;
+}
+.skill-star-icon {
+  fill: $skills-light;
+  width: 18px;
+  height: 18px;
+}
+
+
+#skill_description_panel {
+  position: absolute;
+  right: 0;
+  top: 70px;
+  bottom: 0;
+  background: $black-surface;
+  border-radius: 4px;
+  width: 300px;
+  z-index: 100;
+  box-shadow: -10px 0 18px -12px $black;
+  border-left: 1px solid $black;
+  border-bottom: 1px solid $black;
+  &.in {
+    animation: fadeInSlideLeft ease-out .28s;
+  }
+  &.out {
+    animation: fadeOutSlideRight ease-in .28s;
+  }
+  .close-btn {
+    text-align: right;
+    button {
+      background: none;
+      padding: 8px;
+      fill: $gray-mid;
+      &:hover {
+        fill: $white;
+      }
+    }
+    svg {
+      width: 25px;
+      height: 25px;
+    }
+  }
+  h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+  }
+  h3 {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: $text-dark-primary;
+  }
+  .image-container {
+    position: relative;
+  }
+}
+
+
+#skill_description_intro {
+  padding-bottom: 18px;
+  img {
+    height: 70px;
+    width: auto;
+    margin-bottom: 16px;
+  }
+}
+#skill_description_body {
+  height: 54%;
+  color: $text-dark-secondary;
+  font-size: 14px;
+  margin: 0 8px 18px;
+  .description {
+    padding: 0 5px 28px;
+    color: $text-dark-primary;
+    p {
+      margin: 0;
+    }
+  }
+  .accolades {
+    text-align: left;
+    ul {
+      padding-left: 18px;
+      margin: 0 18px 28px;
+    }
+    li {
+      margin-bottom: 6px;
+    }
+  }
+
+}
+
+
+// animated stars
+.flare-star {
+  position: absolute;
+  top: 42%;
+  left: 32%;
+  transform: scale(0) rotate(0deg);
+  svg {
+    width: 14px;
+    height: 14px;
+    fill: $skills-light;
+  }
+  &.in {
+    animation: fadeInSpinGrow ease-out .75s;
+    animation-fill-mode: forwards;
+  }
+  &.out {
+    animation: fadeOutSpinShrink ease-in .75s;
+  }
+}
+#star_2 {
+  right: 32%;
+  left: auto;
+  top: 25%;
+  svg {
+    width: 10px;
+    height: 10px;
+  }
+}
+#star_3 {
+  left: auto;
+  right: 36%;
+  top: 0%;
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+
+
+
+
+
+
 
 @keyframes grow {
   0% {transform: scale(1, .6)}
@@ -114,18 +554,15 @@
     bottom: auto;
     left: auto;
     right: auto;
-  }
-  .skill-blob-sm {
     animation: grow;
     animation-iteration-count: infinite;
     animation-timing-function: ease-out;
+  }
+  .skill-blob-sm {
     width: 140px;
     height: 280px;
   }
   .skill-blob-lg {
-    animation: grow;
-    animation-iteration-count: infinite;
-    animation-timing-function: ease-out;
     width: 250px;
     height: 400px;
   }
@@ -141,8 +578,8 @@
   }
   #skill_blob_lg_3 {
     animation-duration: 10 + random(10) + s;
-    bottom: 40%;
-    left: 65%;
+    bottom: 20%;
+    left: 75%;
   }
   #skill_blob_lg_4 {
     animation-duration: 10 + random(10) + s;
@@ -162,7 +599,7 @@
   #skill_blob_sm_3 {
     animation-duration: 10 + random(10) + s;
     bottom: 20%;
-    left: 65%;
+    left: 75%;
   }
   #skill_blob_sm_4 {
     animation-duration: 10 + random(10) + s;
@@ -173,5 +610,16 @@
     animation-duration: 10 + random(10) + s;
     bottom: 40%;
     left: 36%;
+  }
+  #skill_blob_sm_8 {
+    animation-duration: 10 + random(10) + s;
+    bottom: 4%;
+    left: auto;
+    right: 8%;
+  }
+  #skill_blob_sm_9 {
+    animation-duration: 10 + random(10) + s;
+    bottom: 1%;
+    right: 6%;
   }
 }

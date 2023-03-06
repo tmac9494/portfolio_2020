@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useCallback, useState} from 'react';
+import React, {useEffect, useMemo, useCallback, useState, useLayoutEffect} from 'react';
 import './styles.scss';
 import {Route, useLocation} from 'react-router-dom';
 import {addToCache, getCache} from '../General/CacheManager';
@@ -39,12 +39,6 @@ const PageContainer = props => {
   }, [scrollState, setScrollState, currentPage])
   const pageRef = React.useRef(currentPage);
 
-  // requirements before shifting to next scroll position
-  const requirements = React.useRef({
-    animations: 0,
-    content: 0,
-  })
-
   // const updateRequirement = (property, increment) => {
   //   requirements.current[property] += increment;
   //   if (
@@ -53,6 +47,12 @@ const PageContainer = props => {
   //     && nextScroll !== scroll
   //   ) setScroll({scroll: scrollState.scroll});
   // }
+
+  // requirements before shifting to next scroll position
+  // const requirements = React.useRef({
+  //   animations: 0,
+  //   content: 0,
+  // })
 
   // scroll function
   const handleScroll = e => {
@@ -87,7 +87,7 @@ const PageContainer = props => {
   )}
 
   // page change catch
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (pageRef.current !== currentPage) {
       handleScrollUpdate({
         scroll: 0,
@@ -95,10 +95,10 @@ const PageContainer = props => {
         scrolling: false,
       })
       pageRef.current = currentPage;
-      requirements.current = {
-        animations: 0,
-        content: 0,
-      }
+      // requirements.current = {
+      //   animations: 0,
+      //   content: 0,
+      // }
     }
   }, [currentPage, handleScrollUpdate])
 
@@ -111,7 +111,13 @@ const PageContainer = props => {
   // const heightVar = window.innerHeight * 1.5;
 
   const floatingSvgs = useMemo(() => (
-    <div id='floating_svg_container' className='fixed-fill' style={{transform: `translateY(${((total - 1) * 50) - (scrollState.scroll * 50)}px)`}}>
+    <div 
+      id='floating_svg_container' 
+      className='fixed-fill' 
+      style={{
+        transform: `translateY(${((total - 1) * 50) - (scrollState.scroll * 50)}px)`
+      }}
+    >
       {pageSettings[currentPage].svgs}
     </div>
   ), [currentPage, scrollState.scroll, total])
@@ -121,7 +127,7 @@ const PageContainer = props => {
       id='page_container'
       className={scrollState.scrolling ? 'scrolling' : null}
       style={{
-        width: device !== 'mobile' ? window.innerWidth - 70 + 'px' : '100%',
+        width: '100%',
         height: 150 * (total) + 'vh',
         top: -150 * (scrollState.scroll) + 'vh',
         background: gradient,

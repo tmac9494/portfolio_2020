@@ -1,0 +1,135 @@
+
+// up down
+@keyframes fadeInSlideUp {
+    0% {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    50% {
+      transform: translateY(-4%);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(0%);
+      opacity: 1;
+    }
+  }
+  @keyframes fadeOutSlideDown {
+    0% {
+      transform: translateY(0%);
+      opacity: 1;
+    }
+    40% {
+      transform: translateY(-4%);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+  }
+
+
+  // left in right out
+  @keyframes fadeInSlideLeft {
+    0% {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    50% {
+      transform: translateX(-4%);
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(0%);
+      opacity: 1;
+    }
+  }
+  @keyframes fadeOutSlideRight {
+    0% {
+      transform: translateX(0%);
+      opacity: 1;
+    }
+    40% {
+      transform: translateX(-4%);
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+  }
+
+
+
+
+  // fade in and grow, fade out shink
+  @keyframes fadeInSpinGrow {
+    0% {
+      transform: scale(0) rotate(0deg);
+    }
+    60% {
+      transform: scale(1.1) rotate(390deg);
+    }
+    100% {
+      transform: scale(1) rotate(360deg);
+    }
+  }
+  @keyframes fadeOutSpinShrink {
+    0% {
+        transform: scale(1) rotate(360deg);
+    }
+    30% {
+        transform: scale(1.1) rotate(390deg);
+    }
+    100% {
+        transform: scale(0) rotate(0deg);
+    }
+  }
+
+
+
+  // scale in, scale out
+  @keyframes scaleIn {
+    0% {
+      transform: scale(0);
+    }
+    50% {
+      transform: scale(1.14);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  @keyframes scaleOut {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.14);
+    }
+    100% {
+        transform: scale(0);
+    }
+  }
+
+
+
+
+  // specific
+@keyframes fadeOutLeft {
+    0% {
+        transform: scale(1) translateX(0);
+        opacity: 1;
+    }
+    80% {
+        transform: scale(.5) translateX(-60px);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(0) translateX(-90px);
+        opacity: 0;
+    }
+}
+
+  

@@ -1,4 +1,5 @@
 @import '../../styles/mixins';
+@import '../../styles/colors';
 
 #navigation {
   position: fixed;
@@ -61,28 +62,28 @@
 
 .nav-btn.home-nav-btn {
   &:hover, &.active {
-    stroke: #8000FF;
+    stroke: $home-highlight;
   }
 }
 .nav-btn.work-nav-btn {
   &:hover, &.active {
-    stroke: #00E5FF;
-    fill: #00E5FF;
+    stroke: $work-highlight;
+    fill: $work-highlight;
   }
 }
 .nav-btn.contact-nav-btn {
   &:hover, &.active {
-    stroke: #BCFF00;
+    stroke: $contact-highlight;
   }
 }
 .nav-btn.skills-nav-btn {
   &:hover, &.active {
-    stroke: #FF6600;
+    stroke: $skills-highlight;
   }
 }
 .nav-btn.resume-nav-btn {
   &:hover, &.active {
-    stroke: #0414EE;
+    stroke: $resume-highlight;
   }
 }
 .resume-nav-btn svg, .resume-nav-btn svg rect {
@@ -91,7 +92,7 @@
 
 .nav-btn {
   span {
-    font-weight: bold;
+    font-weight: 600;
   }
   svg {
     margin: 2px auto;
