@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useSkillContext, useSkillContextDispatch } from '../../components/SkillContext';
 import { SkillTableSearch } from '../../components/SkillTableSearch';
 import { SkillTableModifier } from '../../components/SkillTabModifier';

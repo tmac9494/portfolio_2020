@@ -15,21 +15,9 @@
       margin: 24px 0 32px 0;
     }
   }
-  .skill-circ {
-    padding: 0 1px;
-    width: 20%
-  }
   .skill-circ-alt {
     width: 20%;
     padding: 0 1px 0 0;
-  }
-  .skill-circ div {
-    width: 100%;
-    max-width: 100%;
-    // max-height: 20px;
-    margin: 0 auto;
-    background: $charcoal;
-    box-shadow: inset 0px 1px 4px rgba(0,0,0,0.3);
   }
   .skill-circ-alt div {
     width: 100%;
@@ -38,18 +26,20 @@
     // max-height: 20px;
     margin: 0 auto;
     background: $charcoal;
-    box-shadow: inset 0px 1px 4px rgba(0,0,0,0.3);
+    box-shadow: inset 0px 3px 6px -4px $black;
+    border-bottom: 1px solid rgba(255, 255, 255, .1);
   }
-  .skill-circ:first-child div, .skill-circ-alt:first-child div {
+  .skill-circ-alt:first-child div {
     border-top-left-radius: 200px;
     border-bottom-left-radius: 200px;
   }
-  .skill-circ:last-child div, .skill-circ-alt:last-child div {
+  .skill-circ-alt:last-child div {
     border-top-right-radius: 200px;
     border-bottom-right-radius: 200px;
   }
   div.beginner, div.familiar, div.intermediate, div.skilled, div.mastered {
-    box-shadow: none;
+    border-bottom: 1px solid rgba(255, 255, 255, .3);
+    box-shadow: inset 0px 3px 6px -4px $black;
   }
   div.beginner, .beginner {
     background: $red-beginner;
@@ -110,7 +100,7 @@
     transform: scale(1);
     transition: all .28s;
     &:hover {
-      background: $black;
+      background: $black-surface-highlight;
       cursor: pointer;
       h3 {
         color: $white;
@@ -302,11 +292,12 @@
     border-radius: 2px;
     height: 100%;
     vertical-align: top;
+    font-size: 14px;
   }
   .close-icon-container, .search-icon-container {
     display: inline-block;
     position: absolute;
-    right: 234px;
+    right: 214px;
     top: 19px;
     &.in {
       animation: scaleIn .32s ease-out;

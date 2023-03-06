@@ -34,7 +34,13 @@ const ProjectListView = props => {
                 </div>
                 <div className='content'>
                   <h4>{data.title}</h4>
-                  <p className='custom-scrollbar' id={'projects_content_item_' + props.type + i} onWheel={(e) => scrollHandler(e, 'projects_content_item_' + props.type + i)}>{data.brief_description}</p>
+                  <p 
+                    className='custom-scrollbar' 
+                    id={'projects_content_item_' + props.type + i} 
+                    onWheel={(e) => scrollHandler(e, 'projects_content_item_' + props.type + i)}
+                  >
+                      {data.brief_description}
+                  </p>
                 </div>
               </div>
             </>

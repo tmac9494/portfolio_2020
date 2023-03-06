@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { AnimationParent } from '../../../General/AnimationParent';
 import { useSkillContext, useSkillContextDispatch } from './SkillContext';
 import { skills } from '../../../../utils';
-import { CompanyIcon } from '../../../General';
+import { CompanyIcon, ScrollShadows, AnimationParent } from '../../../General';
 import { ReactComponent as CloseSvg } from '../../../../assets/icons/close.svg';
 import { SkillBar } from './SkillBar';
 import { ReactComponent as StarSvg } from '../../../../assets/icons/star.svg';
-import scrollPropagationHandler from '../../scrollPropagationHandler';
 
 export const SkillDescriptionPanel = props => {
     
@@ -46,10 +44,10 @@ export const SkillDescriptionPanel = props => {
                 <SkillBar level={skillInfo?.level} />
             </div>
 
-            <div 
+            <ScrollShadows
+                key={skillInfo?.title || 'nothing'}
                 id='skill_description_body'
-                onWheel={e => e.stopPropagation()}
-                className='custom-scrollbar scrollable white-scrollbar'
+                classes='white-scrollbar'
             >
 
                 <div className='description'>
@@ -64,7 +62,7 @@ export const SkillDescriptionPanel = props => {
                     </ul>
                 </div>
 
-            </div>
+            </ScrollShadows>
             {skillInfo?.companies.length > 0 && <>
                 <h3>Where:</h3>
                 <div className='companies-list'>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import scrollHandler from '../../scrollPropagationHandler';
 import { SkillToolbar } from './skillColumns/SkillToolbar';
 import { Skills } from './skillColumns/Skills';

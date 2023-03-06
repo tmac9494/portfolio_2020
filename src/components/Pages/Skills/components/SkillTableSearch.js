@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSkillContextDispatch, useSkillContext } from './SkillContext';
 import { ReactComponent as SearchSvg } from '../../../../assets/icons/search.svg';
 import { ReactComponent as CloseSvg } from '../../../../assets/icons/close.svg';
