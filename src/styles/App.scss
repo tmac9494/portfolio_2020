@@ -10,7 +10,8 @@
 button, a {cursor: pointer}
 body {
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 a {
   text-decoration: none;

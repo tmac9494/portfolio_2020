@@ -8,14 +8,6 @@
 }
 // wrapper
 #page_container {
-  position: absolute;
-  top: 0;
-  height: 100vh;
-  overflow-y: auto;
-  overflow-x: hidden;
-  &.scrolling {
-    transition: top 1.8s ease-in-out;
-  }
   @include tablet {
     margin-left: 70px;
   }
@@ -133,7 +125,7 @@
 }
 
 #floating_svg_container {
-  transition: transform  1.8s ease-in-out;
+  // transition: transform  .28s ease-in-out;
   z-index: 1;
   svg {
     display: block;

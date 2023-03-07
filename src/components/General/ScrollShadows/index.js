@@ -8,7 +8,7 @@ export const ScrollShadows = ({children, classes, id}) => {
     const containerRef = useRef();
 
     const handleScroll = useCallback((e) => {
-        const max = e.target.scrollHeight - e.target.clientHeight;
+        const max = e.target.scrollHeight - e.target.clientHeight - 1;
         const scrollDelta = e.target.scrollTop;
         let classList = '';
         if (scrollDelta < max) classList += ' end';
@@ -19,14 +19,14 @@ export const ScrollShadows = ({children, classes, id}) => {
     useLayoutEffect(() => {
         if (containerRef.current) {
             const e = containerRef.current;
-            const max = e.scrollHeight - e.clientHeight;
+            const max = e.scrollHeight - e.clientHeight - 1;
             const scrollDelta = e.scrollTop;
             let classList = '';
             if (scrollDelta < max) classList += ' end';
             if (scrollDelta > 0) classList += ' start';
             if (shadow !== classList) setShadow(classList);
         }
-    }, [shadow])
+    }, [])
 
 
     return (
