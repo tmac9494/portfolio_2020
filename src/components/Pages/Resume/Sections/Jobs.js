@@ -1,6 +1,7 @@
 import React from 'react';
-import {useDevice} from '../../../General';
+import {useDevice, IconAccordion} from '../../../General';
 import scrollHandler from '../../scrollPropagationHandler';
+import { getSkillsByCompany } from '../../../../utils';
 
 
 const Jobs = props => {
@@ -19,6 +20,9 @@ const Jobs = props => {
                 <span className='head-text'>{data.company}</span>
                 <span className='head-text'>{data.cityState}</span>
                 <span className='head-text'>{data.startDate} - {data.endDate}</span>
+                <IconAccordion 
+                  list={getSkillsByCompany(data.id).map(skill => ({image: skill.img, title: skill.title}))}
+                />
               </div>
             </div>
             <ul className='resume-bullets'>

@@ -1,6 +1,13 @@
 import { skills } from "./skills";
 
+
 export const conditionClass = (condition, className) => condition ? ` ${className}` : '';
+
+export const getSkillsByCompany = companyId => {
+    const skillsList = skills.filter((val, i) => val.companies.includes(companyId));
+    return skillsList;
+}
+
 
 export const sortAlgorithms = {
     aToZ: (a, b) => {

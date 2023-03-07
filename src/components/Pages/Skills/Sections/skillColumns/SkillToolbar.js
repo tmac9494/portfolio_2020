@@ -44,7 +44,12 @@ export const SkillToolbar = props => {
                         text: 'Frameworks',
                         onClick: handleFilter,
                         value: 'fw',
-                    }
+                    },
+                    {
+                        text: 'CMS Systems',
+                        onClick: handleFilter,
+                        value: 'cms',
+                    },
                 ]}
                 value={''}
                 isCheckbox={true}

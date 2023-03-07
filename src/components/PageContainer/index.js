@@ -23,6 +23,8 @@ const PageContainer = props => {
   const gradient = 'linear-gradient(70deg, ' + color + ')';
   const storedScrollPosition = cache[currentPage + '_scroll']
     ? parseInt(cache[currentPage + '_scroll']) : 0;
+  const wih = window.innerHeight;
+  const wihhh = Math.floor(window.innerHeight * 1.5);
 
   // state
   const [scrollState, setScrollState] = useState({
@@ -39,30 +41,17 @@ const PageContainer = props => {
   }, [scrollState, setScrollState, currentPage])
   const pageRef = React.useRef(currentPage);
 
-  // const updateRequirement = (property, increment) => {
-  //   requirements.current[property] += increment;
-  //   if (
-  //     requirements.current.animations === currentPage.animations
-  //     && requirements.current.content === currentPage.content
-  //     && nextScroll !== scroll
-  //   ) setScroll({scroll: scrollState.scroll});
-  // }
-
-  // requirements before shifting to next scroll position
-  // const requirements = React.useRef({
-  //   animations: 0,
-  //   content: 0,
-  // })
+  const scrollStateScrollValue = scrollState.scroll;
 
   // scroll function
-  const handleScroll = e => {
-    if (e.deltaY < 0 && scrollState.scroll === 0) {return;}
-    if (e.deltaY > 0 && scrollState.scroll === total - 1) {return;}
+  const handleScroll = useCallback((e) => {
+    if (e.deltaY < 0 && scrollStateScrollValue === 0) {return;}
+    if (e.deltaY > 0 && scrollStateScrollValue === total - 1) {return;}
     handleScrollUpdate({
       scrolling: true,
-      scroll: e.deltaY > 0 ? scrollState.scroll + 1 : scrollState.scroll - 1
+      scroll: e.deltaY > 0 ? scrollStateScrollValue + 1 : scrollStateScrollValue - 1
     })
-  }
+  }, [scrollStateScrollValue, handleScrollUpdate, total])
 
   // change on circle nav click
   const handleIndexChange = index => {
@@ -77,7 +66,7 @@ const PageContainer = props => {
   let sectionCircs = [];
   for(let i = 0;i < total;i++) {sectionCircs.push(
     <div
-      className={'section-circle light ' + (scrollState.scroll === i ? ' active' : '')}
+      className={'section-circle light ' + (scrollStateScrollValue === i ? ' active' : '')}
       style={{borderColor: currentSettings.floatingColor || '#fff'}}
       key={currentPage + i}
       onClick={() => handleIndexChange(i)}
@@ -104,7 +93,7 @@ const PageContainer = props => {
 
   const pageProps = {
     nextScroll: scrollState.nextScroll,
-    scroll: scrollState.scroll,
+    scroll: scrollStateScrollValue,
     // updateRequirement,
   }
 
@@ -115,12 +104,12 @@ const PageContainer = props => {
       id='floating_svg_container' 
       className='fixed-fill' 
       style={{
-        transform: `translateY(${((total - 1) * 50) - (scrollState.scroll * 50)}px)`
+        transform: `translateY(${((total - 1) * 50) - (scrollStateScrollValue * 50)}px)`
       }}
     >
       {pageSettings[currentPage].svgs}
     </div>
-  ), [currentPage, scrollState.scroll, total])
+  ), [currentPage, scrollStateScrollValue, total])
 
   return(
     <div
@@ -128,8 +117,8 @@ const PageContainer = props => {
       className={scrollState.scrolling ? 'scrolling' : null}
       style={{
         width: '100%',
-        height: 150 * (total) + 'vh',
-        top: -150 * (scrollState.scroll) + 'vh',
+        height: Math.floor(wihhh * (total)) + 'px',
+        top: Math.floor(-wihhh * (scrollStateScrollValue)) + 'px',
         background: gradient,
         ...props.containerStyles
       }}

@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect, useRef } from 'react';
+import React, { useState, useLayoutEffect, useRef, useCallback } from 'react';
 import { conditionClass } from '../../../utils';
 
 
@@ -7,14 +7,14 @@ export const ScrollShadows = ({children, classes, id}) => {
     const [shadow, setShadow] = useState(null);
     const containerRef = useRef();
 
-    const handleScroll = (e) => {
+    const handleScroll = useCallback((e) => {
         const max = e.target.scrollHeight - e.target.clientHeight;
         const scrollDelta = e.target.scrollTop;
         let classList = '';
         if (scrollDelta < max) classList += ' end';
         if (scrollDelta > 0) classList += ' start';
         if (shadow !== classList) setShadow(classList);
-    }
+    }, [shadow, setShadow])
 
     useLayoutEffect(() => {
         if (containerRef.current) {

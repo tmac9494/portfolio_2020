@@ -16,6 +16,7 @@ export const companyLegend = {
     gcio: {
         name: 'Government CIO',
         img: gcioLogo,
+        iconStyle: { borderRadius: '100%' }
     },
     cara: {
         name: 'Carallel LLC',
@@ -36,9 +37,11 @@ export const companyLegend = {
     ps: {
         name: 'Plus Sum Web Services',
         img: psLogo,
+        iconStyle: { borderRadius: '100%' }
     },
     afm: {
         name: 'A-Factor Marketing',
         img: afmLogo,
+        iconStyle: { borderRadius: '100%' }
     },
 }

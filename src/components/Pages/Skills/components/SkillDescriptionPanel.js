@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { useSkillContext, useSkillContextDispatch } from './SkillContext';
-import { skills } from '../../../../utils';
+import { skills, companyLegend } from '../../../../utils';
 import { CompanyIcon, ScrollShadows, AnimationParent } from '../../../General';
 import { ReactComponent as CloseSvg } from '../../../../assets/icons/close.svg';
 import { SkillBar } from './SkillBar';
 import { ReactComponent as StarSvg } from '../../../../assets/icons/star.svg';
+import { IconAccordion } from '../../../General/IconAccordion';
+import { SkillKeyTagsPanel } from './SkillKeyTagsPanel';
 
-export const SkillDescriptionPanel = props => {
+export const SkillDescriptionPanel = () => {
     
     const { skillDescription, skillDescriptionVisibility } = useSkillContext();
     const { closeSkillDescription } = useSkillContextDispatch();
 
     const skillInfo = skills.filter(val => val.title === skillDescription)[0];
     const isSpecialty = skillInfo?.tags.includes('star');
+    const isLove = skillInfo?.tags.includes('hrt');
 
 
     return(
@@ -28,6 +31,12 @@ export const SkillDescriptionPanel = props => {
                     <CloseSvg className='close-icon' />
                 </button>
             </div>
+
+            <SkillKeyTagsPanel 
+                extensiveExperience={isSpecialty}
+                love={isLove}
+            />
+            
 
             <div id='skill_description_intro'>
                 <div className='image-container'>
@@ -66,15 +75,15 @@ export const SkillDescriptionPanel = props => {
             {skillInfo?.companies.length > 0 && <>
                 <h3>Where:</h3>
                 <div className='companies-list'>
-                    {skillInfo?.companies.map((val, i) => 
-                        <CompanyIcon 
-                            key={val + skillDescription} 
-                            id={val}
-                            style={{
-                                zIndex: (-1 * i) + (skillInfo?.companies.length + 10)         
-                            }} 
+                    {skillInfo &&
+                        <IconAccordion 
+                            list={skillInfo?.companies.map((val, i) => ({
+                                title: companyLegend[val].name,
+                                image: companyLegend[val].img,
+                                style: companyLegend[val]?.iconStyle
+                            }))}
                         />
-                    )}
+                    }
                 </div>
             </>}
 

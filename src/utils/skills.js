@@ -256,10 +256,11 @@ export const skills = [
       level: 4,
       tags: ['crtv', 'tool'],
       companies: ['xpdx', 'stnfn', 'svm', 'ps', 'afm'],
-      description: '',
+      description: 'Illustrator has been extremely useful over the years for creating custom svgs and icons as well as other advanced features like generating normal maps for textures.',
       accolades: [
         '5+ years of professional experience.',
-
+        'Extensive experience in custom svg creation for animation.',
+        'Experience with texture creation using Illustrator.'
       ],
     },
     
@@ -269,7 +270,7 @@ export const skills = [
       level: 4,
       tags: ['crtv', 'tool'],
       companies: ['xpdx', 'stnfn'],
-      description: '',
+      description: 'My favorite tool for quickly spinning up design ideas, wire frames, and prototypes.',
       accolades: [
         '4+ years of professional experience.',
 

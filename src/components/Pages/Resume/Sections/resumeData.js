@@ -5,10 +5,12 @@ import svmLogo from '../../../../assets/svm.png';
 import afmLogo from '../../../../assets/afm.png';
 import psLogo from '../../../../assets/plussum.png';
 import gcioLogo from '../../../../assets/gcio.jpg';
+import carallelLogo from '../../../../assets/carallel_logo.svg';
 
 export default {
   jobs: [
     {
+      id: 'evern',
       company: 'Evernote',
       logo: evernoteLogo,
       cityState: 'Redwood City, CA',
@@ -27,6 +29,7 @@ export default {
       ]
     },
     {
+      id: 'gcio',
       company: 'GovernementCIO',
       logo: gcioLogo,
       cityState: 'Washington, DC',
@@ -41,6 +44,22 @@ export default {
       ]
     },
     {
+      id: 'cara',
+      company: 'Carallel LLC',
+      logo: carallelLogo,
+      cityState: 'Lake Forest, IL',
+      startDate: 'October 2020',
+      endDate: 'September 2021',
+      title: 'Front End Engineer',
+      description: '',
+      bullets: [
+        'Help with refactoring/optimizing React implementation.',
+        'Work within the Wordpress + React ecosystem.',
+        'Work with offshore developers to bring new features to the application.',
+      ]
+    },
+    {
+      id: 'xpdx',
       company: 'XpertDox LLC',
       logo: xdLogo,
       cityState: 'Birmingham, AL',
@@ -60,6 +79,7 @@ export default {
       ]
     },
     {
+      id: 'stnfn',
       company: 'Standard Furniture',
       logo: standardLogo,
       cityState: 'Bay Minette, AL',
@@ -81,6 +101,7 @@ export default {
       ]
     },
     {
+      id: 'svm',
       company: 'Southern View Media',
       logo: svmLogo,
       logoClass: 'square',
@@ -98,6 +119,7 @@ export default {
       ]
     },
     {
+      id: 'ps',
       company: 'Plus Sum Internet Marketing',
       logo: psLogo,
       logoClass: 'square',
@@ -116,6 +138,7 @@ export default {
       ]
     },
     {
+      id: 'afm',
       company: 'A Factor Marketing',
       cityState: 'Mobile, AL',
       logo: afmLogo,

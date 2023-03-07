@@ -5,6 +5,7 @@ import useDevice from './useDevice';
 import { CompanyIcon } from './CompanyIcon/CompanyIcon';
 export { ScrollShadows } from './ScrollShadows';
 export { AnimationParent } from './AnimationParent';
+export * from './IconAccordion';
 
 
 export {
