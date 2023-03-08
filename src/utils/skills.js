@@ -274,7 +274,6 @@ export const skills = [
       description: 'My favorite tool for quickly spinning up design ideas, wire frames, and prototypes.',
       accolades: [
         '4+ years of professional experience.',
-
       ],
     },
     
@@ -284,7 +283,7 @@ export const skills = [
       level: 3,
       tags: ['crtv', 'tool'],
       companies: ['xpdx', 'stnfn', 'svm', 'ps', 'afm'],
-      description: '',
+      description: 'Doom dom deem doo',
       accolades: [
         '5+ years of professional experience.',
 

@@ -1,13 +1,13 @@
-import xdLogo from '../../../../assets/xd-logo.svg';
-import standardLogo from '../../../../assets/standard-logo.svg';
-import evernoteLogo from '../../../../assets/evernote.svg';
-import svmLogo from '../../../../assets/svm.png';
-import afmLogo from '../../../../assets/afm.png';
-import psLogo from '../../../../assets/plussum.png';
-import gcioLogo from '../../../../assets/gcio.jpg';
-import carallelLogo from '../../../../assets/carallel_logo.svg';
+import xdLogo from '../assets/xd-logo.svg';
+import standardLogo from '../assets/standard-logo.svg';
+import evernoteLogo from '../assets/evernote-logo.png';
+import svmLogo from '../assets/svm.png';
+import afmLogo from '../assets/afm.png';
+import psLogo from '../assets/plussum.png';
+import gcioLogo from '../assets/gcio.jpg';
+import carallelLogo from '../assets/carallel_logo.svg';
 
-export default {
+export const resumeData = {
   jobs: [
     {
       id: 'evern',

@@ -101,19 +101,55 @@
   }
 }
 
-#Evernote {
-  img {
-    width: 52px;
-    height: auto;
-  }
-}
-
 .resume-bullets {
   li {
     margin-bottom: 6px;
   }
 }
 
+// company specific styles
+#Evernote {
+  .company-logo {
+    width: 120px;
+    height: auto;
+    margin-right: 12px;
+  }
+}
+#CarallelLLC {
+  .company-logo {
+    margin-top: 15px;
+    margin-right: 10px;
+  }
+}
+#XpertDoxLLC {
+  .company-logo {
+    margin-top: 16px;
+    margin-right: 15px;
+  }
+}
+#StandardFurniture {
+  .company-logo {
+    margin-top: 16px;
+    margin-right: 14px;
+  }
+}
+#SouthernViewMedia {
+  .company-logo {
+    margin-right: 18px;
+  }
+}
+#PlusSumInternetMarketing {
+  .company-logo {
+    width: 60px;
+  }
+}
+#AFactorMarketing, #PlusSumInternetMarketing {
+  .company-logo {
+    margin-right: 18px;
+    margin-top: 12px;
+    border-radius: 5%;
+  }
+} 
 
 
 @keyframes bubble {

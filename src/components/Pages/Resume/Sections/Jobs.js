@@ -1,7 +1,7 @@
 import React from 'react';
 import {useDevice, IconAccordion} from '../../../General';
 import scrollHandler from '../../scrollPropagationHandler';
-import { getSkillsByCompany } from '../../../../utils';
+import { getSkillsByCompany, conditionClass } from '../../../../utils';
 
 
 const Jobs = props => {
@@ -14,7 +14,13 @@ const Jobs = props => {
         {props.data.map(data =>
           <div className='resume-content' id={data.company.replace(/\s/g, '')} key={data.title}>
             <div className='header clearfix'>
-              <img src={data.logo} alt={data.company} className={(device !== 'mobile' ? 'f-right ' : '') + (data.logoClass ? data.logoClass : '')} />
+              <img 
+                src={data.logo} 
+                alt={data.company} 
+                className={'company-logo'
+                  + conditionClass(device !== 'mobile', 'f-right') 
+                  + conditionClass(data.logoClass, data.logoClass)} 
+              />
               <div className='f-left'>
               <h2>{data.title}</h2>
                 <span className='head-text'>{data.company}</span>
@@ -22,6 +28,7 @@ const Jobs = props => {
                 <span className='head-text'>{data.startDate} - {data.endDate}</span>
                 <IconAccordion 
                   list={getSkillsByCompany(data.id).map(skill => ({image: skill.img, title: skill.title}))}
+                  width={38}
                 />
               </div>
             </div>

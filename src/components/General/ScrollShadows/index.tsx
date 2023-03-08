@@ -1,15 +1,21 @@
-import React, { useState, useLayoutEffect, useRef, useCallback } from 'react';
+import React, { useState, useLayoutEffect, useRef, useCallback, UIEvent } from 'react';
 import { conditionClass } from '../../../utils';
 
 
-export const ScrollShadows = ({children, classes, id}) => {
+export const ScrollShadows = (props: {
+        children: any, 
+        classes?: string, 
+        id?: string,
+    }) => {
+    
+    const [shadow, setShadow] = useState<null | string>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
+    const {children, classes, id} = props;
 
-    const [shadow, setShadow] = useState(null);
-    const containerRef = useRef();
-
-    const handleScroll = useCallback((e) => {
-        const max = e.target.scrollHeight - e.target.clientHeight - 1;
-        const scrollDelta = e.target.scrollTop;
+    const handleScroll = useCallback((e: UIEvent) => {
+        const target = e.target as HTMLDivElement;
+        const max = target.scrollHeight - target.clientHeight - 1;
+        const scrollDelta = target.scrollTop;
         let classList = '';
         if (scrollDelta < max) classList += ' end';
         if (scrollDelta > 0) classList += ' start';
@@ -26,6 +32,7 @@ export const ScrollShadows = ({children, classes, id}) => {
             if (scrollDelta > 0) classList += ' start';
             if (shadow !== classList) setShadow(classList);
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 

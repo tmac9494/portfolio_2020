@@ -11,6 +11,7 @@ export type AccordionItem = {
 interface AccordionProps {
     list: AccordionItem[];
     className: string;
+    width?: number;
 }
 
 interface AccordionState {
@@ -25,13 +26,15 @@ export const IconAccordion = (props: AccordionProps): ReactElement => {
         hoverIndex: 0,
         hover: false
     });
-
+    
     const {list} = props;
-
     const zIndexMax: number = list.length + 10;
+    const iconWidth = props.width 
+        ? props.width 
+        : 32;
+
 
     const handleHover = (e:any, value:boolean, index?:number): void => {
-        // console.log(e.clientX, e.clientLeft);
         setHoverState({
             hoverIndex: index !== undefined 
                 ? index 
@@ -58,8 +61,8 @@ export const IconAccordion = (props: AccordionProps): ReactElement => {
                     <img 
                         className='accordion-icon'
                         style={{
-                            width: '32px', 
-                            height: '32px',
+                            width: iconWidth + 'px', 
+                            height: iconWidth + 'px',
                             ...val?.style,
                         }}
                         src={val.image} 
@@ -70,7 +73,7 @@ export const IconAccordion = (props: AccordionProps): ReactElement => {
             <div 
                 className='accordion-icon-tooltip-wrap'
                 style={{
-                    // left: 32 * (hoverState.hoverIndex + 1) + 'px',
+                    left: Math.floor((hoverState.hoverIndex + .5) * iconWidth) + 'px'
                 }}
             >
                 <AnimationParent

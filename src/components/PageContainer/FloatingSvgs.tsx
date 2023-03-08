@@ -24,7 +24,7 @@ export const FloatingSvgs = (props: {
           id='floating_svg_container' 
           className='fixed-fill' 
           style={{
-            transform: `translateY(${Math.floor(scrollDelta / 20)}px)`
+            transform: `translateY(${Math.floor(scrollDelta / 25)}px)`
           }}
         >
           {svgs}
