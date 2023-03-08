@@ -76,7 +76,8 @@ export const SkillDescriptionPanel = () => {
                 <h3>Where:</h3>
                 <div className='companies-list'>
                     {skillInfo &&
-                        <IconAccordion 
+                        <IconAccordion
+                            key={skillDescription}
                             list={skillInfo?.companies.map((val, i) => ({
                                 title: companyLegend[val].name,
                                 image: companyLegend[val].img,

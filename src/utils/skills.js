@@ -94,7 +94,8 @@ export const skills = [
       accolades: [
         '2+ years of professional experience.',
         'Experience in Typescript + React environments.',
-        'Experience in Typescript + NodeJS environments.'
+        'Experience in Typescript + NodeJS environments.',
+        'Linkedin Learning certification in React + Typescript.'
 
       ],
     },

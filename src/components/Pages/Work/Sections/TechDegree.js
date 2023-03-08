@@ -5,7 +5,7 @@ import workInfo from './workData';
 const TechDegree = props => {
   const {techdegree} = workInfo;
   return(
-    <section className='section-container' style={{transform: 'translateY(100vh)'}}>
+    <section className='section-container'>
       <ProjectListView
         headerTitle='Techdegree Projects'
         projects={techdegree}

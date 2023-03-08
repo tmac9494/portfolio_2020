@@ -56,9 +56,15 @@ const stateMachine = (state, action) => {
                 skillDescriptionVisibility: false,
             }
         case 'search':
-            return prepareSkills({...state, query: action.value});
+            return {
+                ...prepareSkills({...state, query: action.value}),
+                skillDescriptionVisibility: false,
+            }
         case 'clear-search':
-            return prepareSkills({...state, query: ''});
+            return {
+                ...prepareSkills({...state, query: ''}),
+                skillDescriptionVisibility: false,
+            }
         default: return state;
     }
 }

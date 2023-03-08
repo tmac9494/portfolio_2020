@@ -22,35 +22,6 @@ const PageContainer = props => {
   const currentSettings = pageSettings[currentPage];
   const {total, color, svgs} = currentSettings;
   const gradient = 'linear-gradient(70deg, ' + color + ')';
-  // const storedScrollPosition = cache[currentPage + '_scroll']
-  //   ? parseInt(cache[currentPage + '_scroll']) : 0;
-
-  // state
-  // const [scrollState, setScrollState] = useState({
-  //   scroll: storedScrollPosition,
-  //   scrolling: false,
-  //   nextScroll: storedScrollPosition,
-  // })
-  // const handleScrollUpdate = useCallback(update => {
-  //   if (update.scroll !== undefined) addToCache(currentPage + '_scroll', update.scroll);
-  //   setScrollState({
-  //     ...scrollState,
-  //     ...update
-  //   })
-  // }, [scrollState, setScrollState, currentPage])
-  // const pageRef = React.useRef(currentPage);
-
-  // const scrollStateScrollValue = scrollState.scroll;
-
-  // // scroll function
-  // const handleScroll = useCallback((e) => {
-  //   if (e.deltaY < 0 && scrollStateScrollValue === 0) {return;}
-  //   if (e.deltaY > 0 && scrollStateScrollValue === total - 1) {return;}
-  //   handleScrollUpdate({
-  //     scrolling: true,
-  //     scroll: e.deltaY > 0 ? scrollStateScrollValue + 1 : scrollStateScrollValue - 1
-  //   })
-  // }, [scrollStateScrollValue, handleScrollUpdate, total])
 
   // // change on circle nav click
   // const handleIndexChange = index => {
@@ -69,7 +40,7 @@ const PageContainer = props => {
       className={'section-circle light ' + (scrollStateScrollValue === i ? ' active' : '')}
       style={{borderColor: currentSettings.floatingColor || '#fff'}}
       key={currentPage + i}
-      onClick={() => console.log('idk')
+      onClick={() => window.scrollTo({ top: window.innerHeight * i, behavior: 'smooth'})
         // () => handleIndexChange(i)
       
       }
@@ -78,49 +49,20 @@ const PageContainer = props => {
     </div>
   )}
 
-  // // page change catch
-  // useLayoutEffect(() => {
-  //   if (pageRef.current !== currentPage) {
-  //     addToCache(currentPage + '_scroll', 0);
-  //     setScrollState({
-  //       scroll: 0,
-  //       nextScroll: 1,
-  //       scrolling: false,
-  //     })
-  //     pageRef.current = currentPage;
-  //     // requirements.current = {
-  //     //   animations: 0,
-  //     //   content: 0,
-  //     // }
-  //   }
-  // }, [currentPage])
-
-  // const pageProps = {
-  //   nextScroll: scrollState.nextScroll,
-  //   scroll: scrollStateScrollValue,
-  //   // updateRequirement,
-  // }
-
-  // const heightVar = window.innerHeight * 1.5;
-
-  const floatingSvgs = useMemo(() => (
-    <div 
-      id='floating_svg_container' 
-      className='fixed-fill' 
-      style={{
-        transform: `translateY(${((total - 1) * 50) - (scrollStateScrollValue * 50)}px)`
-      }}
-    >
-      {pageSettings[currentPage].svgs}
-    </div>
-  ), [currentPage, scrollStateScrollValue, total])
+  useEffect(() => {
+    const body = document.getElementsByTagName('body')[0];
+    body.id = `${currentPage}_body`;
+    window.scrollTo({
+      top: 0,
+    })
+  }, [currentPage]);
 
   return(
+    <div>
     <div
       id='page_container'
       style={{
         background: gradient,
-        height: 125 * total + 'vh',
         ...props.containerStyles
       }}
     >
@@ -141,6 +83,7 @@ const PageContainer = props => {
       >
         {sectionCircs}
       </div>
+    </div>
     </div>
   )
 }

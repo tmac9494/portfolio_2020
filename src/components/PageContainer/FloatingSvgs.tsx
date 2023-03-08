@@ -1,17 +1,12 @@
 import React, { ReactElement, useState, useEffect } from 'react';
 
-interface scrollState {
-    value: number;
-}
 
 export const FloatingSvgs = (props: {
-    total: number,
     svgs: any,
 }): ReactElement => {
     
-    const [scrollDelta, setScrollDelta] = useState(window.scrollY);
-    const { total, svgs } = props;
-    const scrollStateScrollValue = 0;
+    const [scrollDelta, setScrollDelta] = useState<number>(window.scrollY);
+    const { svgs } = props;
 
     // mount/unmount scroll effect
     useEffect(() => {
@@ -29,7 +24,7 @@ export const FloatingSvgs = (props: {
           id='floating_svg_container' 
           className='fixed-fill' 
           style={{
-            transform: `translateY(${Math.floor(scrollDelta / 10)}px)`
+            transform: `translateY(${Math.floor(scrollDelta / 20)}px)`
           }}
         >
           {svgs}

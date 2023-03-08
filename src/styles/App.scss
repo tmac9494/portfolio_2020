@@ -11,7 +11,9 @@ button, a {cursor: pointer}
 body {
   position: relative;
   overflow-x: hidden;
+  width: 100%;
   overflow-y: auto;
+  background-size: cover;
 }
 a {
   text-decoration: none;
@@ -197,6 +199,36 @@ a {
   width: 25%;
   @include tablet {
     width: 20%;
+  }
+}
+
+// scroll bar backgrounds
+#work_body {
+  background: $black-surface;
+  &::-webkit-scrollbar-thumb {
+    background: $work-highlight;
+    border-radius: 0;
+  }
+}
+#home_body {
+  background: $black-surface;
+  &::-webkit-scrollbar-thumb {
+    background: $home-highlight;
+    border-radius: 0;
+  }
+}
+#skills_body {
+  background: $black-surface;
+  &::-webkit-scrollbar-thumb {
+    background: $skills-highlight;
+    border-radius: 0;
+  }
+}
+#resume_body {
+  background: $black-surface;
+  &::-webkit-scrollbar-thumb {
+    background: $resume-highlight;
+    border-radius: 0;
   }
 }
 

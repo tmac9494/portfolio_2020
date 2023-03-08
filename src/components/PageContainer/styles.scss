@@ -81,15 +81,15 @@
   width: 100vw;
   position: relative;
   z-index: 5;
+  // &:first-child {
+  //   max-height: 800px
+  // }
   .top-content {
     position: absolute;
     top: 10%;
     left: 10%;
     max-width: 80%;
     width: 650px;
-  }
-  &:not(:first-child) {
-    transform: translateY(50vh);
   }
   .content-wrap {
     width: 90%;
