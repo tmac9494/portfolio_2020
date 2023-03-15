@@ -43,11 +43,12 @@ const stateMachine = (
         const addFilterToState = (id:SkillTags) => {
             let filters = state.filters.slice();
             filters.push(id);
-            return { ...state, filters}
+            return { ...state, skillsList: state.origin, filters}
         }
         const removeFilterFromState = (id:SkillTags) => {
             return {
                 ...state,
+                skillsList: state.origin,
                 filters: state.filters.filter(val => val !== id)
             }
         }
