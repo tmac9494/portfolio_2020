@@ -10,12 +10,13 @@ import { SkillKeyTagsPanel } from './SkillKeyTagsPanel';
 
 export const SkillDescriptionPanel = () => {
     
-    const { skillDescription, skillDescriptionVisibility, skillsList } = useSkillContext();
+    const { skillDescription, skillDescriptionVisibility, origin} = useSkillContext();
     const { closeSkillDescription } = useSkillContextDispatch();
 
-    if (!skillsList) return null;
+    if (!origin) return null;
 
-    const skillInfo = skillsList.filter(val => val.id === skillDescription)[0];
+    const skillInfo = origin.filter(val => val.id === skillDescription)[0];
+
     const isSpecialty = skillInfo?.tags.includes(SkillTags.Star);
     const isLove = skillInfo?.tags.includes(SkillTags.Heart);
 

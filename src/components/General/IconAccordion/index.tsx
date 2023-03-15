@@ -51,7 +51,7 @@ export const IconAccordion = (props: AccordionProps): ReactElement => {
 
     return (
         <div 
-            className={'icon-accordion relative' + conditionClass(props.className, props.className)}
+            className={'icon-accordion relative' + conditionClass(props.className)}
             onMouseLeave={(e) => handleHover(e, false)}
         >
             {props.list.map((val, i) => (

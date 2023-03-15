@@ -42,7 +42,7 @@ export const ScrollShadows = (props: {
     return (
         <div
             className={'scrollable custom-scrollbar shadow-scroll' 
-                + conditionClass(classes, classes) 
+                + conditionClass(classes) 
                 + conditionClass(shadow)
             }
             id={id}

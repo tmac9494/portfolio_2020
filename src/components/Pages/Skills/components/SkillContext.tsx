@@ -1,14 +1,14 @@
 import React, { useMemo, createContext, useReducer, useContext, useCallback, ReactElement } from 'react';
 import { prepareSkills, SkillIds, SkillTags, SkillSorts, Skill, SkillContextValue } from '../../../../utils';
 
-interface SkillContextDispatchValue {
-    handleFilter?: () => void,
-    setSkillDescription?: () => void,
-    closeSkillDescription?: () => void,
-    searchSkills?: () => void,
-    clearSearch?: () => void,
-    handleSort?: () => void,
-}
+// interface SkillContextDispatchValue {
+//     handleFilter?: () => void,
+//     setSkillDescription?: () => void,
+//     closeSkillDescription?: () => void,
+//     searchSkills?: () => void,
+//     clearSearch?: () => void,
+//     handleSort?: () => void,
+// }
 
 enum SkillActions {
     ToggleFilter = 'toggle-filter',
@@ -39,21 +39,18 @@ const stateMachine = (
 ) => {
     
     // filters
-    const addFilterToState = (id:SkillTags) => {
-        let filters = state.filters.slice();
-        filters.push(id);
-        return {
-            ...state,
-            filters
-        }
-    }
-    const removeFilterFromState = (id:SkillTags) => {
-        return {
-            ...state,
-            filters: state.filters.filter(val => val !== id)
-        }
-    }
     const handleFilter = (id: SkillTags) => {
+        const addFilterToState = (id:SkillTags) => {
+            let filters = state.filters.slice();
+            filters.push(id);
+            return { ...state, filters}
+        }
+        const removeFilterFromState = (id:SkillTags) => {
+            return {
+                ...state,
+                filters: state.filters.filter(val => val !== id)
+            }
+        }
         const filterFunction = state.filters.includes(action.filter) 
             ? removeFilterFromState
             : addFilterToState;
@@ -70,33 +67,42 @@ const stateMachine = (
         return prepareSkills(update);
     }
 
+    // skill description
+    const updateSkillDescription = (
+        visibility: boolean, 
+        skill?: SkillIds
+    ) => ({
+        ...state,
+        skillDescription: skill || state.skillDescription,
+        skillDescriptionVisibility: visibility,
+    });
+
+    // search query
+    const handleSearchQuery = (query: string) => ({
+        ...prepareSkills({...state, query, skillsList: query === '' ? state.origin : state.skillsList}),
+        skillDescriptionVisibility: false,
+    })
+
 
     switch(action.type) {
         case SkillActions.ToggleFilter:
             return handleFilter(action.filter);
+
         case SkillActions.Sort:
             return editSort(action.sort);
+
         case SkillActions.SetSkill: 
-            return {
-                ...state,
-                skillDescription: action.skill,
-                skillDescriptionVisibility: true,
-            }
+            return updateSkillDescription(true, action.skill)
+
         case SkillActions.ClearSkill:
-            return {
-                ...state,
-                skillDescriptionVisibility: false,
-            }
+            return updateSkillDescription(false)
+
         case SkillActions.Search:
-            return {
-                ...prepareSkills({...state, query: action.value}),
-                skillDescriptionVisibility: false,
-            }
+            return handleSearchQuery(action.value)
+
         case SkillActions.ClearSearch:
-            return {
-                ...prepareSkills({...state, query: ''}),
-                skillDescriptionVisibility: false,
-            }
+            return handleSearchQuery('')
+
         default: return state;
     }
 }
@@ -111,6 +117,7 @@ export const SkillContextProvider = (props: {
     const [state, dispatch] = useReducer(stateMachine, prepareSkills({
         ...initialState,
         skillsList: props.skills || [],
+        origin: props.skills || [],
     }))
 
     // filters 

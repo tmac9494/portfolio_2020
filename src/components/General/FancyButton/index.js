@@ -54,7 +54,7 @@ const FancyButton = props => {
         onMouseLeave={handleHoverOut}
         onClick={props.onClick}
         onMouseDown={handleClick}
-        onFocus={() => handleMouseEvent('50%', '50%', '3')}
+        onFocus={() => handleMouseEvent('50%', '50%', 'entrance')}
         onBlur={() => handleMouseEvent('50%', '50%', 'exit')}
       >
         {props.children

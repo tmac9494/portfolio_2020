@@ -1,8 +1,6 @@
-import React, {useEffect, useMemo, useCallback, useState, useLayoutEffect} from 'react';
+import React, {useEffect } from 'react';
 import './styles.scss';
 import {Route, useLocation} from 'react-router-dom';
-import {addToCache, getCache} from '../General/CacheManager';
-import {useDevice} from '../General';
 import pageSettings from './pageSettings';
 import Home from '../Pages/Home';
 import Work from '../Pages/Work';
@@ -13,24 +11,13 @@ import { FloatingSvgs } from './FloatingSvgs';
 
 
 const PageContainer = props => {
-  const device = useDevice();
 
   // page settings
-  const cache = getCache();
   const location = useLocation();
   const currentPage = location.pathname === '/' ? 'home' : location.pathname.replace('/', '');
   const currentSettings = pageSettings[currentPage];
   const {total, color, svgs} = currentSettings;
   const gradient = 'linear-gradient(70deg, ' + color + ')';
-
-  // // change on circle nav click
-  // const handleIndexChange = index => {
-  //   // setNextScroll(index);
-  //   handleScrollUpdate({
-  //     scroll: index,
-  //     scrolling: true,
-  //   })
-  // }
 
   // // circle nav
   const scrollStateScrollValue = 0;
@@ -49,16 +36,15 @@ const PageContainer = props => {
     </div>
   )}
 
+
+  // change body id and reset scroll position on page change
   useEffect(() => {
     const body = document.getElementsByTagName('body')[0];
     body.id = `${currentPage}_body`;
-    window.scrollTo({
-      top: 0,
-    })
+    window.scrollTo({ top: 0 })
   }, [currentPage]);
 
   return(
-    <div>
     <div
       id='page_container'
       style={{
@@ -71,11 +57,12 @@ const PageContainer = props => {
       <Route path='/skills' exact component={Skills} />
       <Route path='/resume' exact component={Resume} />
       <Route path='/contact' exact component={Contact} />
+
       {/* Background svgs */}
       <FloatingSvgs 
-        toatl={total}
         svgs={svgs}
       />
+      
       {/* floating nav right*/}
       <div
         id='section-circles'
@@ -83,7 +70,7 @@ const PageContainer = props => {
       >
         {sectionCircs}
       </div>
-    </div>
+
     </div>
   )
 }

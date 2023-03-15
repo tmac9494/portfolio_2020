@@ -74,6 +74,7 @@ export interface SkillContextValue {
     query: string,
     sort: SkillSorts,
     skillsList?: Skill[] | null,
+    origin?: Skill[] | null,
 }
 
 export type SkillImage = {
