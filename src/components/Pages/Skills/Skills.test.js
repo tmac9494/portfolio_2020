@@ -7,3 +7,6 @@ test('Expect skills for each company', () => {
         expect(getSkillsByCompany(id).length).toBeGreaterThan(0);
     })
 })
+
+
+// confirm all skills-data.json ids are valid with enum

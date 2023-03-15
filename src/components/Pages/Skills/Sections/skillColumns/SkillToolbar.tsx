@@ -1,9 +1,10 @@
 import React from 'react';
+import { SkillSorts, SkillTags } from '../../../../../utils';
 import { useSkillContext, useSkillContextDispatch } from '../../components/SkillContext';
 import { SkillTableSearch } from '../../components/SkillTableSearch';
 import { SkillTableModifier } from '../../components/SkillTabModifier';
 
-export const SkillToolbar = props => {
+export const SkillToolbar = () => {
     
     const { sort, filters } = useSkillContext();
     const {
@@ -23,32 +24,32 @@ export const SkillToolbar = props => {
                     {
                         text: 'Frontend',
                         onClick: handleFilter,
-                        value: 'fe',
+                        value: SkillTags.Frontend,
                     },
                     {
                         text: 'Backend',
                         onClick: handleFilter,
-                        value: 'be'
+                        value: SkillTags.Backend
                     },
                     {
                         text: 'Languages',
                         onClick: handleFilter,
-                        value: 'lang',
+                        value: SkillTags.Language,
                     },
                     {
                         text: 'Libraries',
                         onClick: handleFilter,
-                        value: 'lib',
+                        value: SkillTags.Libraries,
                     },
                     {
                         text: 'Frameworks',
                         onClick: handleFilter,
-                        value: 'fw',
+                        value: SkillTags.Frameworks,
                     },
                     {
                         text: 'CMS Systems',
                         onClick: handleFilter,
-                        value: 'cms',
+                        value: SkillTags.CMS,
                     },
                 ]}
                 value={''}
@@ -61,17 +62,17 @@ export const SkillToolbar = props => {
                     {
                         text: 'A to Z',
                         onClick: handleSort,
-                        value: 'aToZ',
+                        value: SkillSorts.AtoZ,
                     },
                     {
                         text: 'Best to Worst',
                         onClick: handleSort,
-                        value: 'bestToWorst',
+                        value: SkillSorts.BestToWorst,
                     },
                     {
                         text: 'Worst to Best',
                         onClick: handleSort,
-                        value: 'worstToBest',
+                        value: SkillSorts.WorstToBest,
                     },
                 ]}
                 value={currentSortValue}

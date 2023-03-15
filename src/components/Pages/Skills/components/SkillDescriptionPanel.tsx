@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSkillContext, useSkillContextDispatch } from './SkillContext';
-import { skills, companyLegend } from '../../../../utils';
-import { CompanyIcon, ScrollShadows, AnimationParent } from '../../../General';
+import { companyImages, skillImages, SkillTags } from '../../../../utils';
+import { ScrollShadows, AnimationParent } from '../../../General';
 import { ReactComponent as CloseSvg } from '../../../../assets/icons/close.svg';
 import { SkillBar } from './SkillBar';
 import { ReactComponent as StarSvg } from '../../../../assets/icons/star.svg';
@@ -10,12 +10,14 @@ import { SkillKeyTagsPanel } from './SkillKeyTagsPanel';
 
 export const SkillDescriptionPanel = () => {
     
-    const { skillDescription, skillDescriptionVisibility } = useSkillContext();
+    const { skillDescription, skillDescriptionVisibility, skillsList } = useSkillContext();
     const { closeSkillDescription } = useSkillContextDispatch();
 
-    const skillInfo = skills.filter(val => val.title === skillDescription)[0];
-    const isSpecialty = skillInfo?.tags.includes('star');
-    const isLove = skillInfo?.tags.includes('hrt');
+    if (!skillsList) return null;
+
+    const skillInfo = skillsList.filter(val => val.id === skillDescription)[0];
+    const isSpecialty = skillInfo?.tags.includes(SkillTags.Star);
+    const isLove = skillInfo?.tags.includes(SkillTags.Heart);
 
 
     return(
@@ -34,15 +36,15 @@ export const SkillDescriptionPanel = () => {
 
             <SkillKeyTagsPanel 
                 extensiveExperience={isSpecialty}
-                love={isLove}
+                isLove={isLove}
             />
             
 
             <div id='skill_description_intro'>
                 <div className='image-container'>
                     <img 
-                        src={skillInfo?.img} 
-                        alt={skillInfo ? skillInfo.title : ''} 
+                        src={skillImages[skillInfo.id].img} 
+                        alt={skillImages[skillInfo.id].name} 
                     />
                     <SpecialtyFlare 
                         key={skillDescription} 
@@ -79,9 +81,9 @@ export const SkillDescriptionPanel = () => {
                         <IconAccordion
                             key={skillDescription}
                             list={skillInfo?.companies.map((val, i) => ({
-                                title: companyLegend[val].name,
-                                image: companyLegend[val].img,
-                                style: companyLegend[val]?.iconStyle
+                                title: companyImages[val].name,
+                                image: companyImages[val].img,
+                                style: companyImages[val]?.iconStyle
                             }))}
                         />
                     }
@@ -94,7 +96,7 @@ export const SkillDescriptionPanel = () => {
 
 
 
-export const SpecialtyFlare = ({ isSpecial }) => {
+export const SpecialtyFlare = ({ isSpecial }: { isSpecial: boolean }) => {
 
     if (!isSpecial) {
         return null;
@@ -125,22 +127,26 @@ export const SpecialtyFlare = ({ isSpecial }) => {
 }
 
 
-export const SpecialtyFlareItem = ({ id, className, delay }) => {
+export const SpecialtyFlareItem = ({id, className, delay} : {
+     id:string, 
+     className:string, 
+     delay:number 
+}) => {
 
-    const [movingIn, setMovingIn] = useState(true);
-    const [visibility, setVisibility] = useState(null);
+    const [movingIn, setMovingIn] = useState<boolean>(true);
+    const [visibility, setVisibility] = useState<boolean | null>(null);
     const timeBetweenRecurring = 3000;
     const timeBetweenState = 5000;
 
     useEffect(() => {
-        const delayTimeout = setTimeout(() => {
-            setVisibility(movingIn)
-        }, [!movingIn 
+        const totalDelay = !movingIn 
             ? timeBetweenState + delay 
             : visibility === null 
-                ? delay // initial load
-                : timeBetweenRecurring - delay // proceeding animations
-            ]);
+            ? delay // initial load
+            : timeBetweenRecurring - delay;
+        const delayTimeout = setTimeout(() => {
+            setVisibility(movingIn)
+        }, totalDelay);
         return () => clearTimeout(delayTimeout);
     }, [movingIn, delay, visibility])
 
@@ -149,7 +155,7 @@ export const SpecialtyFlareItem = ({ id, className, delay }) => {
     return (
         <AnimationParent 
             id={id}
-            className={className}
+            className={className} 
             inCallback={() => setMovingIn(false)}
             outCallback={() => setMovingIn(true)}
             isVisible={visibility}

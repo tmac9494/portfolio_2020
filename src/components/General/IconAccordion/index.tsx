@@ -10,7 +10,7 @@ export type AccordionItem = {
 
 interface AccordionProps {
     list: AccordionItem[];
-    className: string;
+    className?: string;
     width?: number;
 }
 
@@ -42,6 +42,11 @@ export const IconAccordion = (props: AccordionProps): ReactElement => {
             hover: value,
         })
     }
+
+    // !!!
+    // doesnt support centered Icons
+    //
+    // 
 
 
     return (

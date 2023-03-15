@@ -6,6 +6,7 @@ export const FloatingSvgs = (props: {
 }): ReactElement => {
     
     const [scrollDelta, setScrollDelta] = useState<number>(window.scrollY);
+    const parallaxFactor = 25; // 100px of scrolling will be divided by this factor on each tick
     const { svgs } = props;
 
     // mount/unmount scroll effect
@@ -17,14 +18,12 @@ export const FloatingSvgs = (props: {
         return () => document.removeEventListener('scroll', handleScroll);
     }, [])
 
-    console.log(scrollDelta)
-
     return(
         <div 
           id='floating_svg_container' 
           className='fixed-fill' 
           style={{
-            transform: `translateY(${Math.floor(scrollDelta / 25)}px)`
+            transform: `translateY(${Math.floor(scrollDelta / parallaxFactor)}px)`
           }}
         >
           {svgs}

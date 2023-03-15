@@ -1,28 +1,30 @@
-import { skills } from "./skills";
+import { Skill, SkillSorts, SkillTags, SkillContextValue } from "./skills";
 
 
-export const conditionClass = (condition, className) => condition ? ` ${className}` : '';
-
-export const getSkillsByCompany = companyId => {
-    const skillsList = skills.filter((val, i) => val.companies.includes(companyId));
-    return skillsList;
-}
-
+export const conditionClass = (
+    condition: boolean | undefined | null | string, 
+    className?: string
+) => condition ? ` ${className || condition}` : '';
 
 export const sortAlgorithms = {
-    aToZ: (a, b) => {
+    [SkillSorts.AtoZ]: (a:Skill, b:Skill) => {
         if (a.title < b.title) { return -1; }
         if (a.title > b.title) { return 1; }
         return 0;
     },
-    bestToWorst: (a, b) => {
-        const sameLevelWithStar = (a.level === b.level && (a.tags.includes('star') && !b.tags.includes('star')));
+    [SkillSorts.BestToWorst]: (a:Skill, b:Skill) => {
+        const sameLevelWithStar = (
+            a.level === b.level 
+            && (a.tags.includes(SkillTags.Star) && !b.tags.includes(SkillTags.Star))
+        );
         if (sameLevelWithStar || a.level > b.level) { return -1; }
         if (a.level < b.level) { return 1; }
         return 0;
     },
-    worstToBest: (a, b) => {
-        const sameLevelWithStar = (a.level === b.level && (b.tags.includes('star') && !a.tags.includes('star')));
+    [SkillSorts.WorstToBest]: (a:Skill, b:Skill) => {
+        const sameLevelWithStar = (
+            a.level === b.level 
+            && (b.tags.includes(SkillTags.Star) && !a.tags.includes(SkillTags.Star)));
         if (a.level < b.level || sameLevelWithStar) { return -1; }
         if (a.level > b.level) { return 1; }
         return 0;
@@ -30,17 +32,19 @@ export const sortAlgorithms = {
   }
 
 // skills handler
-export const prepareSkills = update => {
+export const prepareSkills = (update: SkillContextValue) => {
+
+    if (!update.skillsList) return update;
 
     // search
-    const queryFilter = value => {
+    const queryFilter = (value:Skill) => {
         const skillName = value.title.toLowerCase();
         const query = update.query.toLowerCase();
         return skillName.includes(query);
     }
 
     // reduce active filters array and check for concurrent id mathes
-    const handleFilter = (value) => update.filters.reduce(
+    const handleFilter = (value:Skill) => update.filters.reduce(
         (isValid, activeFilter) => {
         if (isValid) {
             return value.tags.includes(activeFilter);
@@ -49,16 +53,17 @@ export const prepareSkills = update => {
         },
         true
     );
+
     // sorts
-    const sortValueFromState = Object.keys(update.sort).filter(val => update.sort[val])[0];
-    const skillPool = update.skillList || skills;
+    const sortValueFromState = update.sort;
+    const skillPool = update.skillsList;
 
     update.skillsList = skillPool
         .filter(handleFilter)
         .sort(sortAlgorithms[sortValueFromState]);
     
     // filter by search query if active
-    if (update.query !== '') {
+    if (update.query !== '' && update.skillsList) {
         update.skillsList = update.skillsList.filter(queryFilter);
     }
 

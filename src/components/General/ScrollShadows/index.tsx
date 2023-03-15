@@ -1,6 +1,7 @@
 import React, { useState, useLayoutEffect, useRef, useCallback, UIEvent } from 'react';
 import { conditionClass } from '../../../utils';
 
+type ShadowState = null | string;
 
 export const ScrollShadows = (props: {
         children: any, 
@@ -8,30 +9,32 @@ export const ScrollShadows = (props: {
         id?: string,
     }) => {
     
-    const [shadow, setShadow] = useState<null | string>(null);
+    const [shadow, setShadow] = useState<ShadowState>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const {children, classes, id} = props;
 
-    const handleScroll = useCallback((e: UIEvent) => {
-        const target = e.target as HTMLDivElement;
+    const handleShadowState = (
+        target: HTMLDivElement,
+        currentValue: ShadowState,
+    ) => {
         const max = target.scrollHeight - target.clientHeight - 1;
         const scrollDelta = target.scrollTop;
         let classList = '';
         if (scrollDelta < max) classList += ' end';
         if (scrollDelta > 0) classList += ' start';
-        if (shadow !== classList) setShadow(classList);
-    }, [shadow, setShadow])
+        if (currentValue !== classList) setShadow(classList);
+    }
 
+    // handle scroll change
+    const handleScroll = useCallback((e: UIEvent) => {
+        handleShadowState(e.target as HTMLDivElement, shadow);
+    }, [shadow])
+
+
+    // handle on load
     useLayoutEffect(() => {
-        if (containerRef.current) {
-            const e = containerRef.current;
-            const max = e.scrollHeight - e.clientHeight - 1;
-            const scrollDelta = e.scrollTop;
-            let classList = '';
-            if (scrollDelta < max) classList += ' end';
-            if (scrollDelta > 0) classList += ' start';
-            if (shadow !== classList) setShadow(classList);
-        }
+        if (containerRef.current) 
+            handleShadowState(containerRef.current, shadow);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -40,7 +43,7 @@ export const ScrollShadows = (props: {
         <div
             className={'scrollable custom-scrollbar shadow-scroll' 
                 + conditionClass(classes, classes) 
-                + conditionClass(shadow !== null, shadow)
+                + conditionClass(shadow)
             }
             id={id}
             onScroll={handleScroll}

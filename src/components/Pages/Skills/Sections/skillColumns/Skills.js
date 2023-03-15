@@ -11,6 +11,8 @@ export const Skills = props => {
     skillDescriptionVisibility
   } = useSkillContext();
 
+  if (!skillsList) return null;
+
   return skillsList.map((val, i) => 
     <SkillContainer
       key={val.title}

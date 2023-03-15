@@ -8,9 +8,8 @@ export const SkillTableModifier = props => {
     
     const [isOpen, setIsOpen] = useState(false);
     const { isCheckbox, value, options, title, filters } = props; 
-    const sortText = isCheckbox 
-        ? ''
-        : options.filter(val => val.value === value)[0]?.text;
+    const sortText = !isCheckbox &&
+        options.filter(val => val.value === value)[0]?.text;
     
     useEffect(() => {
         setIsOpen(false)

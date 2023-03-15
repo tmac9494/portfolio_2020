@@ -1,21 +1,29 @@
 import React from 'react';
 import {useDevice, IconAccordion} from '../../../General';
 import scrollHandler from '../../scrollPropagationHandler';
-import { getSkillsByCompany, conditionClass } from '../../../../utils';
+import {  conditionClass, companyImages, Employer, Skill, skillImages } from '../../../../utils';
 
 
-const Jobs = props => {
+const Jobs = (props: {
+  data: Employer[],
+  skills: Skill[],
+}) => {
 
   const device = useDevice();
+  console.log(companyImages);
 
   return(
     <section className='section-container'>
-      <div onWheel={e => scrollHandler(e, 'resume_container')} id='resume_container' className='resume-content-wrap abs-center content-wrap scrollable custom-scrollbar white-scrollbar'>
-        {props.data.map(data =>
+      <div 
+        onWheel={e => scrollHandler(e, 'resume_container')} 
+        id='resume_container' 
+        className='resume-content-wrap abs-center content-wrap scrollable custom-scrollbar white-scrollbar'
+      >
+        {props.data.map((data: Employer) =>
           <div className='resume-content' id={data.company.replace(/\s/g, '')} key={data.title}>
             <div className='header clearfix'>
               <img 
-                src={data.logo} 
+                src={companyImages[data.id].fullLogo} 
                 alt={data.company} 
                 className={'company-logo'
                   + conditionClass(device !== 'mobile', 'f-right') 
@@ -27,7 +35,14 @@ const Jobs = props => {
                 <span className='head-text'>{data.cityState}</span>
                 <span className='head-text'>{data.startDate} - {data.endDate}</span>
                 <IconAccordion 
-                  list={getSkillsByCompany(data.id).map(skill => ({image: skill.img, title: skill.title}))}
+                  list={
+                    props.skills
+                    .filter(skill => skill.companies.includes(data.id))
+                    .map(skill => ({
+                      image: skillImages[skill.id].img, 
+                      title: skillImages[skill.id].name
+                    }))
+                  }
                   width={38}
                 />
               </div>
