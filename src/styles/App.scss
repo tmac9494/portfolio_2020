@@ -85,57 +85,6 @@ a {
   justify-content: center;
 }
 
-.icon-accordion {
-  width: 100%;
-  .accordion-icon-container {
-    display: inline-block;
-    transition: margin-left 0.2s;
-    position: relative;
-    &:not(:first-child) {
-      margin-left: -24px;
-    }
-    &:hover {
-      .accordion-icon-tooltip-wrap {
-        z-index: 600 !important;
-      }
-    }
-  }
-  // .company-icon-container:not(:first-child) {
-  //   transform: translateX(-12px);
-  // }
-  &:hover {
-    .accordion-icon-container {
-      margin-left: 0px !important;
-    }
-  }
-}
-
-.accordion-icon-tooltip-wrap {
-  position: absolute;
-  top: auto;
-  left: 50%;
-  bottom: 0;
-  margin-bottom: -14px;
-  transition: left 0.2s ease-out;
-  transform: translateX(-50%);
-  z-index: 500;
-}
-
-.accordion-icon-tooltip {
-  padding: 2px 8px;
-  background: $black;
-  color: $text-dark-primary;
-  border-radius: 25px;
-  white-space: nowrap;
-  font-size: 10px;
-  &.in {
-    animation: scaleIn 0.2s ease-out;
-  }
-  &.out {
-    animation: scaleOut 0.2s ease-in;
-  }
-}
-
 // general effects
 .shadow-scroll {
   position: relative;
