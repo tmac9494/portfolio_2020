@@ -80,7 +80,13 @@ const stateMachine = (
 
     // search query
     const handleSearchQuery = (query: string) => ({
-        ...prepareSkills({...state, query, skillsList: query === '' ? state.origin : state.skillsList}),
+        ...prepareSkills({
+            ...state, 
+            query, 
+            skillsList: query === '' 
+                ? state.origin 
+                : state.skillsList
+        }),
         skillDescriptionVisibility: false,
     })
 

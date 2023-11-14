@@ -1,9 +1,10 @@
-[{
+[
+  {
     "title": "React",
     "level": 5,
     "id": "react",
     "tags": ["lib", "fw", "star", "hrt", "fe"],
-    "companies": ["evern", "gcio", "cara", "xpdx", "stnfn", "svm", "ps"],
+    "companies": ["nm", "evern", "gcio", "cara", "xpdx", "stnfn", "svm", "ps"],
     "description": "My specialty. I chose to focus on React exclusively in 2015 for frontend development and I have loved every minute of it.",
     "accolades": [
       "8+ years of professional experience.",
@@ -33,7 +34,7 @@
     "level": 5,
     "id": "nodejs",
     "tags": ["fw", "lang", "star", "be"],
-    "companies": ["evern", "gcio", "xpdx", "stnfn"],
+    "companies": ["nm", "evern", "gcio", "xpdx", "stnfn"],
     "description": "I love Node! I started my career with a focus on front-end development, so NodeJS was a perfect match to get APIs up quickly early in my career.",
     "accolades": [
       "6+ years of professional experience.",
@@ -58,17 +59,16 @@
   },
   {
     "title": "TypeScript",
-    "level": 3,
+    "level": 5,
     "id": "typescript",
     "tags": ["fw", "lang", "fe", "be"],
-    "companies": ["evern", "gcio"],
+    "companies": ["nm", "evern", "gcio"],
     "description": "JavaScript's more successful younger brother. I did not use typescript professionaly for most of my career. Now that it's become much more standard across the industry I have had the oppurtunity to use it and grown fond of it's effect on the architecture of components.",
     "accolades": [
       "2+ years of professional experience.",
       "Experience in Typescript + React environments.",
       "Experience in Typescript + NodeJS environments.",
       "Linkedin Learning certification in React + Typescript."
-
     ]
   },
   {
@@ -91,7 +91,17 @@
     "level": 5,
     "id": "sass",
     "tags": ["fw", "hrt", "star", "fe"],
-    "companies": ["evern", "gcio", "cara", "xpdx", "stnfn", "svm", "ps", "afm"],
+    "companies": [
+      "nm",
+      "evern",
+      "gcio",
+      "cara",
+      "xpdx",
+      "stnfn",
+      "svm",
+      "ps",
+      "afm"
+    ],
     "description": "What happens when CSS goes Super Saiyan. Anyone not using Sass for their stylesheets is basically a cave man.",
     "accolades": [
       "7+ years of professional experience.",
@@ -106,16 +116,24 @@
     "tags": ["fw", "fe"],
     "companies": [],
     "description": "I chose React over Angular long ago, but I love Google and most of their Technology so I can never write it off. I have an understanding of the basics of Angular but would need to put in some learning time before using it professionally.",
-    "accolades": [
-      "Not much going on here:)"
-    ]
-  
-  },{
+    "accolades": ["Not much going on here:)"]
+  },
+  {
     "title": "HTML",
     "level": 5,
     "id": "html",
     "tags": ["fe", "star", "lang"],
-    "companies": ["evern", "gcio", "cara", "xpdx", "stnfn", "svm", "ps", "afm"],
+    "companies": [
+      "nm",
+      "evern",
+      "gcio",
+      "cara",
+      "xpdx",
+      "stnfn",
+      "svm",
+      "ps",
+      "afm"
+    ],
     "description": "The frame and drywall of the internet. As a frontend engineer I would say I know html inside and out.",
     "accolades": [
       "8+ years of professional experience.",
@@ -129,7 +147,17 @@
     "level": 5,
     "id": "css",
     "tags": ["fe", "lang", "star", "hrt"],
-    "companies": ["evern", "gcio", "cara", "xpdx", "stnfn", "svm", "ps", "afm"],
+    "companies": [
+      "nm",
+      "evern",
+      "gcio",
+      "cara",
+      "xpdx",
+      "stnfn",
+      "svm",
+      "ps",
+      "afm"
+    ],
     "description": "The paint and decorations of the internet. CSS is what hooked me into web development and I have spent extensive time learning advanced css animation/transition tricks to create eye candy UI.",
     "accolades": [
       "8+ years of professional experience.",
@@ -143,7 +171,17 @@
     "level": 5,
     "id": "js",
     "tags": ["fe", "lang", "star", "hrt"],
-    "companies": ["evern", "gcio", "cara", "xpdx", "stnfn", "svm", "ps", "afm"],
+    "companies": [
+      "nm",
+      "evern",
+      "gcio",
+      "cara",
+      "xpdx",
+      "stnfn",
+      "svm",
+      "ps",
+      "afm"
+    ],
     "description": "The pipes and wires of the web. A build-it-yourself mentality helped me understand it on a fundamental level, but I still find myself learning something new every few months. I look forward to and dread the day that stops occurring.",
     "accolades": [
       "8+ years of professional experience.",
@@ -184,7 +222,7 @@
     "level": 4,
     "id": "mongodb",
     "tags": ["be", "fw", "lib", "hrt", "star"],
-    "companies": ["cara", "xpdx", "stnfn"],
+    "companies": ["nm", "cara", "xpdx", "stnfn"],
     "description": "My favourite solution for databases. I discovered mongo early in my career and loved how easy it was to understand with a background in JavaScript and OOP.",
     "accolades": [
       "5+ years of professional experience.",
@@ -193,8 +231,8 @@
       "Experience with MongoDB advanced features like: expireAt and populate(mongoose)"
     ]
   },
-  
-  { 
+
+  {
     "title": "Webpack",
     "level": 2,
     "id": "webpack",
@@ -206,7 +244,7 @@
       "Light experience configuring compressed payloads from a SSR environment."
     ]
   },
-  
+
   {
     "title": "Wordpress",
     "level": 4,
@@ -222,7 +260,7 @@
       "Experience in woocommerce"
     ]
   },
-  
+
   {
     "title": "Illustrator",
     "level": 4,
@@ -236,7 +274,7 @@
       "Experience with texture creation using Illustrator."
     ]
   },
-  
+
   {
     "title": "Adobe XD",
     "level": 4,
@@ -244,11 +282,9 @@
     "tags": ["crtv", "tool"],
     "companies": ["xpdx", "stnfn"],
     "description": "My favorite tool for quickly spinning up design ideas, wire frames, and prototypes.",
-    "accolades": [
-      "4+ years of professional experience."
-    ]
+    "accolades": ["4+ years of professional experience."]
   },
-  
+
   {
     "title": "Photoshop",
     "level": 3,
@@ -256,7 +292,6 @@
     "tags": ["crtv", "tool"],
     "companies": ["xpdx", "stnfn", "svm", "ps", "afm"],
     "description": "Doom dom deem doo",
-    "accolades": [
-      "5+ years of professional experience."
-    ]
-  }]
+    "accolades": ["5+ years of professional experience."]
+  }
+]

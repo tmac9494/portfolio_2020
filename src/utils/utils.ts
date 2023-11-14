@@ -6,12 +6,15 @@ export const conditionClass = (
     className?: string
 ) => condition ? ` ${className || condition}` : '';
 
+
 export const sortAlgorithms = {
+    // a to z sort
     [SkillSorts.AtoZ]: (a:Skill, b:Skill) => {
         if (a.title < b.title) { return -1; }
         if (a.title > b.title) { return 1; }
         return 0;
     },
+    // best to worst sort
     [SkillSorts.BestToWorst]: (a:Skill, b:Skill) => {
         const sameLevelWithStar = (
             a.level === b.level 
@@ -21,6 +24,7 @@ export const sortAlgorithms = {
         if (a.level < b.level) { return 1; }
         return 0;
     },
+    // worst to best sort
     [SkillSorts.WorstToBest]: (a:Skill, b:Skill) => {
         const sameLevelWithStar = (
             a.level === b.level 
@@ -29,7 +33,8 @@ export const sortAlgorithms = {
         if (a.level > b.level) { return 1; }
         return 0;
     }
-  }
+}
+
 
 // skills handler
 export const prepareSkills = (update: SkillContextValue) => {

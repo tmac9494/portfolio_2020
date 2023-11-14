@@ -3,6 +3,11 @@ import {ReactComponent as FilterSvg} from '../../../../assets/icons/filter.svg';
 import { AnimationParent } from '../../../General/AnimationParent';
 import { conditionClass } from '../../../../utils';
 
+// type ModifierOption = {
+//     text: string,
+//     onClick: (arg0: any) => void, //!!
+//     value: ModifierValue
+// }
 
 export const SkillTableModifier = props => {
     
