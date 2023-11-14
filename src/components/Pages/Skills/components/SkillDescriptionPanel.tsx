@@ -22,7 +22,7 @@ export const SkillDescriptionPanel = () => {
 
   return (
     <AnimationParent
-      isVisible={skillDescriptionVisibility}
+      isVisible={!!skillDescriptionVisibility}
       id="skill_description_panel"
     >
       <div className="close-btn">
@@ -145,7 +145,7 @@ export const SpecialtyFlareItem = ({
       className={className}
       inCallback={() => setMovingIn(false)}
       outCallback={() => setMovingIn(true)}
-      isVisible={visibility}
+      isVisible={!!visibility}
     >
       <StarSvg />
     </AnimationParent>

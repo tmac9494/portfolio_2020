@@ -13,7 +13,6 @@ interface AccordionProps {
   list: AccordionItem[];
   className?: string;
   width?: number;
-  center?: boolean;
 }
 
 interface AccordionState {
@@ -21,15 +20,18 @@ interface AccordionState {
   hover: boolean;
 }
 
-export const IconAccordion = (props: AccordionProps): ReactElement => {
+export const IconAccordion: React.FC<AccordionProps> = ({
+  list,
+  width,
+  className,
+}): ReactElement => {
   const [hoverState, setHoverState] = useState<AccordionState>({
     hoverIndex: 0,
     hover: false,
   });
 
-  const { list } = props;
   const zIndexMax: number = list.length + 10;
-  const iconWidth = props.width ? props.width : 32;
+  const iconWidth = width ? width : 32;
 
   const handleHover = (e: any, value: boolean, index?: number): void => {
     setHoverState({
@@ -37,15 +39,14 @@ export const IconAccordion = (props: AccordionProps): ReactElement => {
       hover: value,
     });
   };
-  const isCentered = props.center;
 
   return (
     <div
-      className={"icon-accordion" + conditionClass(props.className)}
+      className={"icon-accordion" + conditionClass(className)}
       onMouseLeave={(e) => handleHover(e, false)}
     >
       <div className="accordion-content-container relative">
-        {props.list.map((val, i) => (
+        {list.map((val, i) => (
           <div
             key={val.title}
             className="accordion-icon-container"
