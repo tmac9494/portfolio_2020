@@ -3,7 +3,7 @@ import scrollHandler from '../../scrollPropagationHandler';
 
 const Education = props => {
   return(
-    <section className='section-container' style={{transform: 'translateY(100vh)'}}>
+    <section className='section-container'>
       <div onWheel={e => scrollHandler(e, 'education_container')} id='education_container' className='abs-center content-wrap scrollable custom-scrollbar white-scrollbar'>
         {props.data.map(data =>
           <div className='resume-content' key={data.title}>

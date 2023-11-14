@@ -1,4 +1,3 @@
-import React from 'react';
 import safetyFirstImage from '../../../../assets/safety-first.jpg';
 import boogiesImage from '../../../../assets/boogies.jpg';
 import xperttrialImg from '../../../../assets/apps/xperttrial.PNG';

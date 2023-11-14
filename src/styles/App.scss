@@ -1,16 +1,22 @@
-@import './normalize.css';
-@import './mixins.scss';
-@import './colors.scss';
-@import './animations.scss';
+@import "./normalize.css";
+@import "./mixins.scss";
+@import "./colors.scss";
+@import "./animations.scss";
 
 // general configuration
 * {
   box-sizing: border-box;
 }
-button, a {cursor: pointer}
+button,
+a {
+  cursor: pointer;
+}
 body {
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
+  width: 100%;
+  overflow-y: auto;
+  background-size: cover;
 }
 a {
   text-decoration: none;
@@ -33,38 +39,72 @@ a {
   border-radius: 200px;
 }
 .cool-btn {
-  background: linear-gradient(to top right, #0596D5, #00FF99);
+  background: linear-gradient(to top right, #0596d5, #00ff99);
 }
 .warm-btn {
-  background: linear-gradient(to top right, #FF005F, #FFD500);
+  background: linear-gradient(to top right, #ff005f, #ffd500);
 }
 .normalize-btn {
   outline: none;
   border: none;
 }
 .svg-outline {
-  &, line, circle, path, polyline {
-    fill:none !important;
-    stroke:#16161C !important;
-    stroke-miterlimit:10 !important;
-    stroke-width:30px !important;
-    stroke-linecap:round !important;
-    stroke-linejoin:round !important;
-    &.light {stroke: #fff !important}
+  &,
+  line,
+  circle,
+  path,
+  polyline {
+    fill: none !important;
+    stroke: #16161c !important;
+    stroke-miterlimit: 10 !important;
+    stroke-width: 30px !important;
+    stroke-linecap: round !important;
+    stroke-linejoin: round !important;
+    &.light {
+      stroke: #fff !important;
+    }
   }
 }
 .svg {
-  fill:#16161C;
-  &.light {fill: #fff}
+  fill: #16161c;
+  &.light {
+    fill: #fff;
+  }
 }
 
-.company-icon-container {
+.content-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+// ??
+.company-icon-container,
+.accoudion-image-container {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-
+// general effects
+.shadow-scroll {
+  position: relative;
+  box-shadow: inset 0 0 0 $black;
+  transition: box-shadow 0.32s;
+  &.start-shadow,
+  &.end {
+    height: 1px;
+  }
+  &.start {
+    box-shadow: inset 0 20px 16px -20px $black;
+  }
+  &.end {
+    top: auto;
+    box-shadow: inset 0 -20px 16px -20px $black;
+  }
+  &.start.end {
+    box-shadow: inset 0 20px 16px -20px $black, inset 0 -20px 16px -20px $black;
+  }
+}
 
 // positioning/layout
 .f-right {
@@ -93,9 +133,12 @@ a {
 .clearfix {
   clear: both;
   display: table;
-  content: '';
+  content: "";
 }
-.one-half, .one-fourth, .one-fifth, .one-third {
+.one-half,
+.one-fourth,
+.one-fifth,
+.one-third {
   float: left;
   padding: 0 10px;
 }
@@ -118,6 +161,36 @@ a {
   }
 }
 
+// scroll bar backgrounds
+#work_body {
+  background: $black-surface;
+  &::-webkit-scrollbar-thumb {
+    background: $work-highlight;
+    border-radius: 0;
+  }
+}
+#home_body {
+  background: $black-surface;
+  &::-webkit-scrollbar-thumb {
+    background: $home-highlight;
+    border-radius: 0;
+  }
+}
+#skills_body {
+  background: $black-surface;
+  &::-webkit-scrollbar-thumb {
+    background: $skills-highlight;
+    border-radius: 0;
+  }
+}
+#resume_body {
+  background: $black-surface;
+  &::-webkit-scrollbar-thumb {
+    background: $resume-highlight;
+    border-radius: 0;
+  }
+}
+
 // custom scrollbars
 .scrollable {
   overflow-x: hidden;
@@ -131,15 +204,15 @@ a {
   background: none;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0,0.35);
+  background: rgba(0, 0, 0, 0.35);
   border-radius: 1.2rem;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
 }
 
 .custom-scrollbar.white-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.8);
+  background: rgba(255, 255, 255, 0.8);
 }
 .custom-scrollbar.white-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #fff;

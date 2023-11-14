@@ -1,9 +1,18 @@
 import React, { useState, useCallback } from 'react';
+import { conditionClass } from '../../../utils';
 
 export const AnimationParent = props => {
     
     const [outHasFinished, setOutHasFinished] = useState(true);
-    const { isVisible, inCallback, outCallback } = props;
+    const { 
+        isVisible, 
+        inCallback, 
+        outCallback, 
+        id, 
+        attributes, 
+        children, 
+        className 
+    } = props;
 
     const handleAnimationEnd = useCallback(() => {  // useCallback to ensure correct variables
         if (!isVisible) {
@@ -25,12 +34,12 @@ export const AnimationParent = props => {
 
     return (
         <div 
-            id={props.id} 
-            className={`${props.className} ${isVisible ? 'in' : 'out'}`} 
-            {...props.attributes}
+            id={id} 
+            className={`${isVisible ? 'in' : 'out'}${conditionClass(className)}`} 
+            {...attributes}
             onAnimationEnd={handleAnimationEnd}
         >
-            {props.children}
+            {children}
         </div>
     );
 }
