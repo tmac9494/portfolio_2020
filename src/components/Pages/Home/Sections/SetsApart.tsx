@@ -21,10 +21,12 @@ export const InfoBlock: React.FC<{
 export const SetsApart: React.FC = () => {
   return (
     <section className="section-container">
-      <h2 className="section-title tl">What Sets Me Apart</h2>
+      <div className="site-content-wrap text-center">
+        <h2 className="section-title">What Sets Me Apart</h2>
+      </div>
       <div
         id="info_block_container"
-        className="abs-center clearfix content-wrap scrollable custom-scrollbar white-scrollbar"
+        className="site-content-wrap scrollable custom-scrollbar white-scrollbar padding-top-5"
         onWheel={(e) => scrollHandler(e, "info_block_container")}
       >
         <InfoBlock

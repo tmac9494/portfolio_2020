@@ -9,6 +9,30 @@ export type SkillTabModifierOption = {
   value: SkillSorts | SkillTags;
 };
 
+const ModifierTitle: React.FC<{
+  isCheckbox?: boolean;
+  isOpen: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  filters?: SkillTags[];
+  title: string;
+}> = ({ isCheckbox, isOpen, setIsOpen, filters, title }) => {
+  return isCheckbox ? (
+    <button
+      className={"filter-btn normalize-btn" + (isOpen ? " active" : "")}
+      onClick={() => setIsOpen(!isOpen)}
+    >
+      {filters && filters.length > 0 && (
+        <span className="skill-filter-count">{filters.length}</span>
+      )}
+      <FilterSvg className="filter-svg" />
+    </button>
+  ) : (
+    <div className="skill-control-title">
+      <span>{title}</span>
+    </div>
+  );
+};
+
 export const SkillTableModifier: React.FC<{
   isCheckbox?: boolean;
   value: string;
@@ -24,26 +48,15 @@ export const SkillTableModifier: React.FC<{
   useEffect(() => {
     setIsOpen(false);
   }, [value]);
-
-  const titleElement = isCheckbox ? (
-    <button
-      className={"filter-btn normalize-btn" + (isOpen ? " active" : "")}
-      onClick={() => setIsOpen(!isOpen)}
-    >
-      {filters && filters.length > 0 && (
-        <span className="skill-filter-count">{filters.length}</span>
-      )}
-      <FilterSvg className="filter-svg" />
-    </button>
-  ) : (
-    <div className="skill-control-title">
-      <span>{title}</span>
-    </div>
-  );
-
   return (
     <div className="skill-table-control">
-      {titleElement}
+      <ModifierTitle
+        isCheckbox={isCheckbox}
+        filters={filters}
+        title={title}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+      />
 
       {!isCheckbox && (
         <div className="skill-control-value-container">
