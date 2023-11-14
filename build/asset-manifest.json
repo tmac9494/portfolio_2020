@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.41b0aa3a.css",
-    "main.js": "/static/js/main.29238ed0.js",
+    "main.css": "/static/css/main.6ec69705.css",
+    "main.js": "/static/js/main.9301bd4d.js",
     "static/media/drayton.PNG": "/static/media/drayton.02640ec376dbffe91786.PNG",
     "static/media/standard.PNG": "/static/media/standard.10761a5f3f9bdc2f5a45.PNG",
     "static/media/xperttrial.PNG": "/static/media/xperttrial.1d66e8f4da2d451d0996.PNG",
@@ -14,6 +14,7 @@
     "static/media/baldwin.jpg": "/static/media/baldwin.1a413b75942ca87b880f.jpg",
     "static/media/safety-first.jpg": "/static/media/safety-first.b7e5fd8e5d04173af0de.jpg",
     "static/media/boogies.jpg": "/static/media/boogies.17ad74804ac31704e559.jpg",
+    "static/media/barton.jpg": "/static/media/barton.9ce1306396852fb51438.jpg",
     "static/media/proj-10.jpg": "/static/media/proj-10.afef861684a0ed47603f.jpg",
     "static/media/proj-2.jpg": "/static/media/proj-2.68ba6cb14deaeef13960.jpg",
     "static/media/sass.png": "/static/media/sass.de84c34f61fe480b7c96.png",
@@ -65,11 +66,11 @@
     "static/media/search.svg": "/static/media/search.c3a9b743b3bfe662b7143a41bc6656cd.svg",
     "static/media/star.svg": "/static/media/star.91224391cb2252f37538b0295da00a2d.svg",
     "static/media/close.svg": "/static/media/close.55fac31e703ad0d262641ce2b6ee6f40.svg",
-    "main.41b0aa3a.css.map": "/static/css/main.41b0aa3a.css.map",
-    "main.29238ed0.js.map": "/static/js/main.29238ed0.js.map"
+    "main.6ec69705.css.map": "/static/css/main.6ec69705.css.map",
+    "main.9301bd4d.js.map": "/static/js/main.9301bd4d.js.map"
   },
   "entrypoints": [
-    "static/css/main.41b0aa3a.css",
-    "static/js/main.29238ed0.js"
+    "static/css/main.6ec69705.css",
+    "static/js/main.9301bd4d.js"
   ]
 }
