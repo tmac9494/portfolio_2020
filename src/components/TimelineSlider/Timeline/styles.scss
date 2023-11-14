@@ -1,4 +1,4 @@
-$circleSize: 24px;
+$circleSize: 28px;
 
 .timeline,
 .timeline-element,
@@ -16,13 +16,14 @@ $circleSize: 24px;
 }
 
 .radio-circle {
+  cursor: pointer;
   width: $circleSize;
   height: $circleSize;
   border-radius: 200px;
 }
 
 .transition-line {
-  width: 80px;
+  width: 60px;
   height: 2px;
   border-radius: 10px;
   transform: scaleX(1.2);
@@ -38,7 +39,19 @@ $circleSize: 24px;
   width: 33.333%;
 }
 
-.subject-tooltip {
-  position: absolute;
-  top: 100%;
+.timeline-element {
+  .subject-tooltip {
+    position: absolute;
+    top: 100%;
+    span {
+      white-space: nowrap;
+    }
+  }
+
+  &:nth-child(even) {
+    .subject-tooltip {
+      top: auto;
+      bottom: 100%;
+    }
+  }
 }

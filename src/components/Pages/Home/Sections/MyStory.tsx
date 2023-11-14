@@ -1,6 +1,7 @@
 import React from "react";
 import { useDevice } from "../../../General";
 import { TimelineSlider } from "../../../TimelineSlider";
+import sampleImage from "../../../../assets/barton.jpg";
 
 export type StoryBlock = {
   subject: string;
@@ -11,47 +12,74 @@ export type StoryBlock = {
 
 const dataSet: StoryBlock[] = [
   {
+    subject: "Childhood",
+    title: "Well Rounded and Thinking Ahead",
+    content: [
+      "Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.",
+      "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.",
+    ],
+    images: [sampleImage],
+  },
+  {
+    subject: "College Years",
+    title: "Connections Made and Lessons Learned",
+    content: [
+      "Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.",
+      "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.",
+    ],
+    images: [sampleImage],
+  },
+  {
+    subject: "A New Hope",
+    title: "New Possibilities and an Old Feeling",
+    content: [
+      "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.",
+    ],
+    images: [sampleImage],
+  },
+  {
     subject: "Humble Beginnings",
-    title: "Humble Beginnings",
+    title: "Knock Knock. Whose there? A Portfolio",
     content: [
       "Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.",
-      "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.",
     ],
-    images: ["test"],
+    images: [sampleImage],
   },
   {
-    subject: "Second",
-    title: "Second Title Here",
+    subject: "Forged in Fire",
+    title: "A Pit in The Stomach, and a Race in The Heart",
     content: [
       "Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.",
-      "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.",
+      "Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.",
     ],
-    images: ["test"],
+    images: [sampleImage],
   },
   {
-    subject: "Third",
-    title: "Third Title Here",
+    subject: "Learning to Lead",
+    title: "Engineering is Challenging, but People Even More So",
     content: [
-      "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.",
+      "Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.",
+      "Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.",
     ],
-    images: ["test"],
+    images: [sampleImage],
   },
   {
-    subject: "Fourth",
-    title: "Fourth Title Here",
+    subject: "Finding Balance",
+    title: "Growing The Family, Going Remote, and Entering a Pandemic",
     content: [
       "Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.",
+      "Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.",
     ],
-    images: ["test"],
+    images: [sampleImage],
   },
   {
-    subject: "Fifth",
-    title: "Fifth Title Here",
+    subject: "Looking Forward",
+    title: "Great Cultures, Great Products, and a Little More Fire",
     content: [
       "Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.",
       "Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.",
     ],
-    images: ["test"],
+    images: [sampleImage],
   },
 ];
 

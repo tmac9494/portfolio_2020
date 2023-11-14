@@ -14,8 +14,6 @@ export const TimelineContent: React.FC<{
     delta = width;
   }
 
-  const style = { transform: `translateX(-${delta * currentStoryIndex}px)` };
-
   const x = useSpring({
     x: -(delta * currentStoryIndex),
     easing: easings.easeInOutBack,
@@ -40,7 +38,11 @@ export const TimelineContent: React.FC<{
               ))}
             </div>
           </div>
-          <div className="timeline-images"></div>
+          <div className="timeline-images">
+            {listItem.images.map((img) => (
+              <img src={img} key={img} className="timeline-image" />
+            ))}
+          </div>
         </div>
       ))}
     </animated.div>

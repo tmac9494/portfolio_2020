@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { StoryBlock } from "../../Pages/Home/Sections";
 import { animated, useSpring, easings } from "react-spring";
 import "./styles.scss";
@@ -7,8 +7,11 @@ const TimelineRadioButton: React.FC<{
   action: () => void;
   active: boolean;
   subject: string;
-}> = ({ action, active, subject }) => {
+  index: number;
+}> = ({ action, active, subject, index }) => {
   const easing = active ? easings.easeOutBack : easings.easeInBack;
+
+  const [hover, setHover] = useState(false);
 
   const scale = useSpring({
     scale: active ? 1.5 : 1,
@@ -19,11 +22,11 @@ const TimelineRadioButton: React.FC<{
   });
 
   const tooltip = useSpring({
-    opacity: active ? 1 : 0,
-    y: active ? 14 : 0,
+    opacity: active ? 1 : hover ? 0.6 : 0,
+    y: (active || hover ? 14 : 0) * (index % 2 ? -1 : 1),
     config: {
-      duration: 240,
-      easing,
+      duration: 200,
+      easing: active || hover ? easings.easeOutBack : easings.easeInBack,
     },
   });
 
@@ -33,6 +36,8 @@ const TimelineRadioButton: React.FC<{
         style={scale}
         className="radio-circle"
         onClick={action}
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
       ></animated.div>
 
       <animated.div style={tooltip} className="subject-tooltip text-center">
@@ -48,13 +53,14 @@ export const Timeline: React.FC<{
   currentStoryIndex: number;
 }> = ({ list, setStory, currentStoryIndex }) => {
   return (
-    <div className="timeline">
+    <div className="timeline padding-top-4 padding-bottom-4">
       {list.map((listItem, i) => (
         <div key={listItem.title} className="timeline-element">
           <TimelineRadioButton
             subject={listItem.subject}
             active={currentStoryIndex === i}
             action={() => setStory(i)}
+            index={i}
           />
           {i !== list.length - 1 && <div className="transition-line" />}
         </div>
