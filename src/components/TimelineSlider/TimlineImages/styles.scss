@@ -1,0 +1,40 @@
+.timeline-images {
+  .timeline-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    max-width: 64%;
+    z-index: 4;
+    transition: transform 0.28s;
+    &:hover {
+      z-index: 10 !important;
+      transform: scale(1.2);
+      img {
+        box-shadow: 0px 4px 18px rgba(32, 0, 32, 0.5);
+      }
+    }
+    img {
+      width: 100%;
+      height: auto;
+      box-shadow: 0px 0px 0px transparent;
+      transition: box-shadow 0.28s;
+    }
+  }
+  .timeline-image.image-1 {
+    top: 50%;
+    left: auto;
+    right: 0%;
+    width: 50%;
+    transform: translateY(-50%);
+    &:hover {
+      transform: translateY(-50%) scale(1.2);
+    }
+    z-index: 5;
+  }
+  .timeline-image.image-2 {
+    top: 40%;
+    left: 12%;
+    z-index: 4;
+    width: 48%;
+  }
+}

@@ -9,8 +9,6 @@ export const TimelineSlider: React.FC<{
 }> = ({ list }) => {
   const [currentStory, setCurrentStory] = useState<number>(0);
 
-  const content = list[currentStory];
-
   return (
     <div className="timeline-slider">
       <Timeline

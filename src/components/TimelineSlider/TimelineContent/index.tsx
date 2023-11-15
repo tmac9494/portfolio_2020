@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import { StoryBlock } from "../../Pages/Home/Sections";
+import { TimelineImages } from "../TimlineImages";
 import { useSpring, animated, easings } from "react-spring";
 import "./styles.scss";
 
@@ -9,12 +10,13 @@ export const TimelineContent: React.FC<{
 }> = ({ list, currentStoryIndex }) => {
   const containerRef = useRef<any>();
   let delta = 25;
+
   if (containerRef.current) {
     const { width } = containerRef.current.getBoundingClientRect();
     delta = width;
   }
 
-  const x = useSpring({
+  const timleinePosition = useSpring({
     x: -(delta * currentStoryIndex),
     easing: easings.easeInOutBack,
   });
@@ -22,7 +24,7 @@ export const TimelineContent: React.FC<{
   return (
     <animated.div
       className="flex flex-row align-center"
-      style={x}
+      style={timleinePosition}
       ref={containerRef}
     >
       {list.map((listItem, index) => (
@@ -38,11 +40,7 @@ export const TimelineContent: React.FC<{
               ))}
             </div>
           </div>
-          <div className="timeline-images">
-            {listItem.images.map((img) => (
-              <img src={img} key={img} className="timeline-image" />
-            ))}
-          </div>
+          <TimelineImages images={listItem.images} />
         </div>
       ))}
     </animated.div>

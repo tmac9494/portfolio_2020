@@ -1,4 +1,13 @@
+@import "../../../styles/mixins.scss";
+@import "../../../styles/colors.scss";
+
 $circleSize: 28px;
+// $timelineColor: #6900cc;
+// $timelineReadColor: #70019c;
+
+$timelineColor: $home-dark;
+$timelineReadColor: $home-highlight;
+$read-shadow: rgba(36, 1, 36, 0.9);
 
 .timeline,
 .timeline-element,
@@ -10,9 +19,38 @@ $circleSize: 28px;
   justify-content: center;
 }
 
+.timeline-container {
+  display: inline-block;
+  width: auto;
+  margin: 0 auto;
+}
+
+$timelineShadow: 0 6px 6px -4px $read-shadow;
 .radio-circle,
 .transition-line {
-  background: #fff;
+  transition: background-color 0.32s, box-shadow 0.32s;
+  background: $timelineColor;
+  box-shadow: 0 0 0 transparent;
+  &.has-read.radio-circle {
+    background-color: $timelineReadColor;
+    box-shadow: 0 4px 4px -3px $read-shadow;
+  }
+  &.active {
+    // transition-delay: 0.24s;
+    background-color: $timelineReadColor;
+    box-shadow: 0 6px 6px -4px $read-shadow;
+  }
+}
+
+.timeline-fill {
+  height: 3px;
+  border-radius: 10px;
+  transition: width 0.24s;
+  background: $timelineReadColor;
+  left: 0 !important;
+  transform: none !important;
+  margin-top: -2px;
+  box-shadow: 0 1px 4px -1px $read-shadow;
 }
 
 .radio-circle {
@@ -22,27 +60,29 @@ $circleSize: 28px;
   border-radius: 200px;
 }
 
+.radio-container {
+  flex-grow: 1;
+}
+
 .transition-line {
-  width: 60px;
-  height: 2px;
+  flex-grow: 2;
+  width: 12px;
+  height: 3px;
   border-radius: 10px;
   transform: scaleX(1.2);
   position: relative;
   z-index: -1;
-}
-
-.timeline-copy {
-  width: 66.666%;
-}
-
-.timeline-images {
-  width: 33.333%;
+  @include tablet {
+    width: 50px;
+  }
 }
 
 .timeline-element {
   .subject-tooltip {
     position: absolute;
     top: 100%;
+    color: #d8c5f7;
+    // color: #fff;
     span {
       white-space: nowrap;
     }

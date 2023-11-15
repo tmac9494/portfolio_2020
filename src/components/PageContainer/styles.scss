@@ -1,10 +1,22 @@
-@import '../../styles/mixins';
+@import "../../styles/mixins";
 
 @keyframes pop-in {
-  0% {width: 0%;height:0%;}
-  60% {width: 75%; height: 75%}
-  90% {width: 58%; height: 58%}
-  100% {width: 65%; height: 65%}
+  0% {
+    width: 0%;
+    height: 0%;
+  }
+  60% {
+    width: 75%;
+    height: 75%;
+  }
+  90% {
+    width: 58%;
+    height: 58%;
+  }
+  100% {
+    width: 65%;
+    height: 65%;
+  }
 }
 // wrapper
 #page_container {
@@ -38,7 +50,7 @@
   height: 24px;
   border-radius: 100px;
   border: 1px solid;
-  transition: background .5s;
+  transition: background 0.5s;
   position: relative;
   display: inline-block;
   &.light {
@@ -48,14 +60,14 @@
     }
   }
   &.dark {
-    border-color: #16161C;
+    border-color: #16161c;
     div {
-      background: #16161C;
+      background: #16161c;
     }
   }
   &.active {
     div {
-      animation: pop-in .36s ease-out forwards;
+      animation: pop-in 0.36s ease-out forwards;
     }
   }
   div {
@@ -76,7 +88,7 @@
 
 // page classes
 .section-container {
-  height: 100vh;
+  min-height: 100vh;
   padding-top: 50px;
   width: 100vw;
   position: relative;
