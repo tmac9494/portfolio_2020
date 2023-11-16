@@ -194,7 +194,7 @@ export const MyStory: React.FC = () => {
   const device = useDevice();
 
   return (
-    <section className="section-container">
+    <section className="section-container padding-top-4 padding-bottom-4">
       <div className="site-content-wrap" id="my_story_container">
         <h2 className="section-title text-center">My Story</h2>
 

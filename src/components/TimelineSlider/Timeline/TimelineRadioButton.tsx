@@ -14,10 +14,20 @@ export const TimelineRadioButton: React.FC<{
 
   const [hover, setHover] = useState(false);
 
+  const circleDuration = 280;
+  const circleDelay = active ? 240 : 0;
+  const circleBackground = useSpring({
+    delay: circleDelay,
+    backgroundColor: active || hasRead ? "#8000FF" : "#160556",
+    config: {
+      duration: circleDuration,
+    },
+  });
   const circleSpring = useSpring({
     scale: active ? 1.5 : 1,
+    delay: circleDelay,
     config: {
-      duration: 280,
+      duration: circleDuration,
       easing,
     },
   });
@@ -33,6 +43,7 @@ export const TimelineRadioButton: React.FC<{
     opacity,
     y,
     scale,
+    delay: active ? 240 : 0,
     config: {
       ...config.gentle,
       duration: 200,
@@ -43,7 +54,7 @@ export const TimelineRadioButton: React.FC<{
   return (
     <div className="relative radio-container">
       <animated.div
-        style={circleSpring}
+        style={{ ...circleSpring, ...circleBackground }}
         className={classNames(
           "radio-circle",
           hasRead && "has-read",

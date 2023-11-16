@@ -23,7 +23,7 @@ export const TimelineContent: React.FC<{
 
   return (
     <animated.div
-      className="flex flex-row align-center"
+      className="flex flex-row"
       style={timleinePosition}
       ref={containerRef}
     >

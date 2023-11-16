@@ -23,6 +23,15 @@ a {
 }
 
 // common buttons/elements
+.btn {
+  outline: none;
+  border: none;
+  background: $home-highlight;
+  color: $white;
+  border-radius: 4px;
+  padding: 12px 18px;
+  transition: background-color 0.2s, color 0.2s;
+}
 .gen-img {
   width: 100%;
   height: auto;
@@ -101,7 +110,9 @@ a {
   }
 }
 
-// positioning/layout
+// ---------- positioning/layout
+
+// flex
 .flex {
   display: flex;
   flex-direction: row;
@@ -116,6 +127,8 @@ a {
 .align-center {
   align-items: center;
 }
+
+// text-align
 .text-right {
   text-align: right;
 }
