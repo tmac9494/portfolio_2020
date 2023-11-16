@@ -32,7 +32,7 @@ export const TimelineContent: React.FC<{
           className="timeline-content-block flex flex-row"
           style={{ opacity: currentStoryIndex === index ? 1 : 0 }}
         >
-          <div className="timeline-copy">
+          <div className="timeline-copy padding-right-3">
             <h3>{listItem.title}</h3>
             <div>
               {listItem.content.map((text, i) => (

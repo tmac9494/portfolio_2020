@@ -1,19 +1,27 @@
 {
   "files": {
-    "main.css": "/static/css/main.6ec69705.css",
-    "main.js": "/static/js/main.9301bd4d.js",
+    "main.css": "/static/css/main.d03d97bf.css",
+    "main.js": "/static/js/main.a98b71e4.js",
     "static/media/drayton.PNG": "/static/media/drayton.02640ec376dbffe91786.PNG",
     "static/media/standard.PNG": "/static/media/standard.10761a5f3f9bdc2f5a45.PNG",
     "static/media/xperttrial.PNG": "/static/media/xperttrial.1d66e8f4da2d451d0996.PNG",
     "static/media/xpertscreen.PNG": "/static/media/xpertscreen.e926181bb3a4bf19c26c.PNG",
+    "static/media/college.jpg": "/static/media/college.611a84413b64efa00ad3.jpg",
     "static/media/gcio.jpg": "/static/media/gcio.c2eb6f737c3134c7d0f9.jpg",
     "static/media/xpertconsole.PNG": "/static/media/xpertconsole.46edc85466136a5eede9.PNG",
+    "static/media/hope2.jpg": "/static/media/hope2.3317c54b309014208405.jpg",
+    "static/media/childhood5.jpg": "/static/media/childhood5.a2807d7f5f95a4a75fa2.jpg",
+    "static/media/childhood1.jpg": "/static/media/childhood1.97721e13c980e890d6a5.jpg",
     "static/media/sso.PNG": "/static/media/sso.bc959a4dda03b441e74b.PNG",
     "static/media/svm.png": "/static/media/svm.4b2bb7f7e7b41cecf5ac.png",
+    "static/media/college2.jpg": "/static/media/college2.cc512fab67c537b961d1.jpg",
     "static/media/nm-full.png": "/static/media/nm-full.c96dab9c977d0cc9abf6.png",
+    "static/media/hope1.jpg": "/static/media/hope1.7f5abdf53ce4d43ba2e1.jpg",
     "static/media/baldwin.jpg": "/static/media/baldwin.1a413b75942ca87b880f.jpg",
+    "static/media/college1.jpg": "/static/media/college1.13249b1c618be6d1c136.jpg",
     "static/media/safety-first.jpg": "/static/media/safety-first.b7e5fd8e5d04173af0de.jpg",
     "static/media/boogies.jpg": "/static/media/boogies.17ad74804ac31704e559.jpg",
+    "static/media/childhood2.jpg": "/static/media/childhood2.3b0ef823d492eda8feb3.jpg",
     "static/media/barton.jpg": "/static/media/barton.9ce1306396852fb51438.jpg",
     "static/media/proj-10.jpg": "/static/media/proj-10.afef861684a0ed47603f.jpg",
     "static/media/proj-2.jpg": "/static/media/proj-2.68ba6cb14deaeef13960.jpg",
@@ -30,6 +38,7 @@
     "static/media/php.png": "/static/media/php.651c2e645bd21744f798.png",
     "static/media/proj-8.jpg": "/static/media/proj-8.879822522bf4565146c4.jpg",
     "static/media/proj-3.jpg": "/static/media/proj-3.2178aadec17d85abaf22.jpg",
+    "static/media/hope3.jpg": "/static/media/hope3.ed95efd9088a5eaae649.jpg",
     "static/media/css.png": "/static/media/css.58dcb903c6c7b84f4b90.png",
     "static/media/gcio-logo.png": "/static/media/gcio-logo.6ce3766ab4406e284d91.png",
     "static/media/wordpress.png": "/static/media/wordpress.10b268dbf7ee88ad10e9.png",
@@ -66,11 +75,11 @@
     "static/media/search.svg": "/static/media/search.c3a9b743b3bfe662b7143a41bc6656cd.svg",
     "static/media/star.svg": "/static/media/star.91224391cb2252f37538b0295da00a2d.svg",
     "static/media/close.svg": "/static/media/close.55fac31e703ad0d262641ce2b6ee6f40.svg",
-    "main.6ec69705.css.map": "/static/css/main.6ec69705.css.map",
-    "main.9301bd4d.js.map": "/static/js/main.9301bd4d.js.map"
+    "main.d03d97bf.css.map": "/static/css/main.d03d97bf.css.map",
+    "main.a98b71e4.js.map": "/static/js/main.a98b71e4.js.map"
   },
   "entrypoints": [
-    "static/css/main.6ec69705.css",
-    "static/js/main.9301bd4d.js"
+    "static/css/main.d03d97bf.css",
+    "static/js/main.a98b71e4.js"
   ]
 }
