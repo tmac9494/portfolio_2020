@@ -18,6 +18,7 @@ import collegeImage1 from "../../../../assets/story/college1.jpg";
 import collegeImage2 from "../../../../assets/story/college2.jpg";
 import collegeImage3 from "../../../../assets/story/college3.jpg";
 import collegeImage4 from "../../../../assets/story/college.jpg";
+import collegeImage5 from "../../../../assets/story/college4.jpg";
 import hopeImage1 from "../../../../assets/story/hope1.jpg";
 import hopeImage2 from "../../../../assets/story/hope2.jpg";
 import hopeImage3 from "../../../../assets/story/hope3.jpg";

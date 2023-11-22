@@ -1,75 +1,36 @@
-import classNames from "classnames";
 import React, { useState } from "react";
-import { easings, useSpring, animated, config } from "react-spring";
-import { getTimelineRadioSpring } from "../utils";
+import { TimelineTooltip } from "./TimelineTooltip";
+import { TimelineCircle } from "./TimelineCircle";
 
 export const TimelineRadioButton: React.FC<{
   action: () => void;
-  active: boolean;
   hasRead: boolean;
   subject: string;
   index: number;
-}> = ({ action, active, subject, index, hasRead }) => {
-  const easing = active ? easings.easeOutBack : easings.easeInBack;
-
+  lastIndex: number;
+  currentStoryIndex: number;
+}> = ({ action, subject, index, lastIndex, currentStoryIndex, hasRead }) => {
   const [hover, setHover] = useState(false);
-
-  const circleDuration = 280;
-  const circleDelay = active ? 240 : 0;
-  const circleBackground = useSpring({
-    delay: circleDelay,
-    backgroundColor: active || hasRead ? "#8000FF" : "#160556",
-    config: {
-      duration: circleDuration,
-    },
-  });
-  const circleSpring = useSpring({
-    scale: active ? 1.5 : 1,
-    delay: circleDelay,
-    config: {
-      duration: circleDuration,
-      easing,
-    },
-  });
-
-  const { opacity, y, scale } = getTimelineRadioSpring({
-    active,
-    hover,
-    hasRead,
-    index,
-  });
-
-  const tooltip = useSpring({
-    opacity,
-    y,
-    scale,
-    delay: active ? 240 : 0,
-    config: {
-      ...config.gentle,
-      duration: 200,
-      easing: active || hover ? easings.easeOutBack : easings.easeInBack,
-    },
-  });
+  const active = index === currentStoryIndex;
 
   return (
     <div className="relative radio-container">
-      <animated.div
-        style={{ ...circleSpring, ...circleBackground }}
-        className={classNames(
-          "radio-circle",
-          hasRead && "has-read",
-          active && "active"
-        )}
-        onClick={action}
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
-      ></animated.div>
-
-      <animated.div style={tooltip} className="subject-tooltip text-center">
-        <span className={classNames("tooltip-text", hasRead && "has-read")}>
-          {subject}
-        </span>
-      </animated.div>
+      <TimelineCircle
+        setHover={setHover}
+        active={active}
+        index={index}
+        lastIndex={lastIndex}
+        hasRead={hasRead}
+        action={action}
+        currentStoryIndex={currentStoryIndex}
+      />
+      <TimelineTooltip
+        hover={hover}
+        active={active}
+        subject={subject}
+        index={index}
+        hasRead={hasRead}
+      />
     </div>
   );
 };

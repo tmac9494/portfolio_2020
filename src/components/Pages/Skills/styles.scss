@@ -1,5 +1,5 @@
-@import '../../../styles/mixins';
-@import '../../../styles/colors';
+@import "../../../styles/mixins";
+@import "../../../styles/colors";
 
 #skills_page {
   min-height: 100%;
@@ -27,7 +27,7 @@
     margin: 0 auto;
     background: $charcoal;
     box-shadow: inset 0px 3px 6px -4px $black;
-    border-bottom: 1px solid rgba(255, 255, 255, .1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
   .skill-circ-alt:first-child div {
     border-top-left-radius: 200px;
@@ -37,33 +37,45 @@
     border-top-right-radius: 200px;
     border-bottom-right-radius: 200px;
   }
-  div.beginner, div.familiar, div.intermediate, div.skilled, div.mastered {
-    border-bottom: 1px solid rgba(255, 255, 255, .3);
+  div.beginner,
+  div.familiar,
+  div.intermediate,
+  div.skilled,
+  div.mastered {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
     box-shadow: inset 0px 3px 6px -4px $black;
   }
-  div.beginner, .beginner {
+  div.beginner,
+  .beginner {
     background: $red-beginner;
-    color: $red-beginner
+    color: $red-beginner;
   }
-  div.familiar, .familiar {
+  div.familiar,
+  .familiar {
     background: $orange-familiar;
     color: $orange-familiar;
   }
-  div.intermediate, .intermediate {
+  div.intermediate,
+  .intermediate {
     background: $green-intermediate;
     color: $green-intermediate;
   }
-  div.skilled, .skilled {
+  div.skilled,
+  .skilled {
     background: $green-skilled;
     color: $green-skilled;
   }
-  div.mastered, .mastered {
+  div.mastered,
+  .mastered {
     background: $green-mastered;
     color: $green-mastered;
   }
 }
 
-#skills_wrapper, #lang_wrapper, #tech_wrapper, #skills_table {
+#skills_wrapper,
+#lang_wrapper,
+#tech_wrapper,
+#skills_table {
   width: 90%;
   height: 75%;
   max-width: 1140px;
@@ -73,14 +85,12 @@
   }
 }
 
-
-
 .skill-container-alt {
   width: 100%;
   padding: 8px;
   position: relative;
   @include tablet {
-    width: 33.333%
+    width: 33.333%;
   }
   @include desktop {
     width: 25%;
@@ -92,13 +102,13 @@
     justify-content: start;
     background: $black-surface;
     border-radius: 4px;
-    box-shadow: 0 4px 12px -6px rgba(0,0,0,0.5);
+    box-shadow: 0 4px 12px -6px rgba(0, 0, 0, 0.5);
     padding: 28px 8px 12px;
     position: relative;
     border-bottom: 1px solid $black;
     box-shadow: 0px 0px 0px $black;
     transform: scale(1);
-    transition: all .28s;
+    transition: all 0.28s;
     &:hover {
       background: $black-surface-highlight;
       cursor: pointer;
@@ -113,7 +123,7 @@
     }
   }
   h3 {
-    transition: color .16s;
+    transition: color 0.16s;
     color: $text-dark-primary;
     text-align: center;
     font-size: 16px;
@@ -136,7 +146,7 @@
 }
 
 .skill-level-stat {
-  position:relative;
+  position: relative;
   z-index: 2;
   width: 80%;
   margin: 0 auto;
@@ -154,7 +164,7 @@
 .skill-level-text {
   display: block;
   text-align: center;
-  font-size: 12px
+  font-size: 12px;
 }
 
 #skills_table {
@@ -189,7 +199,7 @@
   }
   .skill-control-value {
     background: $shadow-mid;
-    transition: all .2s;
+    transition: all 0.2s;
     border: none;
     outline: none;
     display: block;
@@ -199,7 +209,8 @@
     font-size: 14px;
     border-radius: 4px;
     border: 1px solid $gray-dark;
-    &:hover, &.active {
+    &:hover,
+    &.active {
       background: $charcoal;
     }
   }
@@ -211,10 +222,10 @@
     width: 120px;
     background: $black;
     &.in {
-      animation: fadeInSlideUp ease-out .28s;
+      animation: fadeInSlideUp ease-out 0.28s;
     }
     &.out {
-      animation: fadeOutSlideDown ease-in .28s;
+      animation: fadeOutSlideDown ease-in 0.28s;
     }
   }
   .skill-control-option {
@@ -224,7 +235,7 @@
     background: none;
     outline: none;
     border: none;
-    transition: .2s;
+    transition: 0.2s;
     padding: 6px 0;
     color: $gray-mid;
     border-bottom: 1px solid $charcoal;
@@ -239,8 +250,12 @@
   .filter-btn {
     background: none;
     position: relative;
-    &:hover, &.active {
+    &:hover,
+    &.active {
       background: $charcoal;
+      .skill-filter-count {
+        background: $charcoal;
+      }
     }
     .filter-svg {
       width: 25px;
@@ -249,7 +264,7 @@
       color: $white;
     }
     &:after {
-      content: '';
+      content: "";
       background: $gray-dark;
       border-radius: 3px;
       display: block;
@@ -264,9 +279,8 @@
   .skill-filter-count {
     position: absolute;
     font-size: 11px;
-    background: $skills-highlight;
-    color: $skills-floating;
-    font-weight: bold;
+    color: $white;
+    background: $black-surface;
     border-radius: 100%;
     top: 0;
     right: 0;
@@ -276,7 +290,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 1px 3px 6px $black;
   }
 }
 
@@ -294,25 +307,27 @@
     vertical-align: top;
     font-size: 14px;
   }
-  .close-icon-container, .search-icon-container {
+  .close-icon-container,
+  .search-icon-container {
     display: inline-block;
     position: absolute;
     right: 214px;
     top: 19px;
     &.in {
-      animation: scaleIn .32s ease-out;
+      animation: scaleIn 0.32s ease-out;
       animation-fill-mode: forwards;
     }
     &.out {
-      animation: fadeOutLeft .32s ease-in;
+      animation: fadeOutLeft 0.32s ease-in;
     }
   }
-  .close-icon, .search-icon {
+  .close-icon,
+  .search-icon {
     width: 28px;
     height: 28px;
     color: $gray-mid;
     padding-top: 4px;
-    transition: color .2s;
+    transition: color 0.2s;
   }
   .search-icon {
     width: 28px;
@@ -331,8 +346,6 @@
   }
 }
 
-
-
 .skill-column {
   display: flex;
   flex-direction: row;
@@ -349,7 +362,6 @@
   width: 18px;
   height: 18px;
 }
-
 
 #skill_key_tags {
   position: absolute;
@@ -369,7 +381,6 @@
   }
 }
 
-
 #skill_description_panel {
   position: absolute;
   right: 0;
@@ -383,10 +394,10 @@
   border-left: 1px solid $black;
   border-bottom: 1px solid $black;
   &.in {
-    animation: fadeInSlideLeft ease-out .28s;
+    animation: fadeInSlideLeft ease-out 0.28s;
   }
   &.out {
-    animation: fadeOutSlideRight ease-in .28s;
+    animation: fadeOutSlideRight ease-in 0.28s;
   }
   .close-btn {
     text-align: right;
@@ -420,7 +431,6 @@
   }
 }
 
-
 #skill_description_intro {
   padding-bottom: 18px;
   img {
@@ -451,9 +461,7 @@
       margin-bottom: 6px;
     }
   }
-
 }
-
 
 // animated stars
 .flare-star {
@@ -467,11 +475,11 @@
     fill: $skills-light;
   }
   &.in {
-    animation: fadeInSpinGrow ease-out .75s;
+    animation: fadeInSpinGrow ease-out 0.75s;
     animation-fill-mode: forwards;
   }
   &.out {
-    animation: fadeOutSpinShrink ease-in .75s;
+    animation: fadeOutSpinShrink ease-in 0.75s;
   }
 }
 #star_2 {
@@ -493,24 +501,28 @@
   }
 }
 
-
-
-
-
-
-
-
 @keyframes grow {
-  0% {transform: scale(1, .6)}
-  25% {transform: scale(1.1, 1.2)}
-  50% {transform: scale(.8, .7)}
-  75% {transform: scale(1, 1.1)}
-  100% {transform: scale(1, .6)}
+  0% {
+    transform: scale(1, 0.6);
+  }
+  25% {
+    transform: scale(1.1, 1.2);
+  }
+  50% {
+    transform: scale(0.8, 0.7);
+  }
+  75% {
+    transform: scale(1, 1.1);
+  }
+  100% {
+    transform: scale(1, 0.6);
+  }
 }
 
 //svgs
 #floating_svg_container {
-  .skill-blob-lg, .skill-blob-sm {
+  .skill-blob-lg,
+  .skill-blob-sm {
     position: absolute;
     top: auto;
     bottom: auto;

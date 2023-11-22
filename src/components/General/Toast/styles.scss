@@ -12,17 +12,18 @@ $svgSize: 82px;
   left: 5%;
   bottom: 5%;
   z-index: 200;
+  max-width: 500px;
   h2 {
     color: $text-dark-primary;
   }
   p {
     font-weight: 500;
-    font-size: 18px;
   }
   .toast-icon {
     width: $svgSize;
     height: $svgSize;
     fill: #c2c2c2;
+    flex-shrink: 0;
   }
 }
 

@@ -2,6 +2,7 @@
 @import "../../../styles/colors.scss";
 
 $circleSize: 28px;
+$interactionLayerSize: $circleSize + 6px;
 // $timelineColor: #6900cc;
 // $timelineReadColor: #70019c;
 
@@ -38,21 +39,33 @@ $timelineShadow: 0 6px 6px -4px $read-shadow;
   &.active {
     // transition-delay: 0.24s;
     background-color: $timelineReadColor;
-    box-shadow: 0 6px 6px -4px $read-shadow;
+    box-shadow: 0 10px 6px -6px $read-shadow;
   }
 }
 
 .timeline-fill {
-  height: 3px;
+  height: 5px;
   border-radius: 10px;
-  transition: width 0.24s;
   background: $timelineReadColor;
   left: 0 !important;
   transform: none !important;
-  margin-top: -2px;
+  margin-top: -3px;
   box-shadow: 0 1px 4px -1px $read-shadow;
+  max-width: 100%;
+  margin-left: 8px;
+  margin-right: 12px !important;
 }
 
+.radio-container {
+  button {
+    background: transparent;
+    border: 0;
+    outline: 0;
+    width: $interactionLayerSize;
+    height: $interactionLayerSize;
+    z-index: 5;
+  }
+}
 .radio-circle {
   cursor: pointer;
   width: $circleSize;

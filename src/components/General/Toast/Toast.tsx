@@ -33,7 +33,11 @@ export const Toast: React.FC<{
   });
 
   return (
-    <animated.div style={animation} id="toast-container" className="padding-3">
+    <animated.div
+      style={animation}
+      id="toast-container"
+      className="padding-3 padding-top-2 padding-bottom-2"
+    >
       <div className="flex flex-row align-center">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -43,10 +47,10 @@ export const Toast: React.FC<{
           <path d="M256 48C141.31 48 48 141.31 48 256s93.31 208 208 208 208-93.31 208-208S370.69 48 256 48zm0 319.91a20 20 0 1120-20 20 20 0 01-20 20zm21.72-201.15l-5.74 122a16 16 0 01-32 0l-5.74-121.94v-.05a21.74 21.74 0 1143.44 0z" />
         </svg>
         <div>
-          {title && <h2 className="margin-top-1">{title}</h2>}
-          <p className="margin-bottom-2">{message}</p>
+          {title && <h2 className="margin-bottom-0">{title}</h2>}
+          <p className="margin-bottom-2 margin-top-1">{message}</p>
 
-          <div className="text-right margin-top-2">
+          <div className="text-right margin-top-1">
             <button
               onClick={() => setVisible(false)}
               id="toast-btn"

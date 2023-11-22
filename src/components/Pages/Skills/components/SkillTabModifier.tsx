@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ReactComponent as FilterSvg } from "../../../../assets/icons/filter.svg";
 import { AnimationParent } from "../../../General/AnimationParent";
 import { SkillSorts, SkillTags, conditionClass } from "../../../../utils";
+import { useSpring, animated, config, easings } from "react-spring";
 
 export type SkillTabModifierOption = {
   text: string;
@@ -16,14 +17,26 @@ const ModifierTitle: React.FC<{
   filters?: SkillTags[];
   title: string;
 }> = ({ isCheckbox, isOpen, setIsOpen, filters, title }) => {
+  const countIsVisible = filters && filters.length > 0;
+  const countSpring = useSpring({
+    scale: countIsVisible ? 1 : 0,
+    opacity: countIsVisible ? 1 : 0,
+    config: {
+      ...config.stiff,
+      easing: easings.easeOutBack,
+      duration: 260,
+    },
+  });
+
   return isCheckbox ? (
     <button
       className={"filter-btn normalize-btn" + (isOpen ? " active" : "")}
       onClick={() => setIsOpen(!isOpen)}
     >
-      {filters && filters.length > 0 && (
-        <span className="skill-filter-count">{filters.length}</span>
-      )}
+      <animated.span style={countSpring} className="skill-filter-count">
+        {filters && filters.length > 0 && filters.length}
+      </animated.span>
+
       <FilterSvg className="filter-svg" />
     </button>
   ) : (
@@ -48,6 +61,7 @@ export const SkillTableModifier: React.FC<{
   useEffect(() => {
     setIsOpen(false);
   }, [value]);
+
   return (
     <div className="skill-table-control">
       <ModifierTitle
@@ -57,7 +71,6 @@ export const SkillTableModifier: React.FC<{
         isOpen={isOpen}
         setIsOpen={setIsOpen}
       />
-
       {!isCheckbox && (
         <div className="skill-control-value-container">
           <button
@@ -68,7 +81,6 @@ export const SkillTableModifier: React.FC<{
           </button>
         </div>
       )}
-
       <AnimationParent
         className="skill-control-options"
         attributes={{

@@ -1,0 +1,2 @@
+export const TIMELINE_FILL_DURATION = 300;
+export const TIMELINE_CIRCLE_DURATION = 280;

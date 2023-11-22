@@ -10,7 +10,7 @@ function App() {
     <BrowserRouter>
       <Toast
         title="Under Construction"
-        message="Portfolio is still a work in progress, thanks for understanding!"
+        message="My Portfolio is still in the process of a re-design, some sections may appear abnormal."
         persist
       />
       <div id="app-container">

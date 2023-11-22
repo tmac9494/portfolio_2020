@@ -29,6 +29,7 @@ export const TimelineContent: React.FC<{
     >
       {list.map((listItem, index) => (
         <div
+          key={listItem.title}
           className="timeline-content-block flex flex-row"
           style={{ opacity: currentStoryIndex === index ? 1 : 0 }}
         >

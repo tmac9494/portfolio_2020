@@ -3,6 +3,7 @@ import { StoryBlock } from "../../Pages/Home/Sections";
 import "./styles.scss";
 import classNames from "classnames";
 import { TimelineRadioButton } from "./TimelineRadioButton";
+import { TIMELINE_FILL_DURATION } from "../utils";
 
 export const Timeline: React.FC<{
   list: StoryBlock[];
@@ -10,20 +11,22 @@ export const Timeline: React.FC<{
   currentStoryIndex: number;
 }> = ({ list, setStory, currentStoryIndex }) => {
   const containerRef = useRef<any>();
+  const lastIndex = useRef<number>(currentStoryIndex);
 
   let elementWidth = 0;
   if (containerRef.current) {
     const { width } = containerRef.current.getBoundingClientRect();
-    // highlihg line width
+    // highlight line width
     elementWidth =
-      (width / list.length) * currentStoryIndex + currentStoryIndex * 6;
+      ((width + currentStoryIndex * 10) / list.length) * currentStoryIndex;
   }
+  const timelineTransition = `width ${TIMELINE_FILL_DURATION}ms linear`;
 
   return (
     <div className="text-center">
       <div className="timeline-container relative">
         <div
-          style={{ width: elementWidth + "px" }}
+          style={{ width: elementWidth + "px", transition: timelineTransition }}
           className="timeline-fill abs-center"
         />
         <div
@@ -34,10 +37,14 @@ export const Timeline: React.FC<{
             <div key={listItem.title} className="timeline-element">
               <TimelineRadioButton
                 subject={listItem.subject}
-                active={currentStoryIndex === i}
                 hasRead={currentStoryIndex > i}
-                action={() => setStory(i)}
+                action={() => {
+                  setStory(i);
+                  lastIndex.current = currentStoryIndex;
+                }}
                 index={i}
+                lastIndex={lastIndex.current}
+                currentStoryIndex={currentStoryIndex}
               />
               {i !== list.length - 1 && (
                 <div

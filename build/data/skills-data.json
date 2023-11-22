@@ -59,7 +59,7 @@
   },
   {
     "title": "TypeScript",
-    "level": 5,
+    "level": 4,
     "id": "typescript",
     "tags": ["fw", "lang", "fe", "be"],
     "companies": ["nm", "evern", "gcio"],
