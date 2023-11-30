@@ -9,6 +9,7 @@ export interface SnakeGameState extends SnakeGameConfig {
   gameState: GameState;
   length: number;
   apple?: AppleTile;
+  position: number;
 }
 
 export type UpdateSnakeGameState = (overrides: Partial<SnakeGameState>) => void;
@@ -110,5 +111,6 @@ export const INITIAL_GAME_STATE: SnakeGameState = {
   apple: undefined,
   length: DEFAULT_LENGTH,
   borderOutOfBounds: difficulties.Normal.borderOutOfBounds,
+  position: 0,
 };
 export const SNAKE_GRID_ID = "snake_game_grid";

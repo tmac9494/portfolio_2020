@@ -22,6 +22,8 @@ export const GameGrid: React.FC<{
   total: number;
   difficulty: Difficulty;
   borderIsOutOfBounds?: boolean;
+  centerPoint: number;
+  max: number;
 }> = ({
   snakeGameState,
   updateGameState,
@@ -30,15 +32,14 @@ export const GameGrid: React.FC<{
   tick,
   difficulty,
   borderIsOutOfBounds = true,
+  centerPoint,
+  max,
 }) => {
-  const max = Math.floor(total * total);
-  const centerPoint = Math.ceil((max - 1) / 2);
-  const [position, setPosition] = useState(centerPoint);
+  const { gameState, apple, length, position } = snakeGameState;
   const direction = useRef<Directions>(INITIAL_DIRECTION);
   const lastPositions = useRef<Set<number>>(
     new Set([position - 1, position - 2])
   );
-  const { gameState, apple, length } = snakeGameState;
 
   // deltas based on grid width
   const deltas = {
@@ -57,9 +58,19 @@ export const GameGrid: React.FC<{
       gameState: GameState.Start,
       apple: undefined,
       length: DEFAULT_LENGTH,
+      position: centerPoint,
     });
-    setPosition(centerPoint);
   }, [centerPoint, updateGameState]);
+
+  const setPosition = useCallback(
+    (position: number) => {
+      updateGameState({
+        ...snakeGameState,
+        position,
+      });
+    },
+    [snakeGameState, updateGameState]
+  );
 
   useApple({
     position,
