@@ -1,11 +1,5 @@
 import { useEffect, useRef } from "react";
-import {
-  GameState,
-  Directions,
-  INITIAL_DIRECTION,
-  AppleTile,
-  GameDeltas,
-} from "../types";
+import { GameState, Directions, AppleTile, GameDeltas } from "../types";
 
 export const useMoveEffect = ({
   position,
@@ -32,7 +26,7 @@ export const useMoveEffect = ({
   direction: React.MutableRefObject<Directions>;
   apple: AppleTile | undefined;
   total: number;
-  setPosition: (value: React.SetStateAction<number>) => void;
+  setPosition: (value: number) => void;
   borderIsOutOfBounds: boolean;
   max: number;
   endGame: () => void;
@@ -71,18 +65,18 @@ export const useMoveEffect = ({
       // end game if player died
       if (playerAteBody || playerOutOfBounds || playerHitObstacle) {
         endGame();
-      }
+      } else {
+        // border out of bounds is false pathfinder
+        if (!borderIsOutOfBounds) {
+          if (isPassedRight) newPosition = position - total + 1;
+          else if (isPassedLeft) newPosition = position + total - 1;
+          else if (isPassedTop) newPosition = position + max - total;
+          else if (isPassedBottom) newPosition = position - max + total;
+        }
 
-      // border out of bounds is false pathfinder
-      if (!borderIsOutOfBounds) {
-        if (isPassedRight) newPosition = position - total + 1;
-        else if (isPassedLeft) newPosition = position + total - 1;
-        else if (isPassedTop) newPosition = position + max - total;
-        else if (isPassedBottom) newPosition = position - max + total;
+        lastTick.current = tick;
+        setPosition(newPosition);
       }
-
-      lastTick.current = tick;
-      setPosition(newPosition);
     }
   }, [
     position,

@@ -31,8 +31,12 @@ export const SnakeGame: React.FC<{
   const { interval, borderOutOfBounds } = difficulties[difficulty];
 
   // snake game state
-  const [snakeGameState, setSnakeGameState] =
-    useState<SnakeGameState>(INITIAL_GAME_STATE);
+  const max = Math.floor(size * size);
+  const centerPoint = Math.ceil((max - 1) / 2);
+  const [snakeGameState, setSnakeGameState] = useState<SnakeGameState>({
+    ...INITIAL_GAME_STATE,
+    position: centerPoint,
+  });
   const { gameState } = snakeGameState;
 
   // game state update handler
@@ -90,6 +94,8 @@ export const SnakeGame: React.FC<{
           difficulty={difficulty}
           total={size}
           borderIsOutOfBounds={borderOutOfBounds}
+          centerPoint={centerPoint}
+          max={max}
         />
         <HighScores
           gameHistory={gameHistory}
