@@ -1,14 +1,23 @@
-import React from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import { SNAKE_GRID_ID, SnakeGame } from "../../../SnakeGame";
 
 export const Top: React.FC = () => {
+  const [showSnakeGame, setShowSnakeGame] = useState<boolean>();
+
+  useLayoutEffect(() => {
+    if (showSnakeGame) {
+      document.getElementById(SNAKE_GRID_ID)?.focus();
+    }
+  }, [showSnakeGame]);
+
   return (
     <section className="section-container">
       <div className="top-content">
         <h1 className="section-title">Trent McDole</h1>
         <span className="pos-title">Full-Stack Javascript Engineer</span>
         <p className="description">
-          Welcome to my portfolio! Built using React and Sass, this applicaiton
+          Welcome to my portfolio! Built using React and Sass, this application
           strives to showcase my creativity, experience, and love for unique
           user experiences. Please navigate through the application to learn
           more about myself and what I value in technology and work life. Thanks
@@ -20,6 +29,13 @@ export const Top: React.FC = () => {
         <NavLink to="/skills" className="warm-btn c2a-btn home-btn">
           What Are You Good At?
         </NavLink>
+        <button
+          onClick={() => setShowSnakeGame(true)}
+          className="btn snake-game-btn"
+        >
+          I want to play Snake
+        </button>
+        {showSnakeGame && <SnakeGame size={15} />}
       </div>
     </section>
   );
