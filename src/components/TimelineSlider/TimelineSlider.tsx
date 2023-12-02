@@ -16,7 +16,7 @@ export const TimelineSlider: React.FC<{
         setStory={(index: number) => setCurrentStory(index)}
         currentStoryIndex={currentStory}
       />
-      <div className="padding-top-5 margin-top-5">
+      <div className="padding-top-5 margin-top-5 slider-content">
         <TimelineContent list={list} currentStoryIndex={currentStory} />
       </div>
     </div>

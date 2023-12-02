@@ -10,10 +10,17 @@ export const Toast: React.FC<{
   persist?: boolean;
 }> = ({ message, title, timeout, buttonText, persist }) => {
   const [visible, setVisible] = useState<boolean>(false);
+  const [render, setRender] = useState<boolean>(false);
 
   useEffect(() => {
     setTimeout(() => setVisible(true), 500);
   }, []);
+
+  useEffect(() => {
+    if (visible && visible !== render) {
+      setRender(true);
+    }
+  }, [render, visible]);
 
   // hide after timeout
   useEffect(() => {
@@ -32,8 +39,11 @@ export const Toast: React.FC<{
     },
   });
 
+  if (!render) return null;
+
   return (
     <animated.div
+      onTransitionEnd={() => visible === false && setRender(false)}
       style={animation}
       id="toast-container"
       className="padding-3 padding-top-2 padding-bottom-2"

@@ -1,13 +1,17 @@
 import { useEffect, useRef } from "react";
-import { GameState, Directions, AppleTile, GameDeltas } from "../types";
+import {
+  GameState,
+  Directions,
+  AppleTile,
+  GameDeltas,
+  SnakeGameCache,
+} from "../types";
 
 export const useMoveEffect = ({
   position,
   deltas,
   tick,
-  lastPositions,
   gameState,
-  direction,
   max,
   length,
   borderIsOutOfBounds,
@@ -16,14 +20,13 @@ export const useMoveEffect = ({
   total,
   setPosition,
   apple,
+  gameCache,
 }: {
-  lastPositions: React.MutableRefObject<Set<number>>;
   gameState: GameState;
   position: number;
   deltas: GameDeltas;
   length: number;
   tick: number;
-  direction: React.MutableRefObject<Directions>;
   apple: AppleTile | undefined;
   total: number;
   setPosition: (value: number) => void;
@@ -31,29 +34,33 @@ export const useMoveEffect = ({
   max: number;
   endGame: () => void;
   centerPoint: number;
+  gameCache: SnakeGameCache;
 }) => {
   const lastTick = useRef<number>();
   useEffect(() => {
-    let newPosition = position + deltas[direction.current];
+    let newPosition = position + deltas[gameCache.direction.direction];
     if (gameState === GameState.Start && lastTick.current !== tick) {
-      const positionsAsArray = Array.from(lastPositions.current);
+      const positionsAsArray = Array.from(gameCache.lastPositions);
       positionsAsArray.unshift(position);
-      if (lastPositions.current.size > max - 2) {
+      if (gameCache.lastPositions.size > max - 2) {
         positionsAsArray.pop();
       }
-      lastPositions.current = new Set(positionsAsArray);
+      gameCache.lastPositions = new Set(positionsAsArray);
+      gameCache.direction.lastPosition = positionsAsArray[0];
 
       // out of bounds positions
       const isPassedRight =
-        (position + 1) % total === 0 && direction.current === Directions.Right;
+        (position + 1) % total === 0 &&
+        gameCache.direction.direction === Directions.Right;
       const isPassedLeft =
-        position % total === 0 && direction.current === Directions.Left;
+        position % total === 0 &&
+        gameCache.direction.direction === Directions.Left;
       const isPassedTop = newPosition < 0;
       const isPassedBottom = newPosition > max - 1;
 
       // player died
       const playerAteBody =
-        lastPositions.current.has(newPosition) &&
+        gameCache.lastPositions.has(newPosition) &&
         positionsAsArray.indexOf(newPosition) < length;
 
       const playerOutOfBounds =
@@ -80,7 +87,6 @@ export const useMoveEffect = ({
     }
   }, [
     position,
-    direction,
     total,
     max,
     gameState,
@@ -91,8 +97,8 @@ export const useMoveEffect = ({
     borderIsOutOfBounds,
     apple?.boundaries,
     endGame,
-    lastPositions,
     lastTick,
     setPosition,
+    gameCache,
   ]);
 };

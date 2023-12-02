@@ -35,7 +35,11 @@ export const Top: React.FC = () => {
         >
           I want to play Snake
         </button>
-        {showSnakeGame && <SnakeGame size={15} />}
+        {showSnakeGame && (
+          <div id="portfolio-snake-game" className="margin-top-5">
+            <SnakeGame size={15} />
+          </div>
+        )}
       </div>
     </section>
   );

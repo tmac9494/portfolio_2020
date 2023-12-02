@@ -72,9 +72,9 @@ const PageContainer: React.FC<{
       <FloatingSvgs svgs={svgs} />
 
       {/* floating nav right*/}
-      <div id="section-circles" onTransitionEnd={(e) => e.stopPropagation()}>
+      {/* {<div id="section-circles" onTransitionEnd={(e) => e.stopPropagation()}>
         {sectionCircs}
-      </div>
+      </div>} */}
     </div>
   );
 };
