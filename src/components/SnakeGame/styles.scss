@@ -1,3 +1,4 @@
+@import "../../styles/mixins.scss";
 $backgroundColor: linear-gradient(to top left, #1a1a1a, #252525);
 $borderColor: #3b3b3b;
 $snakeColor: #8000ff;
@@ -85,6 +86,7 @@ $appleColor: #00ff2a;
   flex-wrap: wrap;
   outline: 0;
   opacity: 0.6;
+  touch-action: none;
   &:focus {
     opacity: 1;
   }
@@ -111,11 +113,13 @@ $appleColor: #00ff2a;
 .scores-container {
   width: 120px;
   position: absolute;
-  left: 100%;
-  top: 0;
+  top: auto;
+  left: auto;
+  right: 0;
+  bottom: 100%;
   background-color: $borderColor;
   border-top-right-radius: 2px;
-  border-bottom-right-radius: 2px;
+  border-top-left-radius: 2px;
   .high-scores-container {
     padding: 8px;
     padding-top: 4px;
@@ -141,15 +145,26 @@ $appleColor: #00ff2a;
 .game-score {
   background: $backgroundColor;
   border: 2px solid $borderColor;
-  border-left: none;
   max-height: 50px;
   overflow: hidden;
   .scoreboard-counter {
-    animation: score-counter 0.32s forwards ease-out;
+    animation: score-counter 0.38s forwards ease-out;
   }
   h1 {
     margin: 0;
     padding: 4px;
+  }
+}
+
+@keyframes info-box {
+  0% {
+    transform: scale(0.4) translate(-50%, -50%);
+  }
+  80% {
+    transform: scale(1.14) translate(-50%, -50%);
+  }
+  100% {
+    transform: scale(1) translate(-50%, -50%);
   }
 }
 
@@ -160,7 +175,27 @@ $appleColor: #00ff2a;
   position: absolute;
   left: 50%;
   top: 50%;
+  transform-origin: 0 0;
   transform: translate(-50%, -50%);
-  padding: 5px;
+  padding: 12px 24px;
   margin-right: -50%;
+  animation: info-box 0.2s ease-out;
+}
+$btnSize: 100px;
+
+@include desktop {
+  .direction-btn {
+    display: none;
+  }
+  .game-score {
+    border-left: none;
+  }
+  .scores-container {
+    left: 100%;
+    top: 0;
+    bottom: auto;
+    right: auto;
+    border-bottom-right-radius: 2px;
+    border-top-left-radius: 0px;
+  }
 }

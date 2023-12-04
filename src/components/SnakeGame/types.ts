@@ -1,3 +1,5 @@
+import { SnakeDirection } from "./utils/SnakeDirection";
+
 export type SnakeGameConfig = {
   size: number;
   width: number;
@@ -97,6 +99,11 @@ export class AppleTile {
 
 export type GameDeltas = Record<Directions, number>;
 
+export type SnakeGameCache = {
+  direction: SnakeDirection;
+  lastPositions: Set<number>;
+};
+
 export const TILE_SIZE = 25;
 export const GRID_WIDTH = 15;
 export const DEFAULT_LENGTH = 2;
@@ -114,3 +121,4 @@ export const INITIAL_GAME_STATE: SnakeGameState = {
   position: 0,
 };
 export const SNAKE_GRID_ID = "snake_game_grid";
+export const MINIMUM_SWIPE_DISTANCE = 25;

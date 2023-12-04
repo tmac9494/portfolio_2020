@@ -13,22 +13,17 @@ import {
   difficulties,
 } from "./types";
 import { DifficultyOptions } from "./DifficultyOptions";
-import { HighScoreSchema, HighScores } from "./HighScores";
+import { HighScores } from "./HighScores";
+import { getSnakeGameHistory } from "./utils";
 
 export const SnakeGame: React.FC<{
   size: number;
 }> = ({ size = 15 }) => {
-  // history storage
-  const gameHistory: HighScoreSchema[] = JSON.parse(
-    localStorage.getItem(HISTORY_STORAGE_KEY) || "[]"
-  );
-
   // difficulty state
   const [difficulty, setDifficulty] = useState<Difficulty>(Difficulty.Normal);
 
   // track game ticks
   const [tick, setTick] = useState<number>(0);
-  const { interval, borderOutOfBounds } = difficulties[difficulty];
 
   // snake game state
   const max = Math.floor(size * size);
@@ -38,6 +33,7 @@ export const SnakeGame: React.FC<{
     position: centerPoint,
   });
   const { gameState } = snakeGameState;
+  const { interval, borderOutOfBounds } = difficulties[difficulty];
 
   // game state update handler
   const updateGameState: UpdateSnakeGameState = useCallback(
@@ -52,32 +48,33 @@ export const SnakeGame: React.FC<{
 
   // core render ticker
   useEffect(() => {
+    const isMobile = window.innerWidth < 800;
     const tickTimeout = setTimeout(() => {
       if (gameState === GameState.Start) {
         setTick(tick + 1);
       }
-    }, interval);
+    }, interval + (isMobile ? 50 : 0));
     return () => clearTimeout(tickTimeout);
   }, [tick, interval, gameState]);
 
   // end game effect
   const endGame = useCallback(() => {
-    let history = gameHistory || [];
+    let gameHistory = getSnakeGameHistory();
     if (
       snakeGameState.length - DEFAULT_LENGTH !== 0 &&
-      !history.find(
+      !gameHistory.find(
         (item) =>
           item.difficulty === difficulty &&
           item.state.length === snakeGameState.length
       )
     ) {
-      history.push({ state: snakeGameState, difficulty });
-      localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(history));
+      gameHistory.push({ state: snakeGameState, difficulty });
+      localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(gameHistory));
     }
     updateGameState({
       gameState: GameState.Dead,
     });
-  }, [updateGameState, gameHistory, snakeGameState, difficulty]);
+  }, [updateGameState, snakeGameState, difficulty]);
 
   return (
     <>
@@ -97,11 +94,7 @@ export const SnakeGame: React.FC<{
           centerPoint={centerPoint}
           max={max}
         />
-        <HighScores
-          gameHistory={gameHistory}
-          difficulty={difficulty}
-          length={snakeGameState.length}
-        />
+        <HighScores difficulty={difficulty} length={snakeGameState.length} />
       </div>
       <DifficultyOptions
         difficulty={difficulty}

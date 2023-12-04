@@ -93,14 +93,16 @@
   // width: 100vw;
   position: relative;
   z-index: 5;
+  padding-top: 80px;
+  padding-left: 12px;
   // &:first-child {
   //   max-height: 800px
   // }
   .top-content {
-    position: absolute;
-    top: 10%;
-    left: 10%;
-    max-width: 80%;
+    // position: absolute;
+    // top: 10%;
+    // left: 10%;
+    max-width: 100%;
     width: 650px;
   }
   .content-wrap {
@@ -113,6 +115,8 @@
   }
   @include tablet {
     padding-top: 0;
+    padding-top: 5%;
+    padding-left: 10%;
     .content-wrap {
       margin-left: 35px;
     }

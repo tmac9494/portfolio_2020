@@ -1,61 +1,38 @@
-import {
-  GameState,
-  Directions,
-  GameDeltas,
-  UpdateSnakeGameState,
-} from "../types";
+import { GameState, SnakeGameCache, UpdateSnakeGameState } from "../types";
 
 export const useKeydownEffect = ({
-  lastPositions,
   gameState,
-  direction,
-  position,
-  deltas,
-  length,
-  restartGame,
+  gameCache,
   updateGameState,
+  gameStateHandler,
 }: {
-  lastPositions: React.MutableRefObject<Set<number>>;
   gameState: GameState;
-  direction: React.MutableRefObject<Directions>;
-  position: number;
-  deltas: GameDeltas;
-  length: number;
   updateGameState: UpdateSnakeGameState;
-  restartGame: () => void;
+  gameCache: SnakeGameCache;
+  gameStateHandler: () => void;
 }) => {
   return (e: any) => {
-    const lastPosition = Array.from(lastPositions.current)[0];
-    const isEmpty = length === 0;
     if (e.key === " ") {
       e.preventDefault();
-      if (gameState === GameState.Idle || gameState === GameState.Start) {
+      if (gameState === GameState.Start) {
         updateGameState({
-          gameState:
-            gameState === GameState.Idle ? GameState.Start : GameState.Pause,
+          gameState: GameState.Pause,
         });
-      } else if (gameState === GameState.Dead) {
-        restartGame();
-      } else if (gameState === GameState.Pause) {
-        updateGameState({ gameState: GameState.Start });
       }
+      gameStateHandler();
     } else if (gameState === GameState.Start) {
       switch (e.key) {
         case "w":
-          if (isEmpty || lastPosition !== position + deltas[Directions.Top])
-            direction.current = Directions.Top;
+          gameCache.direction.toTop();
           break;
         case "s":
-          if (isEmpty || lastPosition !== position + deltas[Directions.Bottom])
-            direction.current = Directions.Bottom;
+          gameCache.direction.toBottom();
           break;
         case "a":
-          if (isEmpty || lastPosition !== position + deltas[Directions.Left])
-            direction.current = Directions.Left;
+          gameCache.direction.toLeft();
           break;
         case "d":
-          if (isEmpty || lastPosition !== position + deltas[Directions.Right])
-            direction.current = Directions.Right;
+          gameCache.direction.toRight();
           break;
       }
     }

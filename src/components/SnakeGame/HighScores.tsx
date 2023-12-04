@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import { SnakeGameState, Difficulty, DEFAULT_LENGTH } from "./types";
+import { getSnakeGameHistory } from "./utils";
 
 export type HighScoreSchema = {
   state: SnakeGameState;
@@ -7,23 +8,27 @@ export type HighScoreSchema = {
 };
 
 export const HighScores: React.FC<{
-  gameHistory: HighScoreSchema[];
   difficulty: Difficulty;
   length: number;
-}> = ({ gameHistory, difficulty, length }) => {
+}> = ({ difficulty, length }) => {
+  const gameHistory = getSnakeGameHistory();
   const history = gameHistory.filter((item) => item.difficulty === difficulty);
-  const lastScore = useRef<number>(length - DEFAULT_LENGTH);
-  if (lastScore.current > length) {
-    lastScore.current = 0;
-  } else if (length !== lastScore.current + 1) {
-    lastScore.current++;
+  const lastScoreRef = useRef<number>(length - DEFAULT_LENGTH);
+  if (lastScoreRef.current > length) {
+    lastScoreRef.current = 0;
+  } else if (length !== lastScoreRef.current + 1) {
+    lastScoreRef.current++;
   }
+
+  const currentScore = length - DEFAULT_LENGTH;
+  const lastScore = lastScoreRef.current - DEFAULT_LENGTH;
+
   return (
     <div className="scores-container">
       <div className="game-score">
         <div key={`count_${length}`} className="scoreboard-counter">
-          <h1>{lastScore.current - DEFAULT_LENGTH}</h1>
-          <h1>{length - DEFAULT_LENGTH}</h1>
+          <h1>{lastScore < 0 ? "--" : lastScore}</h1>
+          <h1>{currentScore}</h1>
         </div>
       </div>
       {history.length > 0 && (

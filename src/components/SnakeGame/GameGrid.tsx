@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { TouchEvent, useCallback, useRef } from "react";
 import {
   DEFAULT_LENGTH,
   Difficulty,
@@ -7,12 +7,19 @@ import {
   GameState,
   INITIAL_DIRECTION,
   SNAKE_GRID_ID,
+  SnakeGameCache,
   SnakeGameState,
   Tile,
   TileStates,
   UpdateSnakeGameState,
 } from ".";
-import { useKeydownEffect, useMoveEffect, useApple } from "./utils";
+import {
+  useKeydownEffect,
+  useMoveEffect,
+  useApple,
+  useSnakeGameTouchEvents,
+} from "./utils";
+import { SnakeDirection } from "./utils/SnakeDirection";
 
 export const GameGrid: React.FC<{
   snakeGameState: SnakeGameState;
@@ -36,10 +43,6 @@ export const GameGrid: React.FC<{
   max,
 }) => {
   const { gameState, apple, length, position } = snakeGameState;
-  const direction = useRef<Directions>(INITIAL_DIRECTION);
-  const lastPositions = useRef<Set<number>>(
-    new Set([position - 1, position - 2])
-  );
 
   // deltas based on grid width
   const deltas = {
@@ -49,11 +52,25 @@ export const GameGrid: React.FC<{
     [Directions.Bottom]: total,
   };
 
+  // values outside of render
+  const gameCache = useRef<SnakeGameCache>({
+    direction: new SnakeDirection(INITIAL_DIRECTION, deltas, position),
+    lastPositions: new Set([position - 1, position - 2]),
+  });
+
+  gameCache.current.direction.position = position;
+
+  const { onTouchEnd, onTouchMove, onTouchStart } = useSnakeGameTouchEvents({
+    direction: gameCache.current.direction,
+  });
+
+  // resta7rt
   const restartGame = useCallback(() => {
-    lastPositions.current.clear();
-    lastPositions.current.add(centerPoint - 1);
-    lastPositions.current.add(centerPoint - 2);
-    direction.current = INITIAL_DIRECTION;
+    gameCache.current.lastPositions.clear();
+    gameCache.current.lastPositions.add(centerPoint - 1);
+    gameCache.current.lastPositions.add(centerPoint - 2);
+    gameCache.current.direction.reset(centerPoint, centerPoint - 1);
+
     updateGameState({
       gameState: GameState.Start,
       apple: undefined,
@@ -62,6 +79,16 @@ export const GameGrid: React.FC<{
     });
   }, [centerPoint, updateGameState]);
 
+  // pause, play, restart trigger
+  const gameStateHandler = useCallback(() => {
+    if (gameState === GameState.Dead) {
+      restartGame();
+    } else if (gameState === GameState.Pause || gameState === GameState.Idle) {
+      updateGameState({ gameState: GameState.Start });
+    }
+  }, [gameState, restartGame, updateGameState]);
+
+  // update snake position
   const setPosition = useCallback(
     (position: number) => {
       updateGameState({
@@ -75,7 +102,7 @@ export const GameGrid: React.FC<{
   useApple({
     position,
     total,
-    lastPositions,
+    lastPositions: gameCache.current.lastPositions,
     length,
     updateGameState,
     difficulty,
@@ -86,13 +113,11 @@ export const GameGrid: React.FC<{
 
   // move effect
   useMoveEffect({
-    lastPositions,
     gameState,
     position,
     deltas,
     length,
     tick,
-    direction,
     apple,
     total,
     setPosition,
@@ -100,25 +125,22 @@ export const GameGrid: React.FC<{
     max,
     endGame,
     centerPoint,
+    gameCache: gameCache.current,
   });
 
   const keydownEffect = useKeydownEffect({
-    lastPositions,
+    gameCache: gameCache.current,
     gameState,
-    direction,
-    position,
-    deltas,
-    length,
-    restartGame,
     updateGameState,
+    gameStateHandler,
   });
 
   // build grid
   let gridList = [];
   for (let i = 0; i < max; i++) {
     const bodyIndex =
-      lastPositions.current.has(i) &&
-      Array.from(lastPositions.current).indexOf(i);
+      gameCache.current.lastPositions.has(i) &&
+      Array.from(gameCache.current.lastPositions).indexOf(i);
     gridList.push(
       <Tile
         bodyIndex={bodyIndex}
@@ -142,6 +164,12 @@ export const GameGrid: React.FC<{
     <div
       className="grid"
       id={SNAKE_GRID_ID}
+      onTouchMove={onTouchMove}
+      onTouchStart={(e: TouchEvent<HTMLDivElement>) => {
+        onTouchStart(e);
+        gameStateHandler();
+      }}
+      onTouchEnd={onTouchEnd}
       onKeyDown={keydownEffect}
       tabIndex={0}
       onBlur={() =>

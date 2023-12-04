@@ -20,7 +20,7 @@ export const useApple = ({
 }: {
   position: number;
   total: number;
-  lastPositions: React.MutableRefObject<Set<number>>;
+  lastPositions: Set<number>;
   length: number;
   updateGameState: UpdateSnakeGameState;
   difficulty: Difficulty;
@@ -49,7 +49,7 @@ export const useApple = ({
             position + total - 1,
             position - total - 1,
             // snake body
-            ...Array.from(lastPositions.current).slice(0, length + 1),
+            ...Array.from(lastPositions).slice(0, length + 1),
           ].reduce((prev: number[], current) => {
             return [
               ...prev,

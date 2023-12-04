@@ -169,3 +169,11 @@
     bottom: 10vh;
   }
 }
+
+#portfolio-snake-game {
+  text-align: center;
+  .grid {
+    box-shadow: 0 28px 50px -28px #000;
+    position: relative;
+  }
+}
