@@ -80,10 +80,9 @@ export const useMoveEffect = ({
           else if (isPassedTop) newPosition = position + max - total;
           else if (isPassedBottom) newPosition = position - max + total;
         }
-
-        lastTick.current = tick;
         setPosition(newPosition);
       }
+      lastTick.current = tick;
     }
   }, [
     position,
@@ -97,7 +96,6 @@ export const useMoveEffect = ({
     borderIsOutOfBounds,
     apple?.boundaries,
     endGame,
-    lastTick,
     setPosition,
     gameCache,
   ]);
