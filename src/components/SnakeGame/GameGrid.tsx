@@ -18,8 +18,10 @@ import {
   useMoveEffect,
   useApple,
   useSnakeGameTouchEvents,
+  useKeyupEffect,
 } from "./utils";
 import { SnakeDirection } from "./utils/SnakeDirection";
+import { SnakeGameContentBox } from "./SnakeGameContentBox";
 
 export const GameGrid: React.FC<{
   snakeGameState: SnakeGameState;
@@ -135,6 +137,10 @@ export const GameGrid: React.FC<{
     gameStateHandler,
   });
 
+  const keyupEffect = useKeyupEffect({
+    gameCache: gameCache.current,
+  });
+
   // build grid
   let gridList = [];
   for (let i = 0; i < max; i++) {
@@ -171,6 +177,7 @@ export const GameGrid: React.FC<{
       }}
       onTouchEnd={onTouchEnd}
       onKeyDown={keydownEffect}
+      onKeyUp={keyupEffect}
       tabIndex={0}
       onBlur={() =>
         gameState === GameState.Start &&
@@ -180,25 +187,7 @@ export const GameGrid: React.FC<{
       }
     >
       {gridList}
-      {gameState === GameState.Dead && (
-        <div className="snake-game-info-box">
-          <h1>Game Over</h1>
-          <p>Press Spacebar to restart</p>
-        </div>
-      )}
-      {gameState === GameState.Pause && (
-        <div className="snake-game-info-box">
-          <h1>Game Paused</h1>
-          <p>Press Spacebar to continue</p>
-        </div>
-      )}
-      {gameState === GameState.Idle && (
-        <div className="snake-game-info-box">
-          <h1>React Snake</h1>
-          <p>W, A, S, D - Snake Movement</p>
-          <p>Spacebar - Pause/Continue/Restart</p>
-        </div>
-      )}
+      <SnakeGameContentBox gameState={gameState} />
     </div>
   );
 };
