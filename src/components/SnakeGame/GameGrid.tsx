@@ -176,8 +176,8 @@ export const GameGrid: React.FC<{
         gameStateHandler();
       }}
       onTouchEnd={onTouchEnd}
-      onKeyDown={keydownEffect}
-      onKeyUp={keyupEffect}
+      onKeyDownCapture={keydownEffect}
+      onKeyUpCapture={keyupEffect}
       tabIndex={0}
       onBlur={() =>
         gameState === GameState.Start &&

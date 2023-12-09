@@ -103,7 +103,9 @@
     animation-timing-function: ease-out;
   }
   .small-rect-home {
-    width: 200px;
+    svg {
+      width: 200px;
+    }
     height: 25px;
     position: absolute;
     bottom: auto;
@@ -111,18 +113,18 @@
     right: auto;
     top: auto;
   }
-  #gradient_rect_lg,
-  #gradient_rect_lg_2 {
+  #gradient_rect_lgg svg,
+  #gradient_rect_lgg_2 svg {
     width: 300px;
     height: 150px;
   }
   @include tablet {
-    .small-rect-home {
+    .small-rect-home svg {
       width: 800px;
       height: 32px;
     }
-    #gradient_rect_lg,
-    #gradient_rect_lg_2 {
+    #gradient_rect_lgg svg,
+    #gradient_rect_lgg_2 svg {
       width: 800px;
       height: 200px;
     }
@@ -152,18 +154,18 @@
     bottom: 24vh;
     left: -12vw;
   }
-  #gradient_rect_lg {
+  #gradient_rect_lgg {
     animation-duration: 10 + random(10) + s;
     position: absolute;
-    right: -20vw;
+    right: -30%;
     left: auto;
     top: auto;
     bottom: 20vh;
   }
-  #gradient_rect_lg_2 {
+  #gradient_rect_lgg_2 {
     animation-duration: 10 + random(10) + s;
     position: absolute;
-    right: -14vw;
+    right: -20%;
     left: auto;
     top: auto;
     bottom: 10vh;

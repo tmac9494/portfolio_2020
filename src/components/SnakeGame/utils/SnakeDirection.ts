@@ -19,11 +19,9 @@ export class SnakeDirection {
     this.keystore = [];
   }
 
-  // add/remove directions
+  // add/remove keyboard direction events
   addKey = (key: Directions) => {
-    if (this.keystore.includes(key)) {
-      this.keystore = this.keystore.filter((value) => value !== key);
-    }
+    if (this.keystore.includes(key)) this.removeKey(key);
     this.keystore.push(key);
   };
   removeKey = (key: Directions) => {
@@ -47,7 +45,7 @@ export class SnakeDirection {
     }
   };
 
-  // direction events
+  // direction triggers
   toTop = () => {
     if (this.lastPosition !== this.position + this.deltas[Directions.Top])
       this.direction = Directions.Top;
@@ -65,15 +63,27 @@ export class SnakeDirection {
       this.direction = Directions.Bottom;
   };
 
+  // keyboard events
   removeTopKey = () => this.removeKey(Directions.Top);
   removeLeftKey = () => this.removeKey(Directions.Left);
   removeRightKey = () => this.removeKey(Directions.Right);
   removeBottomKey = () => this.removeKey(Directions.Bottom);
-
-  addTopKey = () => this.addKey(Directions.Top);
-  addLeftKey = () => this.addKey(Directions.Left);
-  addRightKey = () => this.addKey(Directions.Right);
-  addBottomKey = () => this.addKey(Directions.Bottom);
+  addTopKey = () => {
+    this.addKey(Directions.Top);
+    this.toTop();
+  };
+  addLeftKey = () => {
+    this.addKey(Directions.Left);
+    this.toLeft();
+  };
+  addRightKey = () => {
+    this.addKey(Directions.Right);
+    this.toRight();
+  };
+  addBottomKey = () => {
+    this.addKey(Directions.Bottom);
+    this.toBottom();
+  };
 
   // reset
   reset = (position: number, lastPosition: number) => {

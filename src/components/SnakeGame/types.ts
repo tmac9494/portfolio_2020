@@ -28,24 +28,6 @@ export enum Difficulty {
   Hard = "Hard",
 }
 
-export const difficulties: Record<Difficulty, DifficultySetting> = {
-  [Difficulty.Easy]: {
-    name: Difficulty.Easy,
-    interval: 160,
-    borderOutOfBounds: false,
-  },
-  [Difficulty.Normal]: {
-    name: Difficulty.Normal,
-    interval: 160,
-    borderOutOfBounds: true,
-  },
-  [Difficulty.Hard]: {
-    name: Difficulty.Hard,
-    interval: 140,
-    borderOutOfBounds: true,
-  },
-};
-
 export enum TileStates {
   Apple = "apple",
   Head = "head",
@@ -67,6 +49,20 @@ export enum GameState {
   Pause = "pause",
   Dead = "Dead",
 }
+
+export enum SnakeGameDirectionKeys {
+  W = "w",
+  A = "a",
+  S = "s",
+  D = "d",
+}
+
+export type GameDeltas = Record<Directions, number>;
+
+export type SnakeGameCache = {
+  direction: SnakeDirection;
+  lastPositions: Set<number>;
+};
 
 export class AppleTile {
   location: number;
@@ -97,11 +93,22 @@ export class AppleTile {
   }
 }
 
-export type GameDeltas = Record<Directions, number>;
-
-export type SnakeGameCache = {
-  direction: SnakeDirection;
-  lastPositions: Set<number>;
+export const difficulties: Record<Difficulty, DifficultySetting> = {
+  [Difficulty.Easy]: {
+    name: Difficulty.Easy,
+    interval: 180,
+    borderOutOfBounds: false,
+  },
+  [Difficulty.Normal]: {
+    name: Difficulty.Normal,
+    interval: 180,
+    borderOutOfBounds: true,
+  },
+  [Difficulty.Hard]: {
+    name: Difficulty.Hard,
+    interval: 160,
+    borderOutOfBounds: true,
+  },
 };
 
 export const TILE_SIZE = 25;

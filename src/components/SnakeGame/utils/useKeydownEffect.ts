@@ -31,19 +31,15 @@ export const useKeydownEffect = ({
       switch (e.key.toLowerCase()) {
         case SnakeGameDirectionKeys.W:
           gameCache.direction.addTopKey();
-          gameCache.direction.toTop();
           break;
         case SnakeGameDirectionKeys.S:
           gameCache.direction.addBottomKey();
-          gameCache.direction.toBottom();
           break;
         case SnakeGameDirectionKeys.A:
           gameCache.direction.addLeftKey();
-          gameCache.direction.toLeft();
           break;
         case SnakeGameDirectionKeys.D:
           gameCache.direction.addRightKey();
-          gameCache.direction.toRight();
           break;
       }
     }
