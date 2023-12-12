@@ -1,3 +1,4 @@
+import { AppleTile } from "./utils";
 import { SnakeDirection } from "./utils/SnakeDirection";
 
 export type SnakeGameConfig = {
@@ -12,6 +13,7 @@ export interface SnakeGameState extends SnakeGameConfig {
   length: number;
   apple?: AppleTile;
   position: number;
+  difficulty: Difficulty;
 }
 
 export type UpdateSnakeGameState = (overrides: Partial<SnakeGameState>) => void;
@@ -28,30 +30,14 @@ export enum Difficulty {
   Hard = "Hard",
 }
 
-export const difficulties: Record<Difficulty, DifficultySetting> = {
-  [Difficulty.Easy]: {
-    name: Difficulty.Easy,
-    interval: 160,
-    borderOutOfBounds: false,
-  },
-  [Difficulty.Normal]: {
-    name: Difficulty.Normal,
-    interval: 160,
-    borderOutOfBounds: true,
-  },
-  [Difficulty.Hard]: {
-    name: Difficulty.Hard,
-    interval: 140,
-    borderOutOfBounds: true,
-  },
-};
-
 export enum TileStates {
+  Buffer = "buffer",
   Apple = "apple",
   Head = "head",
   Body = "body",
   Inactive = "inactive",
   Obstacle = "obstacle",
+  Hypercube = "hypercube",
 }
 
 export enum Directions {
@@ -68,33 +54,11 @@ export enum GameState {
   Dead = "Dead",
 }
 
-export class AppleTile {
-  location: number;
-  boundaries: Set<number>;
-  constructor({
-    location,
-    hasBoundaries,
-    gridWidth,
-  }: {
-    location: number;
-    hasBoundaries?: boolean;
-    gridWidth: number;
-  }) {
-    this.location = location;
-    this.boundaries = new Set([]);
-    if (hasBoundaries) {
-      const prevRow = location - gridWidth;
-      const nextRow = location + gridWidth;
-      if ((location + 1) % gridWidth !== 0) {
-        this.boundaries.add(nextRow + 1);
-        this.boundaries.add(prevRow + 1);
-      }
-      if (location % gridWidth !== 0) {
-        this.boundaries.add(nextRow - 1);
-        this.boundaries.add(prevRow - 1);
-      }
-    }
-  }
+export enum SnakeGameDirectionKeys {
+  W = "w",
+  A = "a",
+  S = "s",
+  D = "d",
 }
 
 export type GameDeltas = Record<Directions, number>;
@@ -104,7 +68,25 @@ export type SnakeGameCache = {
   lastPositions: Set<number>;
 };
 
-export const TILE_SIZE = 25;
+export const difficulties: Record<Difficulty, DifficultySetting> = {
+  [Difficulty.Easy]: {
+    name: Difficulty.Easy,
+    interval: 200,
+    borderOutOfBounds: false,
+  },
+  [Difficulty.Normal]: {
+    name: Difficulty.Normal,
+    interval: 200,
+    borderOutOfBounds: true,
+  },
+  [Difficulty.Hard]: {
+    name: Difficulty.Hard,
+    interval: 180,
+    borderOutOfBounds: true,
+  },
+};
+
+export const TILE_SIZE = window.innerWidth <= 800 ? 25 : 32;
 export const GRID_WIDTH = 15;
 export const DEFAULT_LENGTH = 2;
 export const BORDER_OUT_OF_BOUNDS = true;
@@ -119,6 +101,8 @@ export const INITIAL_GAME_STATE: SnakeGameState = {
   length: DEFAULT_LENGTH,
   borderOutOfBounds: difficulties.Normal.borderOutOfBounds,
   position: 0,
+  difficulty: Difficulty.Normal,
 };
 export const SNAKE_GRID_ID = "snake_game_grid";
+export const SNAKE_CONTAINER_ID = "snake_game_container";
 export const MINIMUM_SWIPE_DISTANCE = 25;

@@ -99,9 +99,6 @@
   //   max-height: 800px
   // }
   .top-content {
-    // position: absolute;
-    // top: 10%;
-    // left: 10%;
     max-width: 100%;
     width: 650px;
   }
@@ -115,8 +112,11 @@
   }
   @include tablet {
     padding-top: 0;
-    padding-top: 5%;
-    padding-left: 10%;
+    .top-content {
+      position: absolute;
+      top: 10%;
+      left: 10%;
+    }
     .content-wrap {
       margin-left: 35px;
     }
@@ -144,6 +144,6 @@
   // transition: transform  .28s ease-in-out;
   z-index: 1;
   svg {
-    display: block;
+    display: inline-block;
   }
 }

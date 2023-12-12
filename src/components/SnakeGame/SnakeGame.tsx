@@ -1,104 +1,61 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { GameGrid } from "./GameGrid";
 import "./styles.scss";
-import {
-  DEFAULT_LENGTH,
-  Difficulty,
-  GameState,
-  HISTORY_STORAGE_KEY,
-  INITIAL_GAME_STATE,
-  SnakeGameState,
-  TILE_SIZE,
-  UpdateSnakeGameState,
-  difficulties,
-} from "./types";
+import { SnakeGameState, TILE_SIZE, difficulties } from "./types";
 import { DifficultyOptions } from "./DifficultyOptions";
 import { HighScores } from "./HighScores";
-import { getSnakeGameHistory } from "./utils";
+import { SnakeGameInstance } from "./utils/SnakeGameInstance";
 
 export const SnakeGame: React.FC<{
   size: number;
-}> = ({ size = 15 }) => {
-  // difficulty state
-  const [difficulty, setDifficulty] = useState<Difficulty>(Difficulty.Normal);
+  debug?: boolean;
+}> = ({ size = 15, debug = false }) => {
+  // game state
+  const [gameState, setGameState] = useState<SnakeGameState>();
 
-  // track game ticks
-  const [tick, setTick] = useState<number>(0);
-
-  // snake game state
-  const max = Math.floor(size * size);
-  const centerPoint = Math.ceil((max - 1) / 2);
-  const [snakeGameState, setSnakeGameState] = useState<SnakeGameState>({
-    ...INITIAL_GAME_STATE,
-    position: centerPoint,
-  });
-  const { gameState } = snakeGameState;
-  const { interval, borderOutOfBounds } = difficulties[difficulty];
-
-  // game state update handler
-  const updateGameState: UpdateSnakeGameState = useCallback(
-    (overrides) => {
-      setSnakeGameState({
-        ...snakeGameState,
-        ...overrides,
-      });
-    },
-    [snakeGameState]
+  // game instance logic outside of react render cycle
+  const gameInstance = useRef(
+    new SnakeGameInstance({
+      gridWidth: size,
+      renderDispatch: setGameState,
+      debug,
+    })
   );
 
-  // core render ticker
+  // initial game render/setup/cleanup
   useEffect(() => {
-    const isMobile = window.innerWidth < 800;
-    const tickTimeout = setTimeout(() => {
-      if (gameState === GameState.Start) {
-        setTick(tick + 1);
-      }
-    }, interval + (isMobile ? 50 : 0));
-    return () => clearTimeout(tickTimeout);
-  }, [tick, interval, gameState]);
+    const currentRef = gameInstance.current;
+    currentRef.renderGame();
+    currentRef.startGameTicker();
+    return () => currentRef.cleanUp();
+  }, []);
 
-  // end game effect
-  const endGame = useCallback(() => {
-    let gameHistory = getSnakeGameHistory();
-    if (
-      snakeGameState.length - DEFAULT_LENGTH !== 0 &&
-      !gameHistory.find(
-        (item) =>
-          item.difficulty === difficulty &&
-          item.state.length === snakeGameState.length
-      )
-    ) {
-      gameHistory.push({ state: snakeGameState, difficulty });
-      localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(gameHistory));
-    }
-    updateGameState({
-      gameState: GameState.Dead,
-    });
-  }, [updateGameState, snakeGameState, difficulty]);
+  // null until state setup
+  if (gameState === undefined) {
+    return null;
+  }
 
   return (
     <>
       <div
         id="snake-game"
-        className={`${difficulty}`}
+        className={`${gameState.difficulty}`}
         style={{ maxWidth: TILE_SIZE * size + 2 + "px" }}
+        onTouchMove={gameInstance.current.onTouchMove}
+        onTouchStart={gameInstance.current.onTouchStart}
+        onTouchEnd={gameInstance.current.onTouchEnd}
+        onKeyDown={gameInstance.current.onKeyDown}
+        onKeyUp={gameInstance.current.onKeyUp}
       >
-        <GameGrid
-          updateGameState={updateGameState}
-          endGame={endGame}
-          snakeGameState={snakeGameState}
-          tick={tick}
-          difficulty={difficulty}
-          total={size}
-          borderIsOutOfBounds={borderOutOfBounds}
-          centerPoint={centerPoint}
-          max={max}
+        <GameGrid gameState={gameState} gameInstance={gameInstance.current} />
+        <HighScores
+          difficulty={gameState.difficulty}
+          length={gameState.length}
         />
-        <HighScores difficulty={difficulty} length={snakeGameState.length} />
       </div>
       <DifficultyOptions
-        difficulty={difficulty}
-        setDifficulty={setDifficulty}
+        difficulty={gameState.difficulty}
+        setDifficulty={gameInstance.current.changeDifficulty}
       />
     </>
   );
