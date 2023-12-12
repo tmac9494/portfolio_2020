@@ -9,6 +9,7 @@ import {
   difficulties,
   TILE_SIZE,
   SnakeGameState,
+  TileStates,
 } from "../types";
 import { SnakeDirection } from "./SnakeDirection";
 import { saveSnakeGameHistory } from "./get-game-history";
@@ -21,9 +22,11 @@ type InstanceConstructorParams = {
   renderDispatch: React.Dispatch<
     React.SetStateAction<SnakeGameState | undefined>
   >;
+  debug?: boolean;
 };
 
 export class SnakeGameInstance {
+  debug: boolean;
   isMobile: boolean;
   centerPoint: number;
   gameState: GameState;
@@ -39,6 +42,7 @@ export class SnakeGameInstance {
   hyperCube?: HyperCube;
   touch: SnakeGameTouchHandler;
   lastUpdateTimestamp: number;
+  tickerInterval?: NodeJS.Timeout;
   onTouchStart: (e: TouchEvent<HTMLDivElement>) => void;
   onTouchMove: (e: TouchEvent<HTMLDivElement>) => void;
   onTouchEnd: (e: TouchEvent<HTMLDivElement>) => void;
@@ -46,8 +50,9 @@ export class SnakeGameInstance {
     React.SetStateAction<SnakeGameState | undefined>
   >;
 
-  constructor({ gridWidth, renderDispatch }: InstanceConstructorParams) {
+  constructor({ gridWidth, renderDispatch, debug }: InstanceConstructorParams) {
     this.lastUpdateTimestamp = Date.now();
+    this.debug = !!debug;
     const max = gridWidth * gridWidth;
     const centerPoint = Math.ceil((max - 1) / 2);
     const deltas = {
@@ -108,9 +113,10 @@ export class SnakeGameInstance {
   };
 
   // ------- render ticker callback to react
-  getGameTicker = () => {
+  startGameTicker = () => {
+    this.clearGameTicker();
     const { interval } = difficulties[this.difficulty];
-    return setInterval(() => {
+    this.tickerInterval = setInterval(() => {
       if (this.gameState === GameState.Start) {
         const requiredDelta = interval + (this.isMobile ? 50 : 0);
         if (
@@ -125,54 +131,8 @@ export class SnakeGameInstance {
     }, 17);
   };
 
-  // -------- core game state events
-  setNewGameState = () => {
-    this.gameState = GameState.Idle;
-    this.length = DEFAULT_LENGTH;
-    this.position = this.centerPoint;
-    this.direction.reset(this.centerPoint, this.centerPoint - 1);
-    this.apple.clear();
-    this?.hyperCube?.cleanUp();
-    this.lastPositions.clear();
-    this.lastPositions.add(this.centerPoint - 1);
-    this.lastPositions.add(this.centerPoint - 2);
-    this.generateApple();
-    this.renderGame();
-  };
+  clearGameTicker = () => clearInterval(this.tickerInterval);
 
-  restartGame = () => {
-    this.setNewGameState();
-    this.startGame();
-  };
-  startGame = () => {
-    this.gameState = GameState.Start;
-    this.renderGame();
-  };
-  pauseGame = () => {
-    this.gameState = GameState.Pause;
-    this.renderGame();
-  };
-  endGame = () => {
-    saveSnakeGameHistory({
-      state: this.getCurrentGameState(),
-      difficulty: this.difficulty,
-    });
-    this.gameState = GameState.Dead;
-    this.renderGame();
-  };
-
-  gameStateHandler = () => {
-    if (this.gameState === GameState.Dead) {
-      this.restartGame();
-    } else if (
-      this.gameState === GameState.Pause ||
-      this.gameState === GameState.Idle
-    ) {
-      this.startGame();
-    }
-  };
-
-  // -------- Tick/Move event
   gameTick = () => {
     let newPosition = this.position + this.deltas[this.direction.direction];
     const { borderOutOfBounds } = difficulties[this.difficulty];
@@ -231,6 +191,53 @@ export class SnakeGameInstance {
     this.direction.checkKeys();
   };
 
+  // -------- core game state events
+  setNewGameState = () => {
+    this.gameState = GameState.Idle;
+    this.length = DEFAULT_LENGTH;
+    this.position = this.centerPoint;
+    this.direction.reset(this.centerPoint, this.centerPoint - 1);
+    this.apple.clear();
+    this?.hyperCube?.cleanUp();
+    this.lastPositions.clear();
+    this.lastPositions.add(this.centerPoint - 1);
+    this.lastPositions.add(this.centerPoint - 2);
+    this.generateApple();
+    this.renderGame();
+  };
+
+  restartGame = () => {
+    this.setNewGameState();
+    this.startGame();
+  };
+  startGame = () => {
+    this.gameState = GameState.Start;
+    this.renderGame();
+  };
+  pauseGame = () => {
+    this.gameState = GameState.Pause;
+    this.renderGame();
+  };
+  endGame = () => {
+    saveSnakeGameHistory({
+      state: this.getCurrentGameState(),
+      difficulty: this.difficulty,
+    });
+    this.gameState = GameState.Dead;
+    this.renderGame();
+  };
+
+  gameStateHandler = () => {
+    if (this.gameState === GameState.Dead) {
+      this.restartGame();
+    } else if (
+      this.gameState === GameState.Pause ||
+      this.gameState === GameState.Idle
+    ) {
+      this.startGame();
+    }
+  };
+
   // --------- Snake buffer for item spacing
   getSnakeBuffer = () => {
     const position = this.position;
@@ -238,9 +245,7 @@ export class SnakeGameInstance {
       // create larger buffer around snake's head
       position,
       position + 1,
-      position + 2,
       position - 1,
-      position - 2,
       position + this.gridWidth,
       position - this.gridWidth,
       position + this.gridWidth + 1,
@@ -249,7 +254,16 @@ export class SnakeGameInstance {
       position - this.gridWidth - 1,
       // snake body
       ...Array.from(this.lastPositions).slice(0, this.length + 1),
-    ];
+    ].reduce((prev: number[], current) => {
+      return [
+        ...prev,
+        current,
+        current - this.gridWidth,
+        current + this.gridWidth,
+        current - 1,
+        current + 1,
+      ];
+    }, []);
   };
 
   // -------- apple stuff
@@ -272,15 +286,16 @@ export class SnakeGameInstance {
       buffer: [...this.getSnakeBuffer(), this?.hyperCube?.location || 0],
     });
 
-  // -------- difficulty even/t
+  // -------- difficulty event
   changeDifficulty = (difficulty: Difficulty) => {
     this.difficulty = difficulty;
     this.apple.hasBoundaries = difficulty === Difficulty.Hard;
+    this.startGameTicker();
     this.setNewGameState();
   };
 
   // -------- User Interaction events
-  getDirectionKeyMethod = (key: string) =>
+  getDirectionKeyMethods = (key: string) =>
     this.direction.keyEvents[key.toLowerCase() as SnakeGameDirectionKeys];
   onKeyDown = (e: React.KeyboardEvent) => {
     if (e.key.toLowerCase() === " ") {
@@ -291,17 +306,49 @@ export class SnakeGameInstance {
         this.gameStateHandler();
       }
     } else {
-      const method = this.getDirectionKeyMethod(e.key);
-      method && method[0]();
+      const methods = this.getDirectionKeyMethods(e.key);
+      methods && methods[0]();
     }
   };
   onKeyUp = (e: React.KeyboardEvent) => {
-    const method = this.getDirectionKeyMethod(e.key);
-    method && method[1]();
+    const methods = this.getDirectionKeyMethods(e.key);
+    methods && methods[1]();
   };
 
-  // cleanup
+  // -------- get tile type by index
+  getTileTypeByIndex = (index: number) => {
+    let tileType: TileStates = TileStates.Inactive;
+
+    if (this.debug && this.getSnakeBuffer().includes(index)) {
+      tileType = TileStates.Buffer;
+    }
+
+    if (this.apple?.boundaries.has(index)) {
+      tileType = TileStates.Obstacle;
+    } else if (
+      this.lastPositions.has(index) &&
+      Array.from(this.lastPositions).indexOf(index) < this.length
+    ) {
+      tileType = TileStates.Body;
+    } else {
+      switch (index) {
+        case this.position:
+          tileType = TileStates.Head;
+          break;
+        case this.apple.location:
+          tileType = TileStates.Apple;
+          break;
+        case this.hyperCube?.location:
+          tileType = TileStates.Hypercube;
+          break;
+      }
+    }
+    return tileType;
+  };
+
+  // -------- cleanup
   cleanUp = () => {
+    this.clearGameTicker();
     this.hyperCube?.cleanUp();
   };
 }

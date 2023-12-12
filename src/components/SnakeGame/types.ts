@@ -31,6 +31,7 @@ export enum Difficulty {
 }
 
 export enum TileStates {
+  Buffer = "buffer",
   Apple = "apple",
   Head = "head",
   Body = "body",
@@ -85,7 +86,7 @@ export const difficulties: Record<Difficulty, DifficultySetting> = {
   },
 };
 
-export const TILE_SIZE = 25;
+export const TILE_SIZE = window.innerWidth <= 800 ? 25 : 32;
 export const GRID_WIDTH = 15;
 export const DEFAULT_LENGTH = 2;
 export const BORDER_OUT_OF_BOUNDS = true;

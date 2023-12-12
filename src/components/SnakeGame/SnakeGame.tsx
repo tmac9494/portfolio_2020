@@ -8,29 +8,27 @@ import { SnakeGameInstance } from "./utils/SnakeGameInstance";
 
 export const SnakeGame: React.FC<{
   size: number;
-}> = ({ size = 15 }) => {
+  debug?: boolean;
+}> = ({ size = 15, debug = false }) => {
   // game state
   const [gameState, setGameState] = useState<SnakeGameState>();
 
-  // game instance logic
+  // game instance logic outside of react render cycle
   const gameInstance = useRef(
-    new SnakeGameInstance({ gridWidth: size, renderDispatch: setGameState })
+    new SnakeGameInstance({
+      gridWidth: size,
+      renderDispatch: setGameState,
+      debug,
+    })
   );
-  // initial game render
+
+  // initial game render/setup/cleanup
   useEffect(() => {
-    gameInstance.current.renderGame();
-    return () => gameInstance.current.cleanUp();
+    const currentRef = gameInstance.current;
+    currentRef.renderGame();
+    currentRef.startGameTicker();
+    return () => currentRef.cleanUp();
   }, []);
-
-  const { interval } = gameState
-    ? difficulties[gameState.difficulty]
-    : difficulties[gameInstance.current.difficulty];
-
-  // core render ticker
-  useEffect(() => {
-    const tickInterval = gameInstance.current.getGameTicker();
-    return () => clearInterval(tickInterval);
-  }, [interval]);
 
   // null until state setup
   if (gameState === undefined) {

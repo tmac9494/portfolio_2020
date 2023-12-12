@@ -44,18 +44,7 @@ export class AppleTile {
     buffer: number[];
   }) => {
     const generatePosition = () => Math.floor(Math.random() * max);
-    const snakeBuffer = new Set(
-      buffer.reduce((prev: number[], current) => {
-        return [
-          ...prev,
-          current,
-          current - this.gridWidth,
-          current + this.gridWidth,
-          current - 1,
-          current + 1,
-        ];
-      }, [])
-    );
+    const snakeBuffer = new Set(buffer);
     let newPosition = position;
     do {
       newPosition = generatePosition();

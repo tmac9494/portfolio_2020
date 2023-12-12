@@ -68,6 +68,9 @@ $hypercubeColor: #00d9ff;
     box-shadow: 0 0 12px $hypercubeColor;
     animation: hypercube 0.38s 0.5s forwards infinite;
   }
+  .tile-type-buffer {
+    background: #000;
+  }
   .tile-type-obstacle {
     background: $borderColor;
     animation: obstacle 1s 0.5s forwards infinite;

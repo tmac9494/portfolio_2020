@@ -99,6 +99,7 @@ export const pageSettings: Record<string, PageSettings> = {
         {
           id: "skill_blob_lg_2",
           className: "skill-blob-lg",
+          weight: 12,
         },
       ],
       [
@@ -127,6 +128,7 @@ export const pageSettings: Record<string, PageSettings> = {
         {
           id: "skill_blob_sm_2",
           className: "skill-blob-sm",
+          weight: 8,
         },
       ],
       [
@@ -141,6 +143,7 @@ export const pageSettings: Record<string, PageSettings> = {
         {
           id: "skill_blob_sm_4",
           className: "skill-blob-sm",
+          weight: -8,
         },
       ],
       [
@@ -155,6 +158,7 @@ export const pageSettings: Record<string, PageSettings> = {
         {
           id: "skill_blob_sm_8",
           className: "skill-blob-sm",
+          weight: 50,
         },
       ],
       [
@@ -162,6 +166,7 @@ export const pageSettings: Record<string, PageSettings> = {
         {
           id: "skill_blob_sm_9",
           className: "skill-blob-sm",
+          weight: 10,
         },
       ],
     ],

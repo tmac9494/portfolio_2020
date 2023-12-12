@@ -1,5 +1,5 @@
-@import '../../../styles/mixins';
-@import '../../../styles/colors.scss';
+@import "../../../styles/mixins";
+@import "../../../styles/colors.scss";
 
 #resume_page {
   .content-wrap {
@@ -24,8 +24,10 @@
         margin-bottom: 4px;
       }
     }
-    span, p, h1 {
-      text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    span,
+    p,
+    h1 {
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
     }
   }
   @include tablet {
@@ -80,9 +82,9 @@
     color: $white;
     margin-top: 12px;
     border-radius: 2px;
-    border-bottom: 2px solid rgba(0,0,0,0.2);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.2);
     &:hover {
-      opacity: .9;
+      opacity: 0.9;
     }
   }
   .icon-accordion {
@@ -143,21 +145,31 @@
     width: 60px;
   }
 }
-#AFactorMarketing, #PlusSumInternetMarketing {
+#AFactorMarketing,
+#PlusSumInternetMarketing {
   .company-logo {
     margin-right: 18px;
     margin-top: 12px;
     border-radius: 5%;
   }
-} 
-
+}
 
 @keyframes bubble {
-  0% {transform: scale(1)}
-  25% {transform: scale(.8)}
-  50% {transform: scale(1)}
-  75% {transform: scale(.5)}
-  100% {transform: scale(1)}
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(0.8);
+  }
+  50% {
+    transform: scale(1);
+  }
+  75% {
+    transform: scale(0.5);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 //svgs
@@ -177,24 +189,30 @@
   #res_circ_btm {
     animation-duration: 14 + random(10) + s;
     position: absolute;
-    width: 80vw;
-    height: 55vw;
     bottom: -24vw;
     right: 5%;
+    svg {
+      width: 80vw;
+      height: 55vw;
+    }
   }
   #res_circ_top {
     animation-duration: 14 + random(10) + s;
-    width: 20vw;
-    height: 20vw;
     left: 60%;
     top: -20vw;
+    svg {
+      width: 20vw;
+      height: 20vw;
+    }
   }
   #res_circ_tl {
     animation-duration: 14 + random(10) + s;
     top: 5%;
     left: -1vw;
-    width: 20vw;
-    height: 20vw;
+    svg {
+      width: 20vw;
+      height: 20vw;
+    }
   }
   #res_circ_ml {
     animation-duration: 14 + random(10) + s;
@@ -202,12 +220,16 @@
     left: -2vw;
     width: 24vw;
     height: 30vw;
+    svg {
+    }
   }
   #res_circ_md {
     animation-duration: 14 + random(10) + s;
-    width: 18vw;
-    height: 18vw;
     top: 20vh;
     left: 40vw;
+    svg {
+      width: 18vw;
+      height: 18vw;
+    }
   }
 }

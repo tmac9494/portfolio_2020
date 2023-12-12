@@ -120,12 +120,12 @@
   }
   @include tablet {
     .small-rect-home svg {
-      width: 800px;
+      width: 600px;
       height: 32px;
     }
     #gradient_rect_lgg svg,
     #gradient_rect_lgg_2 svg {
-      width: 800px;
+      width: 500px;
       height: 200px;
     }
   }
@@ -157,7 +157,7 @@
   #gradient_rect_lgg {
     animation-duration: 10 + random(10) + s;
     position: absolute;
-    right: -30%;
+    right: -5vw;
     left: auto;
     top: auto;
     bottom: 20vh;
@@ -165,7 +165,7 @@
   #gradient_rect_lgg_2 {
     animation-duration: 10 + random(10) + s;
     position: absolute;
-    right: -20%;
+    right: -10vw;
     left: auto;
     top: auto;
     bottom: 10vh;

@@ -17,21 +17,7 @@ export const GameGrid: React.FC<{
       <Tile
         bodyIndex={bodyIndex}
         key={i}
-        tileState={
-          i === gameState.position
-            ? TileStates.Head
-            : i === gameState.apple?.location
-            ? TileStates.Apple
-            : i === gameInstance?.hyperCube?.location
-            ? TileStates.Hypercube
-            : i !== gameState.position &&
-              bodyIndex !== false &&
-              bodyIndex < gameState.length
-            ? TileStates.Body
-            : gameState.apple?.boundaries.has(i)
-            ? TileStates.Obstacle
-            : TileStates.Inactive
-        }
+        tileState={gameInstance.getTileTypeByIndex(i)}
       />
     );
   }
