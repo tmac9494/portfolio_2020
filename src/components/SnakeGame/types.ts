@@ -1,3 +1,4 @@
+import { AppleTile } from "./utils";
 import { SnakeDirection } from "./utils/SnakeDirection";
 
 export type SnakeGameConfig = {
@@ -12,6 +13,7 @@ export interface SnakeGameState extends SnakeGameConfig {
   length: number;
   apple?: AppleTile;
   position: number;
+  difficulty: Difficulty;
 }
 
 export type UpdateSnakeGameState = (overrides: Partial<SnakeGameState>) => void;
@@ -34,6 +36,7 @@ export enum TileStates {
   Body = "body",
   Inactive = "inactive",
   Obstacle = "obstacle",
+  Hypercube = "hypercube",
 }
 
 export enum Directions {
@@ -64,49 +67,20 @@ export type SnakeGameCache = {
   lastPositions: Set<number>;
 };
 
-export class AppleTile {
-  location: number;
-  boundaries: Set<number>;
-  constructor({
-    location,
-    hasBoundaries,
-    gridWidth,
-  }: {
-    location: number;
-    hasBoundaries?: boolean;
-    gridWidth: number;
-  }) {
-    this.location = location;
-    this.boundaries = new Set([]);
-    if (hasBoundaries) {
-      const prevRow = location - gridWidth;
-      const nextRow = location + gridWidth;
-      if ((location + 1) % gridWidth !== 0) {
-        this.boundaries.add(nextRow + 1);
-        this.boundaries.add(prevRow + 1);
-      }
-      if (location % gridWidth !== 0) {
-        this.boundaries.add(nextRow - 1);
-        this.boundaries.add(prevRow - 1);
-      }
-    }
-  }
-}
-
 export const difficulties: Record<Difficulty, DifficultySetting> = {
   [Difficulty.Easy]: {
     name: Difficulty.Easy,
-    interval: 180,
+    interval: 200,
     borderOutOfBounds: false,
   },
   [Difficulty.Normal]: {
     name: Difficulty.Normal,
-    interval: 180,
+    interval: 200,
     borderOutOfBounds: true,
   },
   [Difficulty.Hard]: {
     name: Difficulty.Hard,
-    interval: 160,
+    interval: 180,
     borderOutOfBounds: true,
   },
 };
@@ -126,6 +100,8 @@ export const INITIAL_GAME_STATE: SnakeGameState = {
   length: DEFAULT_LENGTH,
   borderOutOfBounds: difficulties.Normal.borderOutOfBounds,
   position: 0,
+  difficulty: Difficulty.Normal,
 };
 export const SNAKE_GRID_ID = "snake_game_grid";
+export const SNAKE_CONTAINER_ID = "snake_game_container";
 export const MINIMUM_SWIPE_DISTANCE = 25;

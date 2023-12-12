@@ -11,14 +11,19 @@ import { ReactComponent as ResCircMl } from "../../assets/res-circ-ml.svg";
 import { ReactComponent as ResCircTop } from "../../assets/res-circ-top.svg";
 import { ReactComponent as ResCircMd } from "../../assets/res-circ-md.svg";
 
-type ParallaxItemProps = {
+export type ParallaxItemProps = {
   id: string;
   delta: number;
   className?: string;
   weight?: number;
 };
 
-export type PageSettingsSvgs = [React.FC, Partial<ParallaxItemProps>][];
+export type PageSettingSvgItem = [
+  React.FC<{ style: any }>,
+  Partial<ParallaxItemProps>
+];
+
+export type PageSettingsSvgs = PageSettingSvgItem[];
 
 export type PageSettings = {
   color: string;
@@ -40,19 +45,25 @@ export const pageSettings: Record<string, PageSettings> = {
         SmallRect,
         { id: "home_sm_rect_2", className: "small-rect-home", weight: 20 },
       ],
-      [SmallRect, { id: "home_sm_rect_3", className: "small-rect-home" }],
-      [SmallRect, { id: "home_sm_rect_4", className: "small-rect-home" }],
+      [
+        SmallRect,
+        { id: "home_sm_rect_3", className: "small-rect-home", weight: -6 },
+      ],
+      [
+        SmallRect,
+        { id: "home_sm_rect_4", className: "small-rect-home", weight: 20 },
+      ],
       [SmallRect, { id: "home_sm_rect_5", className: "small-rect-home" }],
       [
         LargeRect,
-        { id: "gradient_rect_lgg", className: "large-rect-home", weight: 35 },
+        { id: "gradient_rect_lgg", className: "large-rect-home", weight: -5 },
       ],
       [
         LargeRect,
         {
           className: "large-rect-home",
           id: "gradient_rect_lgg_2",
-          weight: 25,
+          weight: 10,
         },
       ],
     ],

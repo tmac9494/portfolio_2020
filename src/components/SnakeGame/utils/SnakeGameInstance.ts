@@ -1,21 +1,30 @@
-import { TouchEvent } from "react";
+import React, { TouchEvent } from "react";
 import {
   GameState,
-  AppleTile,
   DEFAULT_LENGTH,
   INITIAL_DIRECTION,
   Directions,
   Difficulty,
   SnakeGameDirectionKeys,
-  MINIMUM_SWIPE_DISTANCE,
   difficulties,
-  HISTORY_STORAGE_KEY,
   TILE_SIZE,
+  SnakeGameState,
 } from "../types";
 import { SnakeDirection } from "./SnakeDirection";
-import { getSnakeGameHistory } from "./get-game-history";
+import { saveSnakeGameHistory } from "./get-game-history";
+import { SnakeGameTouchHandler } from "./SnakeGameTouchHandler";
+import { AppleTile } from "./AppleTile";
+import { HyperCube } from "./HyperCube";
+
+type InstanceConstructorParams = {
+  gridWidth: number;
+  renderDispatch: React.Dispatch<
+    React.SetStateAction<SnakeGameState | undefined>
+  >;
+};
 
 export class SnakeGameInstance {
+  isMobile: boolean;
   centerPoint: number;
   gameState: GameState;
   length: number;
@@ -26,13 +35,19 @@ export class SnakeGameInstance {
   direction: SnakeDirection;
   deltas: Record<Directions, number>;
   difficulty: Difficulty;
-  apple?: AppleTile;
-  touch: SnakeGameTouchEvents;
+  apple: AppleTile;
+  hyperCube?: HyperCube;
+  touch: SnakeGameTouchHandler;
+  lastUpdateTimestamp: number;
   onTouchStart: (e: TouchEvent<HTMLDivElement>) => void;
   onTouchMove: (e: TouchEvent<HTMLDivElement>) => void;
   onTouchEnd: (e: TouchEvent<HTMLDivElement>) => void;
+  renderDispatch: React.Dispatch<
+    React.SetStateAction<SnakeGameState | undefined>
+  >;
 
-  constructor({ gridWidth }: { gridWidth: number }) {
+  constructor({ gridWidth, renderDispatch }: InstanceConstructorParams) {
+    this.lastUpdateTimestamp = Date.now();
     const max = gridWidth * gridWidth;
     const centerPoint = Math.ceil((max - 1) / 2);
     const deltas = {
@@ -41,25 +56,44 @@ export class SnakeGameInstance {
       [Directions.Top]: -gridWidth,
       [Directions.Bottom]: gridWidth,
     };
+    this.isMobile = window.innerWidth <= 800;
     this.max = max;
     this.centerPoint = centerPoint;
     this.gridWidth = gridWidth;
+    this.difficulty = Difficulty.Normal;
     this.gameState = GameState.Idle;
     this.length = DEFAULT_LENGTH;
     this.position = centerPoint;
-    this.deltas = deltas;
-    this.direction = new SnakeDirection(INITIAL_DIRECTION, deltas, centerPoint);
     this.lastPositions = new Set([centerPoint - 1, centerPoint - 2]);
-    this.difficulty = Difficulty.Normal;
-    this.touch = new SnakeGameTouchEvents(this.direction);
-    this.onTouchStart = this.touch.onTouchStart;
+    this.deltas = deltas;
+    this.apple = new AppleTile({
+      gridWidth,
+    });
+    this.hyperCube = new HyperCube({
+      gridWidth,
+    });
+    this.direction = new SnakeDirection(
+      INITIAL_DIRECTION,
+      deltas,
+      centerPoint,
+      this.renderGame
+    );
+    this.touch = new SnakeGameTouchHandler(this.direction);
+    this.onTouchStart = (e) => {
+      this.gameStateHandler();
+      this.touch.onTouchStart(e);
+    };
     this.onTouchMove = this.touch.onTouchMove;
     this.onTouchEnd = this.touch.onTouchEnd;
+    this.renderDispatch = renderDispatch;
     this.generateApple();
   }
 
   // -------- render event
-  getCurrentGameState = () => {
+  renderGame = () => {
+    this.renderDispatch(this.getCurrentGameState());
+  };
+  getCurrentGameState = (): SnakeGameState => {
     return {
       gameState: this.gameState,
       length: this.length,
@@ -69,7 +103,26 @@ export class SnakeGameInstance {
       width: this.gridWidth,
       interval: difficulties[this.difficulty].interval,
       borderOutOfBounds: difficulties[this.difficulty].borderOutOfBounds,
+      difficulty: this.difficulty,
     };
+  };
+
+  // ------- render ticker callback to react
+  getGameTicker = () => {
+    const { interval } = difficulties[this.difficulty];
+    return setInterval(() => {
+      if (this.gameState === GameState.Start) {
+        const requiredDelta = interval + (this.isMobile ? 50 : 0);
+        if (
+          Date.now() - this.lastUpdateTimestamp >=
+          (this?.hyperCube?.buffActive ? requiredDelta * 0.75 : requiredDelta)
+        ) {
+          this.gameTick();
+          this.renderGame();
+          this.lastUpdateTimestamp = Date.now();
+        }
+      }
+    }, 17);
   };
 
   // -------- core game state events
@@ -77,46 +130,35 @@ export class SnakeGameInstance {
     this.gameState = GameState.Idle;
     this.length = DEFAULT_LENGTH;
     this.position = this.centerPoint;
-    this.direction = new SnakeDirection(
-      INITIAL_DIRECTION,
-      this.deltas,
-      this.centerPoint
-    );
-    this.lastPositions = new Set([this.centerPoint - 1, this.centerPoint - 2]);
-  };
-
-  restartGame = () => {
+    this.direction.reset(this.centerPoint, this.centerPoint - 1);
+    this.apple.clear();
+    this?.hyperCube?.cleanUp();
     this.lastPositions.clear();
     this.lastPositions.add(this.centerPoint - 1);
     this.lastPositions.add(this.centerPoint - 2);
-    this.direction.reset(this.centerPoint, this.centerPoint - 1);
+    this.generateApple();
+    this.renderGame();
+  };
+
+  restartGame = () => {
     this.setNewGameState();
     this.startGame();
   };
-
   startGame = () => {
     this.gameState = GameState.Start;
+    this.renderGame();
   };
   pauseGame = () => {
     this.gameState = GameState.Pause;
+    this.renderGame();
   };
   endGame = () => {
-    let gameHistory = getSnakeGameHistory();
-    if (
-      this.length - DEFAULT_LENGTH !== 0 &&
-      !gameHistory.find(
-        (item) =>
-          item.difficulty === this.difficulty &&
-          item.state.length === this.length
-      )
-    ) {
-      gameHistory.push({
-        state: this.getCurrentGameState(),
-        difficulty: this.difficulty,
-      });
-      localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(gameHistory));
-    }
+    saveSnakeGameHistory({
+      state: this.getCurrentGameState(),
+      difficulty: this.difficulty,
+    });
     this.gameState = GameState.Dead;
+    this.renderGame();
   };
 
   gameStateHandler = () => {
@@ -179,140 +221,87 @@ export class SnakeGameInstance {
             newPosition = this.position - this.max + this.gridWidth;
         }
         this.position = newPosition;
+        this.direction.position = newPosition;
+        if (newPosition === this.apple?.location) this.eatApple();
+        if (newPosition === this.hyperCube?.location) this.hyperCube?.eatCube();
       }
+      this.renderGame();
     }
+    // check keys after tick for responsive controls
+    this.direction.checkKeys();
+  };
+
+  // --------- Snake buffer for item spacing
+  getSnakeBuffer = () => {
+    const position = this.position;
+    return [
+      // create larger buffer around snake's head
+      position,
+      position + 1,
+      position + 2,
+      position - 1,
+      position - 2,
+      position + this.gridWidth,
+      position - this.gridWidth,
+      position + this.gridWidth + 1,
+      position - this.gridWidth + 1,
+      position + this.gridWidth - 1,
+      position - this.gridWidth - 1,
+      // snake body
+      ...Array.from(this.lastPositions).slice(0, this.length + 1),
+    ];
   };
 
   // -------- apple stuff
-  generateApple = () => {
-    this.apple = new AppleTile({
-      location: this.generateAppleLocation(),
-      hasBoundaries: this.difficulty === Difficulty.Hard,
-      gridWidth: this.gridWidth,
-    });
+  eatApple = () => {
+    this.length++;
+    this.apple?.clear();
+    this.generateApple();
+    const value = this.length - DEFAULT_LENGTH;
+    if (value === 2 || value % 10 === 0)
+      this.hyperCube?.setCubeOnGrid({
+        position: this.position,
+        max: this.max,
+        buffer: [...this.getSnakeBuffer(), this?.apple?.location || 0],
+      });
   };
+  generateApple = () =>
+    this.apple?.setAppleOnGrid({
+      position: this.position,
+      max: this.max,
+      buffer: [...this.getSnakeBuffer(), this?.hyperCube?.location || 0],
+    });
 
-  generateAppleLocation = () => {
-    const position = this.position;
-    const generatePosition = () => Math.floor(Math.random() * this.max);
-    const snakeBuffer = new Set(
-      [
-        // create larger buffer around snake's head
-        position,
-        position + 1,
-        position + 2,
-        position - 1,
-        position - 1,
-        position + this.gridWidth,
-        position - this.gridWidth,
-        position + this.gridWidth + 1,
-        position - this.gridWidth + 1,
-        position + this.gridWidth - 1,
-        position - this.gridWidth - 1,
-        // snake body
-        ...Array.from(this.lastPositions).slice(0, this.length + 1),
-      ].reduce((prev: number[], current) => {
-        return [
-          ...prev,
-          current,
-          current - this.gridWidth,
-          current + this.gridWidth,
-          current - 1,
-          current + 1,
-        ];
-      }, [])
-    );
-    let newPosition = position;
-    do {
-      newPosition = generatePosition();
-    } while (snakeBuffer.has(newPosition));
-    return newPosition;
+  // -------- difficulty even/t
+  changeDifficulty = (difficulty: Difficulty) => {
+    this.difficulty = difficulty;
+    this.apple.hasBoundaries = difficulty === Difficulty.Hard;
+    this.setNewGameState();
   };
 
   // -------- User Interaction events
+  getDirectionKeyMethod = (key: string) =>
+    this.direction.keyEvents[key.toLowerCase() as SnakeGameDirectionKeys];
   onKeyDown = (e: React.KeyboardEvent) => {
-    switch (e.key.toLowerCase()) {
-      case " ":
-        if (this.gameState === GameState.Start) {
-          this.pauseGame();
-        } else {
-          this.gameStateHandler();
-        }
-        break;
-      case SnakeGameDirectionKeys.W:
-        this.direction.addTopKey();
-        break;
-      case SnakeGameDirectionKeys.S:
-        this.direction.addBottomKey();
-        break;
-      case SnakeGameDirectionKeys.A:
-        this.direction.addLeftKey();
-        break;
-      case SnakeGameDirectionKeys.D:
-        this.direction.addRightKey();
-        break;
+    if (e.key.toLowerCase() === " ") {
+      e.preventDefault();
+      if (this.gameState === GameState.Start) {
+        this.pauseGame();
+      } else {
+        this.gameStateHandler();
+      }
+    } else {
+      const method = this.getDirectionKeyMethod(e.key);
+      method && method[0]();
     }
   };
   onKeyUp = (e: React.KeyboardEvent) => {
-    switch (e.key.toLowerCase()) {
-      case SnakeGameDirectionKeys.W:
-        this.direction.removeTopKey();
-        break;
-      case SnakeGameDirectionKeys.S:
-        this.direction.removeBottomKey();
-        break;
-      case SnakeGameDirectionKeys.A:
-        this.direction.removeLeftKey();
-        break;
-      case SnakeGameDirectionKeys.D:
-        this.direction.removeRightKey();
-        break;
-    }
-  };
-}
-
-class SnakeGameTouchEvents {
-  touchStart: [number, number] | null;
-  touchEnd: [number, number] | null;
-  direction: SnakeDirection;
-  constructor(direction: SnakeDirection) {
-    this.touchStart = null;
-    this.touchEnd = null;
-    this.direction = direction;
-  }
-
-  onTouchStart = (e: TouchEvent<HTMLDivElement>) => {
-    this.touchEnd = null;
-    this.touchStart = [e.targetTouches[0].clientX, e.targetTouches[0].clientY];
+    const method = this.getDirectionKeyMethod(e.key);
+    method && method[1]();
   };
 
-  onTouchMove = (e: TouchEvent<HTMLDivElement>) => {
-    this.touchEnd = [e.targetTouches[0].clientX, e.targetTouches[0].clientY];
-  };
-
-  onTouchEnd = () => {
-    if (!this.touchStart || !this.touchEnd) return;
-    const xDistance = this.touchStart[0] - this.touchEnd[0];
-    const yDistance = this.touchStart[1] - this.touchEnd[1];
-    const xIsGreeater =
-      (xDistance < 0 ? xDistance * -1 : xDistance) >
-      (yDistance < 0 ? yDistance * -1 : yDistance);
-    const isLeftSwipe = xDistance > MINIMUM_SWIPE_DISTANCE;
-    const isRightSwipe = xDistance < -MINIMUM_SWIPE_DISTANCE;
-    const isUpSwipe = yDistance > MINIMUM_SWIPE_DISTANCE;
-    const isDownSwipe = yDistance < -MINIMUM_SWIPE_DISTANCE;
-    if (xIsGreeater) {
-      if (isLeftSwipe) {
-        this.direction.toLeft();
-      } else if (isRightSwipe) {
-        this.direction.toRight();
-      }
-    } else {
-      if (isUpSwipe) {
-        this.direction.toTop();
-      } else if (isDownSwipe) {
-        this.direction.toBottom();
-      }
-    }
+  // cleanup
+  cleanUp = () => {
+    this.hyperCube?.cleanUp();
   };
 }

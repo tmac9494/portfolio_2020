@@ -1,11 +1,12 @@
 import React, { ReactElement, useState, useEffect } from "react";
 import { PageSettingsSvgs } from "./pageSettings";
+import { ParallaxElement } from "./ParallaxElement";
+export const PARALLAX_FACTOR = 25; // 100px of scrolling will be divided by this factor on each tick
 
 export const FloatingSvgs = (props: {
   svgs: PageSettingsSvgs;
 }): ReactElement => {
   const [scrollDelta, setScrollDelta] = useState<number>(window.scrollY);
-  const parallaxFactor = 25; // 100px of scrolling will be divided by this factor on each tick
   const { svgs } = props;
 
   // mount/unmount scroll effect
@@ -19,21 +20,9 @@ export const FloatingSvgs = (props: {
 
   return (
     <div id="floating_svg_container" className="fixed-fill">
-      {svgs.map((svg, i) => {
-        const SvgElement: React.FC<{ style: any }> = svg[0];
-        return (
-          <div key={svg[1].id} {...svg[1]}>
-            <SvgElement
-              style={{
-                transform: `translateY(${Math.floor(
-                  scrollDelta /
-                    Math.floor(parallaxFactor + (svg[1].weight || 0))
-                )}px)`,
-              }}
-            />
-          </div>
-        );
-      })}
+      {svgs.map((svg, i) => (
+        <ParallaxElement key={svg[1].id} data={svg} delta={scrollDelta} />
+      ))}
     </div>
   );
 };

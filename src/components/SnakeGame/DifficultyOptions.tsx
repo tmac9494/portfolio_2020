@@ -3,7 +3,7 @@ import { Difficulty, SNAKE_GRID_ID } from "./types";
 
 export const DifficultyOptions: React.FC<{
   difficulty: Difficulty;
-  setDifficulty: React.Dispatch<React.SetStateAction<Difficulty>>;
+  setDifficulty: (difficulty: Difficulty) => void;
 }> = ({ difficulty, setDifficulty }) => {
   const handleDifficultyChange = (difficulty: Difficulty) => {
     setDifficulty(difficulty);
