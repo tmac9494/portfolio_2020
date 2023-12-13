@@ -4,9 +4,6 @@
   height: 100%;
   color: #16161c;
   .top-content {
-    position: absolute;
-    top: 10%;
-    left: 10%;
     max-width: 80%;
     width: 650px;
     color: #16161c;
@@ -265,7 +262,7 @@
 #floating_svg_container {
   .work-rect-lg,
   .work-rect-sm {
-    position: absolute;
+    position: fixed;
     top: auto;
     bottom: auto;
     left: auto;

@@ -1,10 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { GameGrid } from "./GameGrid";
 import "./styles.scss";
 import { SnakeGameState, TILE_SIZE, difficulties } from "./types";
 import { DifficultyOptions } from "./DifficultyOptions";
 import { HighScores } from "./HighScores";
 import { SnakeGameInstance } from "./utils/SnakeGameInstance";
+import classNames from "classnames";
+import { EffectIndicator } from "./EffectUI";
+import { GridElementEffects } from "./utils";
 
 export const SnakeGame: React.FC<{
   size: number;
@@ -25,8 +28,7 @@ export const SnakeGame: React.FC<{
   // initial game render/setup/cleanup
   useEffect(() => {
     const currentRef = gameInstance.current;
-    currentRef.renderGame();
-    currentRef.startGameTicker();
+    currentRef.initialize();
     return () => currentRef.cleanUp();
   }, []);
 
@@ -39,7 +41,12 @@ export const SnakeGame: React.FC<{
     <>
       <div
         id="snake-game"
-        className={`${gameState.difficulty}`}
+        className={classNames(
+          gameState.difficulty,
+          gameInstance.current?.hyperCube?.effectIsActive && "hyper-buff",
+          gameInstance.current?.dimensionator?.effectIsActive &&
+            "dimensionator-buff"
+        )}
         style={{ maxWidth: TILE_SIZE * size + 2 + "px" }}
         onTouchMove={gameInstance.current.onTouchMove}
         onTouchStart={gameInstance.current.onTouchStart}
@@ -47,6 +54,16 @@ export const SnakeGame: React.FC<{
         onKeyDown={gameInstance.current.onKeyDown}
         onKeyUp={gameInstance.current.onKeyUp}
       >
+        <div className="snake-game-effect-container flex flex-row">
+          <EffectIndicator
+            gameInstance={gameInstance.current}
+            effect={GridElementEffects.Dimensionator}
+          />
+          <EffectIndicator
+            gameInstance={gameInstance.current}
+            effect={GridElementEffects.Hypercube}
+          />
+        </div>
         <GameGrid gameState={gameState} gameInstance={gameInstance.current} />
         <HighScores
           difficulty={gameState.difficulty}

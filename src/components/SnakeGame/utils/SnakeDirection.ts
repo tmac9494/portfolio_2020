@@ -11,13 +11,13 @@ export class SnakeDirection {
   lastPosition: number;
   position: number;
   deltas: GameDeltas;
-  renderGame: () => void;
+  renderGame: (tick?: boolean) => void;
   keyEvents: Record<SnakeGameDirectionKeys, [() => void, () => void]>;
   constructor(
     initialDirection: Directions,
     deltas: GameDeltas,
     position: number,
-    renderGame: () => void
+    renderGame: (tick?: boolean) => void
   ) {
     this.initialDirection = initialDirection;
     this.deltas = deltas;

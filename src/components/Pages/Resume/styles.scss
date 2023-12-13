@@ -175,7 +175,7 @@
 //svgs
 #floating_svg_container {
   .res-circ {
-    position: absolute;
+    position: fixed;
     top: auto;
     bottom: auto;
     left: auto;
@@ -188,7 +188,7 @@
   }
   #res_circ_btm {
     animation-duration: 14 + random(10) + s;
-    position: absolute;
+    position: fixed;
     bottom: -24vw;
     right: 5%;
     svg {

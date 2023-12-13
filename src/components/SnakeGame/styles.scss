@@ -8,20 +8,25 @@ $easyHead: #00f7ff;
 $hardColor: #ff0037;
 $hardHead: #ff7300;
 $appleColor: #00ff2a;
+$appleDark: #0c5518;
+$hazardColor: #ff0037;
+$hazardDark: #33030d;
+$dimensionatorColor: #e200d7;
+$dimensionatorDark: #240212;
 $hypercubeColor: #00d9ff;
+$hypercubeDark: #02343d;
 
 @keyframes obstacle {
   0% {
-    box-shadow: inset 0 0 0px #ff3300;
+    box-shadow: inset 0 0 0px $hazardColor;
   }
   50% {
-    box-shadow: inset 0 0 12px #ff3300;
+    box-shadow: inset 0 0 12px $hazardColor;
   }
   100% {
-    box-shadow: inset 0 0 0px #ff3300;
+    box-shadow: inset 0 0 0px $hazardColor;
   }
 }
-
 @keyframes hypercube {
   0% {
     box-shadow: 0 0 8px $hypercubeColor;
@@ -33,52 +38,152 @@ $hypercubeColor: #00d9ff;
     box-shadow: 0 0 8px $hypercubeColor;
   }
 }
+@keyframes dimensionator {
+  0% {
+    box-shadow: 2px -1px 0px $dimensionatorColor,
+      -1px 0px 0px $dimensionatorColor;
+  }
+  50% {
+    box-shadow: 0px -1px 0px $dimensionatorColor,
+      -0px 1px 0px $dimensionatorColor;
+  }
+  100% {
+    box-shadow: 1px 0px 0px $dimensionatorColor,
+      -2px 0px 0px $dimensionatorColor;
+  }
+}
+@keyframes bolt {
+  0% {
+    fill: $hypercubeColor;
+  }
+  50% {
+    fill: #75ddf0;
+  }
+  100% {
+    fill: $hypercubeColor;
+  }
+}
+@keyframes hyperframe {
+  0% {
+    border-color: $hypercubeColor;
+  }
+  50% {
+    border-color: #9bdfeb;
+  }
+  100% {
+    border-color: $hypercubeColor;
+  }
+}
+@keyframes hypersnake {
+  0% {
+    box-shadow: 0 0 8px $hypercubeColor;
+  }
+  50% {
+    box-shadow: 0 0 12px $hypercubeColor;
+  }
+  100% {
+    box-shadow: 0 0 8px $hypercubeColor;
+  }
+}
+@keyframes bounce {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+// grid icons
+.snake-game-icon {
+  width: 18px;
+  height: 18px;
+}
+.snake-lightning-icon {
+  fill: $hypercubeColor;
+  animation: bounce 0.38s 0.5s ease-out forwards infinite;
+}
+.dimensionator-icon {
+  fill: $dimensionatorColor;
+}
+.duration-bar {
+  &.hyperCube span {
+    background: $hypercubeColor;
+  }
+  &.dimensionator span {
+    background: $dimensionatorColor;
+  }
+}
 
 #snake-game {
   text-align: center;
-  margin: 0 auto;
+  margin: 38px auto 0;
   position: relative;
   touch-action: none;
+  z-index: 400;
   .game-tile,
   .grid {
     border: 1px solid;
     border-color: $borderColor;
   }
-
   .game-tile {
     box-shadow: 0 0 0px $appleColor;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border-color: transparent;
   }
 
   .grid {
     background: $backgroundColor;
   }
 
-  .tile-type-apple {
-    background: $appleColor;
-    border-color: $appleColor;
+  .tile-type-apple,
+  .tile-type-hypercube {
     transition: background-color 0.25s 0.32s, box-shadow 0.32s 0.5s,
       border-color 0.5s;
+  }
+  .tile-type-apple {
+    background: $appleDark;
+    fill: $appleColor;
+    border-color: $appleColor;
     box-shadow: 0 0 12px $appleColor;
+    border-radius: 6px;
   }
   .tile-type-hypercube {
-    background: $hypercubeColor;
     border-color: $hypercubeColor;
-    transition: background-color 0.25s 0.32s, box-shadow 0.32s 0.5s,
-      border-color 0.5s;
+    background: $hypercubeDark;
     box-shadow: 0 0 12px $hypercubeColor;
-    animation: hypercube 0.38s 0.5s forwards infinite;
+    animation: hypercube 0.38s 0.5s forwards infinite,
+      bolt 0.38s 0.5s forwards infinite;
+  }
+  .tile-type-dimensionator {
+    border-color: $dimensionatorColor;
+    background: $dimensionatorDark;
+    box-shadow: 0 0 12px $dimensionatorColor;
+    animation: dimensionator 0.38s 0.5s forwards infinite;
   }
   .tile-type-buffer {
     background: #000;
   }
   .tile-type-obstacle {
-    background: $borderColor;
+    border-radius: 200px;
+    background: $hazardDark;
+    border-color: $hazardColor;
+    fill: $hazardColor;
     animation: obstacle 1s 0.5s forwards infinite;
   }
 
   .tile-type-head {
     background: $snakeHead;
     border-color: $snakeHead;
+    .snake-eyes span {
+      background: $snakeColor;
+    }
   }
   .tile-type-body {
     background: $snakeColor;
@@ -88,6 +193,9 @@ $hypercubeColor: #00d9ff;
     .tile-type-head {
       background: $easyHead;
       border-color: $easyHead;
+      .snake-eyes span {
+        background: $easyColor;
+      }
     }
     .tile-type-body {
       background: $easyColor;
@@ -98,15 +206,120 @@ $hypercubeColor: #00d9ff;
     .tile-type-head {
       background: $hardHead;
       border-color: $hardHead;
+      .snake-eyes span {
+        background: $hardColor;
+      }
     }
     .tile-type-body {
       background: $hardColor;
       border-color: $hardColor;
     }
   }
+  &.hyper-buff {
+    .grid {
+      animation: hyperframe 0.32s forwards infinite;
+    }
+    .tile-type-body,
+    .tile-type-head {
+      background-color: $hypercubeColor;
+      border-color: $hypercubeColor;
+      animation: hypersnake 0.42s forwards infinite;
+    }
+    .tile-type-head {
+      background-color: #02343d;
+      z-index: 2;
+      .snake-eyes span {
+        background: $hypercubeColor;
+      }
+    }
+    .tile-type-body,
+    .tile-type-head {
+      box-shadow: 0 0 8px $hypercubeColor;
+    }
+  }
+
+  &.dimensionator-buff {
+    .tile-type-body,
+    .tile-type-head {
+      background-color: $dimensionatorColor;
+      border-color: $dimensionatorColor;
+      animation: dimensionator 0.42s forwards infinite;
+    }
+    .tile-type-head {
+      background-color: $dimensionatorDark;
+      z-index: 2;
+      .snake-eyes span {
+        background: $dimensionatorColor;
+      }
+    }
+    .tile-type-body,
+    .tile-type-head {
+      box-shadow: 0 0 8px $dimensionatorColor;
+    }
+  }
+}
+
+$snakeHeadRadius: 6px;
+$snakeEyesSpacing: 2px;
+// snake eyes
+.tile-type-head {
+  border-radius: $snakeHeadRadius;
+  .snake-eyes {
+    position: absolute;
+    bottom: auto;
+    top: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    span {
+      width: 4px;
+      height: 3px;
+      margin: 1px;
+    }
+  }
+  &.top {
+    .snake-eyes {
+      top: $snakeEyesSpacing;
+    }
+  }
+  &.left {
+    .snake-eyes {
+      left: $snakeEyesSpacing;
+    }
+  }
+  &.right {
+    .snake-eyes {
+      left: auto;
+      right: $snakeEyesSpacing;
+    }
+  }
+  &.bottom {
+    .snake-eyes {
+      top: auto;
+      bottom: $snakeEyesSpacing;
+    }
+  }
+  &.from-top {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  &.from-left {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  &.from-right {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  &.from-bottom {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
 }
 
 .grid {
+  box-shadow: 0 28px 50px -28px #000;
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   outline: 0;
@@ -204,6 +417,7 @@ $hypercubeColor: #00d9ff;
   padding: 12px 24px;
   margin-right: -50%;
   animation: info-box 0.2s ease-out;
+  z-index: 10;
 }
 $btnSize: 100px;
 

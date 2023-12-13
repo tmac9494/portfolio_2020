@@ -76,6 +76,10 @@
   }
 }
 
+#my_story_section {
+  overflow-x: hidden;
+}
+
 #my_story_container {
   &,
   h2 {
@@ -107,7 +111,7 @@
       width: 200px;
     }
     height: 25px;
-    position: absolute;
+    position: fixed;
     bottom: auto;
     left: auto;
     right: auto;
@@ -132,50 +136,46 @@
   #home_sm_rect_1 {
     animation-duration: 10 + random(10) + s;
     top: 8vh;
-    left: -8vw;
+    left: -80px;
   }
   #home_sm_rect_2 {
     animation-duration: 10 + random(10) + s;
     top: 14vh;
-    left: -12vw;
+    left: -120px;
   }
   #home_sm_rect_3 {
     animation-duration: 10 + random(10) + s;
     top: 45vh;
-    left: -5vw;
+    left: -50px;
   }
   #home_sm_rect_4 {
     animation-duration: 10 + random(10) + s;
-    bottom: 22vh;
-    left: -15vw;
+    top: 82vh;
+    left: -150px;
   }
   #home_sm_rect_5 {
     animation-duration: 10 + random(10) + s;
-    bottom: 24vh;
-    left: -12vw;
+    top: 80vh;
+    left: -120px;
   }
   #gradient_rect_lgg {
     animation-duration: 10 + random(10) + s;
-    position: absolute;
-    right: -5vw;
+    position: fixed;
+    right: -100px;
     left: auto;
-    top: auto;
-    bottom: 20vh;
+    top: 65vh;
+    bottom: auto;
   }
   #gradient_rect_lgg_2 {
     animation-duration: 10 + random(10) + s;
-    position: absolute;
-    right: -10vw;
+    position: fixed;
+    right: -180px;
     left: auto;
-    top: auto;
-    bottom: 10vh;
+    top: 69vh;
+    bottom: auto;
   }
 }
 
 #portfolio-snake-game {
   text-align: center;
-  .grid {
-    box-shadow: 0 28px 50px -28px #000;
-    position: relative;
-  }
 }

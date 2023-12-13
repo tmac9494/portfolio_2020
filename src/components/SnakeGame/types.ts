@@ -38,6 +38,7 @@ export enum TileStates {
   Inactive = "inactive",
   Obstacle = "obstacle",
   Hypercube = "hypercube",
+  Dimensionator = "dimensionator",
 }
 
 export enum Directions {
