@@ -215,7 +215,7 @@ export class SnakeGameInstance {
     this.position = this.centerPoint;
     this.direction.reset(this.centerPoint, this.centerPoint - 1);
     this.apple.clear();
-    this?.hyperCube?.cleanUp();
+    this.cleanUpGridElements();
     this.lastPositions.clear();
     this.lastPositions.add(this.centerPoint - 1);
     this.lastPositions.add(this.centerPoint - 2);
@@ -241,7 +241,6 @@ export class SnakeGameInstance {
       difficulty: this.difficulty,
     });
     this.gameState = GameState.Dead;
-    this.cleanUpGridElements();
     this.renderGame();
   };
 
