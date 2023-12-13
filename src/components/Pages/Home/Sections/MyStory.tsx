@@ -1,5 +1,4 @@
 import React from "react";
-import { useDevice } from "../../../General";
 import { TimelineSlider } from "../../../TimelineSlider";
 import sampleImage from "../../../../assets/barton.jpg";
 import sampleImage2 from "../../../../assets/nm.png";
@@ -192,10 +191,11 @@ const dataSet: StoryBlock[] = [
 ];
 
 export const MyStory: React.FC = () => {
-  const device = useDevice();
-
   return (
-    <section className="section-container padding-top-4 padding-bottom-4">
+    <section
+      className="section-container padding-top-4 padding-bottom-4"
+      id="my_story_section"
+    >
       <div className="site-content-wrap" id="my_story_container">
         <h2 className="section-title text-center">My Story</h2>
 

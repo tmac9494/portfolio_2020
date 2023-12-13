@@ -14,8 +14,7 @@ import {
 import { SnakeDirection } from "./SnakeDirection";
 import { saveSnakeGameHistory } from "./get-game-history";
 import { SnakeGameTouchHandler } from "./SnakeGameTouchHandler";
-import { AppleTile } from "./AppleTile";
-import { HyperCube } from "./HyperCube";
+import { AppleTile, GridElement } from "./gridElements";
 
 type InstanceConstructorParams = {
   gridWidth: number;
@@ -39,7 +38,8 @@ export class SnakeGameInstance {
   deltas: Record<Directions, number>;
   difficulty: Difficulty;
   apple: AppleTile;
-  hyperCube?: HyperCube;
+  hyperCube?: GridElement;
+  dimensionator?: GridElement;
   touch: SnakeGameTouchHandler;
   lastUpdateTimestamp: number;
   tickerInterval?: NodeJS.Timeout;
@@ -74,7 +74,10 @@ export class SnakeGameInstance {
     this.apple = new AppleTile({
       gridWidth,
     });
-    this.hyperCube = new HyperCube({
+    this.hyperCube = new GridElement({
+      gridWidth,
+    });
+    this.dimensionator = new GridElement({
       gridWidth,
     });
     this.direction = new SnakeDirection(
@@ -94,8 +97,19 @@ export class SnakeGameInstance {
     this.generateApple();
   }
 
+  // initialize
+  initialize = () => {
+    this.renderGame();
+    this.startGameTicker();
+  };
+
   // -------- render event
-  renderGame = () => {
+  renderGame = (shouldTick?: boolean) => {
+    if (shouldTick) {
+      this.gameTick();
+
+      this.lastUpdateTimestamp = Date.now();
+    }
     this.renderDispatch(this.getCurrentGameState());
   };
   getCurrentGameState = (): SnakeGameState => {
@@ -121,11 +135,11 @@ export class SnakeGameInstance {
         const requiredDelta = interval + (this.isMobile ? 50 : 0);
         if (
           Date.now() - this.lastUpdateTimestamp >=
-          (this?.hyperCube?.buffActive ? requiredDelta * 0.75 : requiredDelta)
+          (this?.hyperCube?.effectIsActive
+            ? requiredDelta * 0.8
+            : requiredDelta)
         ) {
-          this.gameTick();
-          this.renderGame();
-          this.lastUpdateTimestamp = Date.now();
+          this.renderGame(true);
         }
       }
     }, 17);
@@ -135,7 +149,7 @@ export class SnakeGameInstance {
 
   gameTick = () => {
     let newPosition = this.position + this.deltas[this.direction.direction];
-    const { borderOutOfBounds } = difficulties[this.difficulty];
+    const borderOutOfBounds = difficulties[this.difficulty].borderOutOfBounds;
     if (this.gameState === GameState.Start) {
       const positionsAsArray = Array.from(this.lastPositions);
       positionsAsArray.unshift(this.position);
@@ -161,6 +175,7 @@ export class SnakeGameInstance {
         positionsAsArray.indexOf(newPosition) < this.length;
 
       const playerOutOfBounds =
+        !this.dimensionator?.effectIsActive &&
         borderOutOfBounds &&
         (isPassedRight || isPassedBottom || isPassedLeft || isPassedTop);
 
@@ -171,7 +186,7 @@ export class SnakeGameInstance {
         this.endGame();
       } else {
         // border out of bounds is false pathfinder
-        if (!borderOutOfBounds) {
+        if (this.dimensionator?.effectIsActive || !borderOutOfBounds) {
           if (isPassedRight) newPosition = this.position - this.gridWidth + 1;
           else if (isPassedLeft)
             newPosition = this.position + this.gridWidth - 1;
@@ -183,7 +198,9 @@ export class SnakeGameInstance {
         this.position = newPosition;
         this.direction.position = newPosition;
         if (newPosition === this.apple?.location) this.eatApple();
-        if (newPosition === this.hyperCube?.location) this.hyperCube?.eatCube();
+        if (newPosition === this.hyperCube?.location) this.hyperCube?.eat();
+        if (newPosition === this.dimensionator?.location)
+          this.dimensionator?.eat();
       }
       this.renderGame();
     }
@@ -224,6 +241,7 @@ export class SnakeGameInstance {
       difficulty: this.difficulty,
     });
     this.gameState = GameState.Dead;
+    this.cleanUpGridElements();
     this.renderGame();
   };
 
@@ -273,10 +291,24 @@ export class SnakeGameInstance {
     this.generateApple();
     const value = this.length - DEFAULT_LENGTH;
     if (value === 2 || value % 10 === 0)
-      this.hyperCube?.setCubeOnGrid({
+      this.hyperCube?.setOnGrid({
         position: this.position,
         max: this.max,
-        buffer: [...this.getSnakeBuffer(), this?.apple?.location || 0],
+        buffer: [
+          ...this.getSnakeBuffer(),
+          this?.apple?.location || 0,
+          this.dimensionator?.location || 0,
+        ],
+      });
+    if (this.difficulty !== Difficulty.Easy && (value === 1 || value % 8 === 0))
+      this.dimensionator?.setOnGrid({
+        position: this.position,
+        max: this.max,
+        buffer: [
+          ...this.getSnakeBuffer(),
+          this.apple?.location || 0,
+          this.hyperCube?.location || 0,
+        ],
       });
   };
   generateApple = () =>
@@ -341,14 +373,21 @@ export class SnakeGameInstance {
         case this.hyperCube?.location:
           tileType = TileStates.Hypercube;
           break;
+        case this.dimensionator?.location:
+          tileType = TileStates.Dimensionator;
+          break;
       }
     }
     return tileType;
   };
 
   // -------- cleanup
+  cleanUpGridElements = () => {
+    this.hyperCube?.cleanUp();
+    this.dimensionator?.cleanUp();
+  };
   cleanUp = () => {
     this.clearGameTicker();
-    this.hyperCube?.cleanUp();
+    this.cleanUpGridElements();
   };
 }

@@ -12,7 +12,7 @@ export const ParallaxElement: React.FC<{
     <div key={elementProps.id} {...elementProps}>
       <Element
         style={{
-          transition: "transform .7s ease-out",
+          transition: "transform 1s ease-out",
           transform: `translateY(${Math.floor(
             delta / Math.floor(PARALLAX_FACTOR + (elementProps.weight || 0))
           )}px)`,

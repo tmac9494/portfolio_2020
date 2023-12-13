@@ -5,9 +5,6 @@
   min-height: 100%;
   color: $white;
   .top-content {
-    position: absolute;
-    top: 10%;
-    left: 10%;
     max-width: 80%;
     width: 650px;
     .description {
@@ -523,7 +520,7 @@
 #floating_svg_container {
   .skill-blob-lg,
   .skill-blob-sm {
-    position: absolute;
+    position: fixed;
     top: auto;
     bottom: auto;
     left: auto;

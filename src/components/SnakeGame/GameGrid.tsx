@@ -15,8 +15,10 @@ export const GameGrid: React.FC<{
       Array.from(gameInstance.lastPositions).indexOf(i);
     gridList.push(
       <Tile
-        bodyIndex={bodyIndex}
         key={i}
+        gameInstance={gameInstance}
+        bodyIndex={bodyIndex}
+        index={i}
         tileState={gameInstance.getTileTypeByIndex(i)}
       />
     );

@@ -113,15 +113,16 @@
   @include tablet {
     padding-top: 0;
     .top-content {
-      position: absolute;
-      top: 10%;
-      left: 10%;
+      // position: absolute;
+      padding-top: 10%;
+      margin-left: 10%;
     }
     .content-wrap {
       margin-left: 35px;
     }
   }
 }
+
 .section-title {
   color: #fff;
   font-size: 32px;
