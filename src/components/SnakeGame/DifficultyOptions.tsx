@@ -16,7 +16,10 @@ export const DifficultyOptions: React.FC<{
         className={`difficulty-btn ${
           difficulty === Difficulty.Easy ? "active" : ""
         }`}
-        onClick={() => handleDifficultyChange(Difficulty.Easy)}
+        onMouseDown={(e: React.MouseEvent) => {
+          e.preventDefault();
+          handleDifficultyChange(Difficulty.Easy);
+        }}
       >
         {Difficulty.Easy}
       </button>
@@ -24,7 +27,10 @@ export const DifficultyOptions: React.FC<{
         className={`difficulty-btn ${
           difficulty === Difficulty.Normal ? "active" : ""
         }`}
-        onClick={() => handleDifficultyChange(Difficulty.Normal)}
+        onMouseDown={(e: React.MouseEvent) => {
+          e.preventDefault();
+          handleDifficultyChange(Difficulty.Normal);
+        }}
       >
         {Difficulty.Normal}
       </button>
@@ -32,7 +38,10 @@ export const DifficultyOptions: React.FC<{
         className={`difficulty-btn ${
           difficulty === Difficulty.Hard ? "active" : ""
         }`}
-        onClick={() => handleDifficultyChange(Difficulty.Hard)}
+        onMouseDown={(e: React.MouseEvent) => {
+          e.preventDefault();
+          handleDifficultyChange(Difficulty.Hard);
+        }}
       >
         {Difficulty.Hard}
       </button>

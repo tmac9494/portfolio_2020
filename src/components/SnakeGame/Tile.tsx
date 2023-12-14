@@ -61,8 +61,8 @@ export const Tile: React.FC<{
       {tileState === TileStates.Dimensionator && <DimensionatorIcon />}
       {tileState === TileStates.Head && (
         <div className="snake-eyes">
-          {direction !== Directions.Left && <span />}
-          {direction !== Directions.Right && <span />}
+          {direction !== Directions.Left && <div className="eye" />}
+          {direction !== Directions.Right && <div className="eye" />}
         </div>
       )}
     </div>

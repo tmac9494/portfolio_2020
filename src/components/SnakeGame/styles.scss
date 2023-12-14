@@ -1,21 +1,5 @@
 @import "../../styles/mixins.scss";
-$backgroundColor: linear-gradient(to top left, #1a1a1a, #252525);
-$borderColor: #3b3b3b;
-$snakeColor: #8000ff;
-$snakeHead: #a868e7;
-$easyColor: #00bd9d;
-$easyHead: #00f7ff;
-$hardColor: #ff0037;
-$hardHead: #ff7300;
-$appleColor: #00ff2a;
-$appleDark: #0c5518;
-$hazardColor: #ff0037;
-$hazardDark: #33030d;
-$dimensionatorColor: #e200d7;
-$dimensionatorDark: #240212;
-$hypercubeColor: #00d9ff;
-$hypercubeDark: #02343d;
-
+@import "./styles/colors.scss";
 @keyframes obstacle {
   0% {
     box-shadow: inset 0 0 0px $hazardColor;
@@ -109,21 +93,18 @@ $hypercubeDark: #02343d;
 .dimensionator-icon {
   fill: $dimensionatorColor;
 }
-.duration-bar {
-  &.hyperCube span {
-    background: $hypercubeColor;
-  }
-  &.dimensionator span {
-    background: $dimensionatorColor;
-  }
-}
 
 #snake-game {
   text-align: center;
-  margin: 38px auto 0;
+  margin: 60px auto 0;
   position: relative;
   touch-action: none;
   z-index: 400;
+  opacity: 0.8;
+  outline: 0;
+  &:focus {
+    opacity: 1;
+  }
   .game-tile,
   .grid {
     border: 1px solid;
@@ -181,7 +162,7 @@ $hypercubeDark: #02343d;
   .tile-type-head {
     background: $snakeHead;
     border-color: $snakeHead;
-    .snake-eyes span {
+    .snake-eyes .eye {
       background: $snakeColor;
     }
   }
@@ -193,7 +174,7 @@ $hypercubeDark: #02343d;
     .tile-type-head {
       background: $easyHead;
       border-color: $easyHead;
-      .snake-eyes span {
+      .snake-eyes .eye {
         background: $easyColor;
       }
     }
@@ -206,7 +187,7 @@ $hypercubeDark: #02343d;
     .tile-type-head {
       background: $hardHead;
       border-color: $hardHead;
-      .snake-eyes span {
+      .snake-eyes .eye {
         background: $hardColor;
       }
     }
@@ -228,7 +209,7 @@ $hypercubeDark: #02343d;
     .tile-type-head {
       background-color: #02343d;
       z-index: 2;
-      .snake-eyes span {
+      .snake-eyes .eye {
         background: $hypercubeColor;
       }
     }
@@ -248,13 +229,20 @@ $hypercubeDark: #02343d;
     .tile-type-head {
       background-color: $dimensionatorDark;
       z-index: 2;
-      .snake-eyes span {
+      .snake-eyes .eye {
         background: $dimensionatorColor;
       }
     }
     .tile-type-body,
     .tile-type-head {
       box-shadow: 0 0 8px $dimensionatorColor;
+    }
+    &.hyper-buff {
+      .snake-eyes .eye {
+        background: $hypercubeColor;
+        border: 1px solid $hypercubeColor;
+        // animation: hyperframe 0.42s forwards infinite;
+      }
     }
   }
 }
@@ -271,7 +259,7 @@ $snakeEyesSpacing: 2px;
     display: flex;
     flex-direction: row;
     justify-content: center;
-    span {
+    .eye {
       width: 4px;
       height: 3px;
       margin: 1px;
@@ -323,10 +311,6 @@ $snakeEyesSpacing: 2px;
   display: flex;
   flex-wrap: wrap;
   outline: 0;
-  opacity: 0.6;
-  &:focus {
-    opacity: 1;
-  }
 }
 
 .game-settings-container {

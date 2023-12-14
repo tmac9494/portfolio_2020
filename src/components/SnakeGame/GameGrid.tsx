@@ -25,16 +25,12 @@ export const GameGrid: React.FC<{
   }
 
   return (
-    <div
-      className="grid"
-      id={SNAKE_GRID_ID}
-      tabIndex={0}
-      onBlur={() =>
-        gameState.gameState === GameState.Start && gameInstance.pauseGame()
-      }
-    >
+    <div className="grid" id={SNAKE_GRID_ID}>
       {gridList}
-      <SnakeGameContentBox gameState={gameState.gameState} />
+      <SnakeGameContentBox
+        gameState={gameState.gameState}
+        gameInstance={gameInstance}
+      />
     </div>
   );
 };

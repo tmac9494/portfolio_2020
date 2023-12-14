@@ -1,7 +1,7 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { GameGrid } from "./GameGrid";
 import "./styles.scss";
-import { SnakeGameState, TILE_SIZE, difficulties } from "./types";
+import { GameState, SNAKE_GAME_ID, SnakeGameState, TILE_SIZE } from "./types";
 import { DifficultyOptions } from "./DifficultyOptions";
 import { HighScores } from "./HighScores";
 import { SnakeGameInstance } from "./utils/SnakeGameInstance";
@@ -40,7 +40,7 @@ export const SnakeGame: React.FC<{
   return (
     <>
       <div
-        id="snake-game"
+        id={SNAKE_GAME_ID}
         className={classNames(
           gameState.difficulty,
           gameInstance.current?.hyperCube?.effectIsActive && "hyper-buff",
@@ -53,13 +53,20 @@ export const SnakeGame: React.FC<{
         onTouchEnd={gameInstance.current.onTouchEnd}
         onKeyDown={gameInstance.current.onKeyDown}
         onKeyUp={gameInstance.current.onKeyUp}
+        tabIndex={0}
+        onBlur={() =>
+          gameState.gameState === GameState.Start &&
+          gameInstance.current.pauseGame()
+        }
       >
         <div className="snake-game-effect-container flex flex-row">
           <EffectIndicator
+            duration={gameState.effects[GridElementEffects.Dimensionator]}
             gameInstance={gameInstance.current}
             effect={GridElementEffects.Dimensionator}
           />
           <EffectIndicator
+            duration={gameState.effects[GridElementEffects.Hypercube]}
             gameInstance={gameInstance.current}
             effect={GridElementEffects.Hypercube}
           />

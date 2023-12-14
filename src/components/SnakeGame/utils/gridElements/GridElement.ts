@@ -22,12 +22,11 @@ export enum GridElementEffects {
 export class GridElement {
   gridWidth: number;
   location?: number;
-  timeout?: NodeJS.Timeout;
-  hideTimeout?: NodeJS.Timeout;
   effectIsActive: boolean;
-  lastActivatedAt: number;
   hideDelay: HideDelay;
   effectDuration: EffectDuration;
+  duration?: number;
+  visibleDuration?: number;
 
   constructor({
     gridWidth,
@@ -38,7 +37,35 @@ export class GridElement {
     this.effectIsActive = false;
     this.hideDelay = hideDelay !== false ? 5000 : hideDelay;
     this.effectDuration = effectDuration !== false ? 15000 : effectDuration;
-    this.lastActivatedAt = Date.now();
+  }
+
+  tick(ms: number) {
+    if (this.location && this.hideDelay) {
+      const hideDelay = this.visibleDuration || 0;
+      console.log(hideDelay);
+      if (hideDelay !== 0) {
+        if (hideDelay > ms) {
+          this.visibleDuration = hideDelay - ms;
+        } else {
+          this.visibleDuration = 0;
+        }
+      } else {
+        this.location = undefined;
+      }
+    }
+
+    if (this.effectIsActive && this.effectDuration) {
+      const duration = this.duration || 0;
+      if (duration !== 0) {
+        if (duration > ms) {
+          this.duration = duration - ms;
+        } else {
+          this.duration = 0;
+        }
+      } else {
+        this.effectIsActive = false;
+      }
+    }
   }
 
   setOnGrid = ({ position, max, buffer }: SetOnGridParams) => {
@@ -49,34 +76,24 @@ export class GridElement {
       do {
         newPosition = generatePosition();
       } while (snakeBuffer.has(newPosition));
-      this.location = newPosition;
       if (this.hideDelay) {
-        this.hideTimeout = setTimeout(() => {
-          this.location = undefined;
-        }, this.hideDelay);
+        this.visibleDuration = this.hideDelay;
       }
+      this.location = newPosition;
     }
   };
 
   eat = () => {
     this.location = undefined;
-    this.lastActivatedAt = Date.now();
-    clearTimeout(this.hideTimeout);
-    clearTimeout(this.timeout);
+    this.duration = this.effectDuration || 0;
     if (this.effectDuration) {
       this.effectIsActive = true;
-      this.timeout = setTimeout(() => {
-        this.effectIsActive = false;
-      }, this.effectDuration);
+      this.duration = this.effectDuration;
     }
   };
 
   cleanUp = () => {
     this.location = undefined;
-    clearTimeout(this.hideTimeout);
-    if (this.effectIsActive) {
-      this.effectIsActive = false;
-      clearTimeout(this.timeout);
-    }
+    this.effectIsActive = false;
   };
 }

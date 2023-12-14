@@ -1,4 +1,4 @@
-import { AppleTile } from "./utils";
+import { AppleTile, GridElementEffects } from "./utils";
 import { SnakeDirection } from "./utils/SnakeDirection";
 
 export type SnakeGameConfig = {
@@ -14,6 +14,7 @@ export interface SnakeGameState extends SnakeGameConfig {
   apple?: AppleTile;
   position: number;
   difficulty: Difficulty;
+  effects: Record<GridElementEffects, number>;
 }
 
 export type UpdateSnakeGameState = (overrides: Partial<SnakeGameState>) => void;
@@ -103,7 +104,12 @@ export const INITIAL_GAME_STATE: SnakeGameState = {
   borderOutOfBounds: difficulties.Normal.borderOutOfBounds,
   position: 0,
   difficulty: Difficulty.Normal,
+  effects: {
+    [GridElementEffects.Dimensionator]: 0,
+    [GridElementEffects.Hypercube]: 0,
+  },
 };
+export const SNAKE_GAME_ID = "snake-game";
 export const SNAKE_GRID_ID = "snake_game_grid";
 export const SNAKE_CONTAINER_ID = "snake_game_container";
 export const MINIMUM_SWIPE_DISTANCE = 25;

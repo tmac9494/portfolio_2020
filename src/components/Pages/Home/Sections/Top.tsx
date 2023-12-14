@@ -1,15 +1,9 @@
-import React, { useLayoutEffect, useState } from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { SNAKE_GRID_ID, SnakeGame } from "../../../SnakeGame";
+import { SnakeGame } from "../../../SnakeGame";
 
 export const Top: React.FC = () => {
   const [showSnakeGame, setShowSnakeGame] = useState<boolean>();
-
-  useLayoutEffect(() => {
-    if (showSnakeGame) {
-      document.getElementById(SNAKE_GRID_ID)?.focus();
-    }
-  }, [showSnakeGame]);
 
   return (
     <section className="section-container">
@@ -30,7 +24,10 @@ export const Top: React.FC = () => {
           What Are You Good At?
         </NavLink>
         <button
-          onClick={() => setShowSnakeGame(true)}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            setShowSnakeGame(true);
+          }}
           className="btn snake-game-btn"
         >
           I want to play Snake
