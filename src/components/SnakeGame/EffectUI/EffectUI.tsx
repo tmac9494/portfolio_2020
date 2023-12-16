@@ -20,10 +20,6 @@ export const EffectIndicator: React.FC<{
   if (!gameInstance[effect]?.effectIsActive) {
     return null;
   }
-  let style: any = { height: `${percentage}%` };
-  if (percentage < 98) {
-    style.borderTopRightRadius = 0;
-  }
 
   return (
     <div
@@ -35,7 +31,7 @@ export const EffectIndicator: React.FC<{
     >
       <Icon />
       <div className={classNames("duration-bar", effect)}>
-        <span style={style} />
+        <span style={{ height: `${percentage}%` }} />
       </div>
     </div>
   );

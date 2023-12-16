@@ -9,13 +9,18 @@ import {
   difficulties,
   TILE_SIZE,
   SnakeGameState,
-  TileStates,
   SNAKE_GAME_ID,
+  GameDeltas,
+  getCoordsFromString,
 } from "../types";
-import { SnakeDirection } from "./SnakeDirection";
-import { saveSnakeGameHistory } from "./get-game-history";
-import { SnakeGameTouchHandler } from "./SnakeGameTouchHandler";
+import {
+  SnakeDirection,
+  saveSnakeGameHistory,
+  SnakeGameTouchHandler,
+} from "./";
 import { AppleTile, GridElement, GridElementEffects } from "./gridElements";
+import { SnakeController } from "./gridElements/Snake";
+import { Coords } from "./gridElements/types";
 
 type InstanceConstructorParams = {
   gridWidth: number;
@@ -31,12 +36,9 @@ export class SnakeGameInstance {
   centerPoint: number;
   gameState: GameState;
   length: number;
-  position: number;
   max: number;
   gridWidth: number;
-  lastPositions: Set<number>;
   direction: SnakeDirection;
-  deltas: Record<Directions, number>;
   difficulty: Difficulty;
   apple: AppleTile;
   hyperCube?: GridElement;
@@ -51,6 +53,7 @@ export class SnakeGameInstance {
   renderDispatch: React.Dispatch<
     React.SetStateAction<SnakeGameState | undefined>
   >;
+  snake: SnakeController;
 
   constructor({ gridWidth, renderDispatch, debug }: InstanceConstructorParams) {
     this.focused = false;
@@ -58,13 +61,7 @@ export class SnakeGameInstance {
     this.lastUpdateTimestamp = 0;
     this.debug = !!debug;
     const max = gridWidth * gridWidth;
-    const centerPoint = Math.ceil((max - 1) / 2);
-    const deltas = {
-      [Directions.Right]: 1,
-      [Directions.Left]: -1,
-      [Directions.Top]: -gridWidth,
-      [Directions.Bottom]: gridWidth,
-    };
+    const centerPoint = Math.ceil((gridWidth - 1) / 2);
     this.isMobile = window.innerWidth <= 800;
     this.max = max;
     this.centerPoint = centerPoint;
@@ -72,9 +69,6 @@ export class SnakeGameInstance {
     this.difficulty = Difficulty.Normal;
     this.gameState = GameState.Idle;
     this.length = DEFAULT_LENGTH;
-    this.position = centerPoint;
-    this.lastPositions = new Set([centerPoint - 1, centerPoint - 2]);
-    this.deltas = deltas;
     this.apple = new AppleTile({
       gridWidth,
     });
@@ -84,10 +78,19 @@ export class SnakeGameInstance {
     this.dimensionator = new GridElement({
       gridWidth,
     });
+    const testpoint = Math.ceil((gridWidth - 1) / 2);
+    this.snake = new SnakeController({
+      head: { x: testpoint, y: testpoint },
+      body: [
+        { x: testpoint - 1, y: testpoint },
+        { x: testpoint - 2, y: testpoint },
+      ],
+      difficulty: Difficulty.Normal,
+      gridWidth: gridWidth,
+    });
     this.direction = new SnakeDirection(
       INITIAL_DIRECTION,
-      deltas,
-      centerPoint,
+      { x: testpoint, y: testpoint },
       this.renderGame
     );
     this.touch = new SnakeGameTouchHandler(this.direction);
@@ -106,7 +109,6 @@ export class SnakeGameInstance {
   focus = () => {
     if (!this.focused) {
       const element = document.getElementById(SNAKE_GAME_ID);
-      console.log(element);
       if (element) {
         this.focused = true;
         element.focus();
@@ -123,7 +125,6 @@ export class SnakeGameInstance {
       gameState: this.gameState,
       length: this.length,
       apple: this.apple,
-      position: this.position,
       size: TILE_SIZE,
       width: this.gridWidth,
       interval: difficulties[this.difficulty].interval,
@@ -133,6 +134,7 @@ export class SnakeGameInstance {
         [GridElementEffects.Hypercube]: this.hyperCube?.duration || 0,
         [GridElementEffects.Dimensionator]: this.dimensionator?.duration || 0,
       },
+      snake: this.snake,
     };
   };
 
@@ -164,59 +166,17 @@ export class SnakeGameInstance {
   };
 
   gameTick = () => {
-    let newPosition = this.position + this.deltas[this.direction.direction];
-    const borderOutOfBounds = difficulties[this.difficulty].borderOutOfBounds;
     if (this.gameState === GameState.Start) {
-      const positionsAsArray = Array.from(this.lastPositions);
-      positionsAsArray.unshift(this.position);
-      if (this.lastPositions.size > this.max - 2) {
-        positionsAsArray.pop();
-      }
-      this.lastPositions = new Set(positionsAsArray);
-      this.direction.lastPosition = positionsAsArray[0];
-
-      // out of bounds positions
-      const isPassedRight =
-        (this.position + 1) % this.gridWidth === 0 &&
-        this.direction.direction === Directions.Right;
-      const isPassedLeft =
-        this.position % this.gridWidth === 0 &&
-        this.direction.direction === Directions.Left;
-      const isPassedTop = newPosition < 0;
-      const isPassedBottom = newPosition > this.max - 1;
-
-      // border out of bounds is false pathfinder
-      if (this.dimensionator?.effectIsActive || !borderOutOfBounds) {
-        if (isPassedRight) newPosition = this.position - this.gridWidth + 1;
-        else if (isPassedLeft) newPosition = this.position + this.gridWidth - 1;
-        else if (isPassedTop)
-          newPosition = this.position + this.max - this.gridWidth;
-        else if (isPassedBottom)
-          newPosition = this.position - this.max + this.gridWidth;
-      }
-
-      // player died
-      const playerAteBody =
-        this.lastPositions.has(newPosition) &&
-        positionsAsArray.indexOf(newPosition) < this.length;
-      const playerOutOfBounds =
-        !this.dimensionator?.effectIsActive &&
-        borderOutOfBounds &&
-        (isPassedRight || isPassedBottom || isPassedLeft || isPassedTop);
-      const playerHitObstacle = this.apple?.boundaries.has(newPosition);
-
-      // end game if player died
-      if (playerAteBody || playerOutOfBounds || playerHitObstacle) {
-        this.endGame();
-      }
-      this.position = newPosition;
-      this.direction.position = newPosition;
-
-      // side effects
-      if (newPosition === this.apple?.location) this.eatApple();
-      if (newPosition === this.hyperCube?.location) this.hyperCube?.eat();
-      if (newPosition === this.dimensionator?.location)
-        this.dimensionator?.eat();
+      this.snake.move({
+        direction: this.direction.direction,
+        dimensionator: this.dimensionator,
+        hyperCube: this.hyperCube,
+        apple: this.apple,
+        eatApple: this.eatApple,
+        endGame: this.endGame,
+      });
+      this.direction.lastPosition = this.direction.position;
+      this.direction.position = this.snake.head.getCoords();
 
       this.renderGame();
     }
@@ -228,13 +188,12 @@ export class SnakeGameInstance {
   setNewGameState = () => {
     this.gameState = GameState.Idle;
     this.length = DEFAULT_LENGTH;
-    this.position = this.centerPoint;
-    this.direction.reset(this.centerPoint, this.centerPoint - 1);
+    this.snake.head.x = this.centerPoint;
+    this.snake.head.y = this.centerPoint;
+    this.direction.reset();
+    this.snake.reset();
     this.apple.clear();
     this.cleanUpGridElements();
-    this.lastPositions.clear();
-    this.lastPositions.add(this.centerPoint - 1);
-    this.lastPositions.add(this.centerPoint - 2);
     this.generateApple();
     this.renderGame();
   };
@@ -270,30 +229,55 @@ export class SnakeGameInstance {
     }
   };
 
-  // --------- Snake buffer for item spacing
-  getSnakeBuffer = () => {
-    const position = this.position;
+  getSnakeBufferCoords = (): Coords[] => {
+    const position = this.snake.head.getCoords();
     return [
       // create larger buffer around snake's head
       position,
-      position + 1,
-      position - 1,
-      position + this.gridWidth,
-      position - this.gridWidth,
-      position + this.gridWidth + 1,
-      position - this.gridWidth + 1,
-      position + this.gridWidth - 1,
-      position - this.gridWidth - 1,
+      {
+        x: position.x + 1,
+        y: position.y,
+      },
+      {
+        x: position.x - 1,
+        y: position.y,
+      },
+      {
+        x: position.x,
+        y: position.y + 1,
+      },
+      {
+        x: position.x,
+        y: position.y - 1,
+      },
+      {
+        x: position.x - 1,
+        y: position.y + 1,
+      },
+      {
+        x: position.x + 1,
+        y: position.y + 1,
+      },
+      {
+        x: position.x - 1,
+        y: position.y - 1,
+      },
+      {
+        x: position.x + 1,
+        y: position.y - 1,
+      },
       // snake body
-      ...Array.from(this.lastPositions).slice(0, this.length + 1),
-    ].reduce((prev: number[], current) => {
+      ...Array.from(
+        this.snake.body.map((element) => ({ x: element.x, y: element.y }))
+      ),
+    ].reduce((prev: Coords[], current: Coords): Coords[] => {
       return [
         ...prev,
         current,
-        current - this.gridWidth,
-        current + this.gridWidth,
-        current - 1,
-        current + 1,
+        { x: current.x, y: current.y + 1 },
+        { x: current.x, y: current.y - 1 },
+        { x: current.x + 1, y: current.y },
+        { x: current.x - 1, y: current.y },
       ];
     }, []);
   };
@@ -301,43 +285,51 @@ export class SnakeGameInstance {
   // -------- apple stuff
   eatApple = () => {
     this.length++;
-    this.apple?.clear();
     this.generateApple();
     const value = this.length - DEFAULT_LENGTH;
+    const obstacleBuffer = Array.from(this.apple.boundaries).map((boundary) =>
+      getCoordsFromString(boundary)
+    );
     if (value === 2 || value % 10 === 0)
       this.hyperCube?.setOnGrid({
-        position: this.position,
         max: this.max,
-        buffer: [
-          ...this.getSnakeBuffer(),
-          this?.apple?.location || 0,
-          ...Array.from(this.apple.boundaries),
-          this.dimensionator?.location || 0,
+        bufferCoords: [
+          this.apple.coords as Coords,
+          ...obstacleBuffer,
+          ...this.getSnakeBufferCoords(),
+          this.hyperCube?.coords || this.snake.head.getCoords(),
+          this.dimensionator?.coords || this.snake.head.getCoords(),
         ],
+        coords: this.snake.head.getCoords(),
       });
     if (this.difficulty !== Difficulty.Easy && (value === 1 || value % 8 === 0))
       this.dimensionator?.setOnGrid({
-        position: this.position,
         max: this.max,
-        buffer: [
-          ...this.getSnakeBuffer(),
-          this.apple?.location || 0,
-          ...Array.from(this.apple.boundaries),
-          this.hyperCube?.location || 0,
+        bufferCoords: [
+          this.apple.coords as Coords,
+          ...obstacleBuffer,
+          ...this.getSnakeBufferCoords(),
+          this.hyperCube?.coords || this.snake.head.getCoords(),
+          this.dimensionator?.coords || this.snake.head.getCoords(),
         ],
+        coords: this.snake.head.getCoords(),
       });
   };
   generateApple = () =>
     this.apple?.setAppleOnGrid({
-      position: this.position,
-      max: this.max,
-      buffer: [...this.getSnakeBuffer(), this?.hyperCube?.location || 0],
+      bufferCoords: [
+        ...this.getSnakeBufferCoords(),
+        this.hyperCube?.coords || this.snake.head.getCoords(),
+        this.dimensionator?.coords || this.snake.head.getCoords(),
+      ],
+      coords: this.snake.head.getCoords(),
     });
 
   // -------- difficulty event
   changeDifficulty = (difficulty: Difficulty) => {
     this.difficulty = difficulty;
     this.apple.hasBoundaries = difficulty === Difficulty.Hard;
+    this.snake.difficulty = difficulty;
     this.startGameTicker();
     this.setNewGameState();
   };
@@ -361,40 +353,6 @@ export class SnakeGameInstance {
   onKeyUp = (e: React.KeyboardEvent) => {
     const methods = this.getDirectionKeyMethods(e.key);
     methods && methods[1]();
-  };
-
-  // -------- get tile type by index
-  getTileTypeByIndex = (index: number) => {
-    let tileType: TileStates = TileStates.Inactive;
-
-    if (this.debug && this.getSnakeBuffer().includes(index)) {
-      tileType = TileStates.Buffer;
-    }
-
-    if (this.apple?.boundaries.has(index)) {
-      tileType = TileStates.Obstacle;
-    } else if (
-      this.lastPositions.has(index) &&
-      Array.from(this.lastPositions).indexOf(index) < this.length
-    ) {
-      tileType = TileStates.Body;
-    } else {
-      switch (index) {
-        case this.position:
-          tileType = TileStates.Head;
-          break;
-        case this.apple.location:
-          tileType = TileStates.Apple;
-          break;
-        case this.hyperCube?.location:
-          tileType = TileStates.Hypercube;
-          break;
-        case this.dimensionator?.location:
-          tileType = TileStates.Dimensionator;
-          break;
-      }
-    }
-    return tileType;
   };
 
   // -------- cleanup

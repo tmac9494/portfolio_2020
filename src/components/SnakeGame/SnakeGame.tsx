@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { GameGrid } from "./GameGrid";
-import "./styles.scss";
+import "./styles/styles.scss";
 import { GameState, SNAKE_GAME_ID, SnakeGameState, TILE_SIZE } from "./types";
 import { DifficultyOptions } from "./DifficultyOptions";
 import { HighScores } from "./HighScores";
@@ -37,6 +37,8 @@ export const SnakeGame: React.FC<{
     return null;
   }
 
+  const total = gameInstance.current.max;
+
   return (
     <>
       <div
@@ -71,7 +73,11 @@ export const SnakeGame: React.FC<{
             effect={GridElementEffects.Hypercube}
           />
         </div>
-        <GameGrid gameState={gameState} gameInstance={gameInstance.current} />
+        <GameGrid
+          gameState={gameState}
+          gameInstance={gameInstance.current}
+          gridSize={total}
+        />
         <HighScores
           difficulty={gameState.difficulty}
           length={gameState.length}

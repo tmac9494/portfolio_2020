@@ -1,29 +1,30 @@
 import {
   Directions,
-  GameDeltas,
+  GAME_DELTAS,
   INITIAL_DIRECTION,
   SnakeGameDirectionKeys,
 } from "../types";
+import { Coords } from "./gridElements/types";
 export class SnakeDirection {
   initialDirection: Directions;
   direction: Directions;
   keystore: Directions[];
-  lastPosition: number;
-  position: number;
-  deltas: GameDeltas;
+  lastPosition: Coords;
+  position: Coords;
   renderGame: (tick?: boolean) => void;
   keyEvents: Record<SnakeGameDirectionKeys, [() => void, () => void]>;
+  initialPositions: Coords[];
   constructor(
     initialDirection: Directions,
-    deltas: GameDeltas,
-    position: number,
+    position: Coords,
     renderGame: (tick?: boolean) => void
   ) {
     this.initialDirection = initialDirection;
-    this.deltas = deltas;
+    const initialPositions = [position, { x: position.x - 1, y: position.y }];
+    this.initialPositions = initialPositions;
     this.direction = initialDirection;
-    this.lastPosition = 0;
-    this.position = position;
+    this.lastPosition = initialPositions[1];
+    this.position = initialPositions[0];
     this.keystore = [];
     this.renderGame = renderGame;
     this.keyEvents = {
@@ -36,8 +37,10 @@ export class SnakeDirection {
 
   // direction handler
   setDirection = (direction: Directions) => {
-    this.direction = direction;
-    this.renderGame();
+    if (this.directionIsNotLastPosition(direction)) {
+      this.direction = direction;
+      this.renderGame();
+    }
   };
 
   // add/remove keyboard direction events
@@ -53,23 +56,20 @@ export class SnakeDirection {
     }
   };
 
+  directionIsNotLastPosition(direction: Directions) {
+    const lastPosition = JSON.stringify(this.lastPosition);
+    const nextPosition = JSON.stringify({
+      x: this.position.x + GAME_DELTAS[direction].x,
+      y: this.position.y + GAME_DELTAS[direction].y,
+    });
+    return lastPosition !== nextPosition;
+  }
+
   // direction triggers
-  toTop = () => {
-    if (this.lastPosition !== this.position + this.deltas[Directions.Top])
-      this.setDirection(Directions.Top);
-  };
-  toLeft = () => {
-    if (this.lastPosition !== this.position + this.deltas[Directions.Left])
-      this.setDirection(Directions.Left);
-  };
-  toRight = () => {
-    if (this.lastPosition !== this.position + this.deltas[Directions.Right])
-      this.setDirection(Directions.Right);
-  };
-  toBottom = () => {
-    if (this.lastPosition !== this.position + this.deltas[Directions.Bottom])
-      this.setDirection(Directions.Bottom);
-  };
+  toTop = () => this.setDirection(Directions.Top);
+  toLeft = () => this.setDirection(Directions.Left);
+  toRight = () => this.setDirection(Directions.Right);
+  toBottom = () => this.setDirection(Directions.Bottom);
 
   // keyboard events
   removeTopKey = () => this.removeKey(Directions.Top);
@@ -111,10 +111,10 @@ export class SnakeDirection {
   };
 
   // reset
-  reset = (position: number, lastPosition: number) => {
+  reset = () => {
     this.direction = INITIAL_DIRECTION;
-    this.position = position;
-    this.lastPosition = lastPosition;
+    this.position = this.initialPositions[0];
+    this.lastPosition = this.initialPositions[1];
     this.direction = this.initialDirection;
   };
 }

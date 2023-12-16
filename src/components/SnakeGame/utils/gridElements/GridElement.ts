@@ -1,3 +1,6 @@
+import { TILE_SIZE, getCoordsAsString, getCoordsFromString } from "../../types";
+import { Coords } from "./types";
+
 type HideDelay = number | false;
 type EffectDuration = number | false;
 
@@ -6,12 +9,13 @@ type GridElementConstructorParams = {
   hasEffect?: boolean;
   hideDelay?: HideDelay;
   effectDuration?: EffectDuration;
+  coords?: Coords;
 };
 
 type SetOnGridParams = {
-  position: number;
   max: number;
-  buffer: number[];
+  coords: Coords;
+  bufferCoords: Coords[];
 };
 
 export enum GridElementEffects {
@@ -21,7 +25,7 @@ export enum GridElementEffects {
 
 export class GridElement {
   gridWidth: number;
-  location?: number;
+  coords?: Coords;
   effectIsActive: boolean;
   hideDelay: HideDelay;
   effectDuration: EffectDuration;
@@ -32,7 +36,9 @@ export class GridElement {
     gridWidth,
     hideDelay,
     effectDuration,
+    coords,
   }: GridElementConstructorParams) {
+    this.coords = coords;
     this.gridWidth = gridWidth;
     this.effectIsActive = false;
     this.hideDelay = hideDelay !== false ? 5000 : hideDelay;
@@ -40,9 +46,8 @@ export class GridElement {
   }
 
   tick(ms: number) {
-    if (this.location && this.hideDelay) {
+    if (this.coords && this.hideDelay) {
       const hideDelay = this.visibleDuration || 0;
-      console.log(hideDelay);
       if (hideDelay !== 0) {
         if (hideDelay > ms) {
           this.visibleDuration = hideDelay - ms;
@@ -50,7 +55,7 @@ export class GridElement {
           this.visibleDuration = 0;
         }
       } else {
-        this.location = undefined;
+        this.coords = undefined;
       }
     }
 
@@ -68,32 +73,41 @@ export class GridElement {
     }
   }
 
-  setOnGrid = ({ position, max, buffer }: SetOnGridParams) => {
-    if (!!!this.location) {
-      const generatePosition = () => Math.floor(Math.random() * max);
-      const snakeBuffer = new Set(buffer);
-      let newPosition = position;
+  setOnGrid = ({ coords, bufferCoords }: SetOnGridParams) => {
+    if (!!!this.coords) {
+      const generateCoords = (): Coords => ({
+        x: Math.floor(Math.random() * this.gridWidth),
+        y: Math.floor(Math.random() * this.gridWidth),
+      });
+      const snakeCoordsBuffer = new Set(
+        bufferCoords.map((cord) => getCoordsAsString(cord))
+      );
+      let newCoords = getCoordsAsString(coords);
       do {
-        newPosition = generatePosition();
-      } while (snakeBuffer.has(newPosition));
+        newCoords = getCoordsAsString(generateCoords());
+      } while (snakeCoordsBuffer.has(newCoords));
       if (this.hideDelay) {
         this.visibleDuration = this.hideDelay;
       }
-      this.location = newPosition;
+      this.coords = getCoordsFromString(newCoords);
     }
   };
 
   eat = () => {
-    this.location = undefined;
+    this.coords = undefined;
     this.duration = this.effectDuration || 0;
     if (this.effectDuration) {
       this.effectIsActive = true;
       this.duration = this.effectDuration;
     }
   };
+  getGridXPosition = () => ((this.coords && this.coords.x) || 0) * TILE_SIZE;
+  getGridYPosition = () => ((this.coords && this.coords.y) || 0) * TILE_SIZE;
 
   cleanUp = () => {
-    this.location = undefined;
     this.effectIsActive = false;
+    this.coords = undefined;
+    this.duration = 0;
+    this.visibleDuration = 0;
   };
 }
