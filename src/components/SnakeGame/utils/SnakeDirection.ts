@@ -12,8 +12,9 @@ export class SnakeDirection {
   lastPosition: Coords;
   position: Coords;
   renderGame: (tick?: boolean) => void;
-  keyEvents: Record<SnakeGameDirectionKeys, [() => void, () => void]>;
+  keyEvents: Record<SnakeGameDirectionKeys, (() => void)[]>;
   initialPositions: Coords[];
+
   constructor(
     initialDirection: Directions,
     position: Coords,
@@ -27,11 +28,21 @@ export class SnakeDirection {
     this.position = initialPositions[0];
     this.keystore = [];
     this.renderGame = renderGame;
+
+    const arrowEventsTop = [this.addTopKey, this.removeTopKey];
+    const arrowEventsBottom = [this.addBottomKey, this.removeBottomKey];
+    const arrowEventsLeft = [this.addLeftKey, this.removeLeftKey];
+    const arrowEventsRight = [this.addRightKey, this.removeRightKey];
+
     this.keyEvents = {
-      [SnakeGameDirectionKeys.W]: [this.addTopKey, this.removeTopKey],
-      [SnakeGameDirectionKeys.S]: [this.addBottomKey, this.removeBottomKey],
-      [SnakeGameDirectionKeys.A]: [this.addLeftKey, this.removeLeftKey],
-      [SnakeGameDirectionKeys.D]: [this.addRightKey, this.removeRightKey],
+      [SnakeGameDirectionKeys.W]: arrowEventsTop,
+      [SnakeGameDirectionKeys.S]: arrowEventsBottom,
+      [SnakeGameDirectionKeys.A]: arrowEventsLeft,
+      [SnakeGameDirectionKeys.D]: arrowEventsRight,
+      [SnakeGameDirectionKeys.ArrowUp]: arrowEventsTop,
+      [SnakeGameDirectionKeys.ArrowLeft]: arrowEventsLeft,
+      [SnakeGameDirectionKeys.ArrowDown]: arrowEventsBottom,
+      [SnakeGameDirectionKeys.ArrowRight]: arrowEventsRight,
     };
   }
 
@@ -57,12 +68,14 @@ export class SnakeDirection {
   };
 
   directionIsNotLastPosition(direction: Directions) {
-    const lastPosition = JSON.stringify(this.lastPosition);
-    const nextPosition = JSON.stringify({
+    const lastPosition = this.lastPosition;
+    const nextPosition = {
       x: this.position.x + GAME_DELTAS[direction].x,
       y: this.position.y + GAME_DELTAS[direction].y,
-    });
-    return lastPosition !== nextPosition;
+    };
+    return (
+      lastPosition.x !== nextPosition.x || lastPosition.y !== nextPosition.y
+    );
   }
 
   // direction triggers

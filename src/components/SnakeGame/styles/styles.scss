@@ -152,52 +152,6 @@
   }
 }
 
-.scores-container {
-  width: 120px;
-  position: absolute;
-  top: auto;
-  left: auto;
-  right: 0;
-  bottom: 100%;
-  background-color: $borderColor;
-  border-top-right-radius: 2px;
-  border-top-left-radius: 2px;
-  .high-scores-container {
-    padding: 8px;
-    padding-top: 4px;
-  }
-  h4 {
-    margin-top: 0;
-    margin-bottom: 6px;
-  }
-}
-
-@keyframes score-counter {
-  0% {
-    transform: translateY(0%);
-  }
-  80% {
-    transform: translateY(-52%);
-  }
-  100% {
-    transform: translateY(-50%);
-  }
-}
-
-.game-score {
-  background: $backgroundColor;
-  border: 2px solid $borderColor;
-  max-height: 50px;
-  overflow: hidden;
-  .scoreboard-counter {
-    animation: score-counter 0.38s forwards ease-out;
-  }
-  h1 {
-    margin: 0;
-    padding: 4px;
-  }
-}
-
 @keyframes info-box {
   0% {
     transform: scale(0.4) translate(-50%, -50%);
@@ -228,20 +182,3 @@
   }
 }
 $btnSize: 100px;
-
-@include desktop {
-  .direction-btn {
-    display: none;
-  }
-  .game-score {
-    border-left: none;
-  }
-  .scores-container {
-    left: 100%;
-    top: 0;
-    bottom: auto;
-    right: auto;
-    border-bottom-right-radius: 2px;
-    border-top-left-radius: 0px;
-  }
-}

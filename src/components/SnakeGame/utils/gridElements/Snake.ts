@@ -72,12 +72,12 @@ export class SnakeController {
     }
 
     // react to state
-    const positionAsString = this.head.getCoordsAsString();
+    const positionAsString = getCoordsAsString(this.head);
 
     // hazards
     const playerAteBody = new Set(
-      this.body.map((item) => item.getCoordsAsString())
-    ).has(this.head.getCoordsAsString());
+      this.body.map((item) => getCoordsAsString(item))
+    ).has(positionAsString);
 
     const playerOutOfBounds =
       this.head.x > this.head.max ||
@@ -85,9 +85,7 @@ export class SnakeController {
       this.head.x < 0 ||
       this.head.y < 0;
 
-    const playerHitObstacle = apple.boundaries.has(
-      this.head.getCoordsAsString()
-    );
+    const playerHitObstacle = apple.boundaries.has(positionAsString);
 
     // player died
     const playerDied = playerAteBody || playerOutOfBounds || playerHitObstacle;
@@ -120,19 +118,17 @@ export class SnakeController {
         direction: from
           ? OPPOSITE_DIRECTION[from]
           : lastSnakeBodyElement.direction,
+        from: lastSnakeBodyElement.from,
         index: this.body.length,
         gridWidth: this.initialParams.gridWidth,
       })
     );
-
-    console.log(lastSnakeBodyElement, this.body[this.body.length - 1]);
   }
 
   // core parameters change/reset
   setCoreParameters(params: SnakeParams) {
     this.body = mapNewBodyElements(params.body, params.gridWidth);
     this.head = mapSnakeHead(params.head, params.gridWidth);
-    this.difficulty = params.difficulty;
   }
 
   // reset snake state

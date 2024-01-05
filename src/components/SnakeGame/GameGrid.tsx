@@ -3,6 +3,7 @@ import {
   OPPOSITE_DIRECTION,
   SNAKE_GRID_ID,
   SnakeGameState,
+  TILE_SIZE,
   Tile,
   TileStates,
   getCoordsFromString,
@@ -12,6 +13,7 @@ import { SnakeGameInstance } from "./utils/SnakeGameInstance";
 import classNames from "classnames";
 import { GridToggle } from "./GridToggle";
 import { SnakeBodyTile, SnakeHeadTile } from "./GameTiles";
+import { SakeTailTile } from "./GameTiles/SakeTailTile";
 
 export const GameGrid: React.FC<{
   gameState: SnakeGameState;
@@ -29,6 +31,10 @@ export const GameGrid: React.FC<{
     return gridList;
   }, [gridSize]);
 
+  const lastBodyElement =
+    gameInstance.snake.body[gameInstance.snake.body.length - 1];
+  const lastBodyElementCoords = lastBodyElement.getCoordsInPixels();
+
   return (
     <div
       className={classNames("grid", showLines && "grid-lines")}
@@ -42,9 +48,21 @@ export const GameGrid: React.FC<{
           to={value.to}
           index={i}
           coords={value.getCoordsInPixels()}
+          lastCoords={value.lastPosition}
           isLast={i === gameInstance.snake.body.length - 1}
+          isNew={value.isNew}
         />
       ))}
+
+      <SakeTailTile
+        key="tail"
+        tileSize={`${TILE_SIZE}px`}
+        x={lastBodyElementCoords.x}
+        y={lastBodyElementCoords.y}
+        index={lastBodyElement.index}
+        from={lastBodyElement.from || OPPOSITE_DIRECTION[lastBodyElement.to]}
+        to={lastBodyElement.to}
+      />
       {gameInstance.apple.coords && (
         <Tile
           key="apple"
@@ -94,6 +112,7 @@ export const GameGrid: React.FC<{
         direction={gameInstance.direction.direction}
         to={gameInstance.snake.head.direction}
         coords={gameInstance.snake.head.getCoordsInPixels()}
+        lastCoords={gameInstance.snake.head.lastPosition}
       />
       <GridToggle callback={setShowLines} showLines={showLines} />
       <SnakeGameContentBox

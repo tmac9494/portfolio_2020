@@ -3,6 +3,7 @@
 $snakeHeadRadius: 14px;
 $snakeEyesSpacing: 2px;
 
+$snakeTransitionTiming: 0.11s;
 #snake-game {
   .game-tile {
     border: 1px solid;
@@ -17,6 +18,7 @@ $snakeEyesSpacing: 2px;
   .tile-type-apple,
   .tile-type-hypercube {
     transition: background-color 0.25s 0.32s, box-shadow 0.32s 0.5s;
+    border-radius: 50px;
   }
   .tile-type-apple {
     position: absolute;
@@ -24,7 +26,6 @@ $snakeEyesSpacing: 2px;
     fill: $appleColor;
     border-color: $appleColor;
     box-shadow: 0 0 12px $appleColor;
-    border-radius: 6px;
   }
   .tile-type-hypercube {
     position: absolute;
@@ -53,7 +54,11 @@ $snakeEyesSpacing: 2px;
 
   .tile-type-head,
   .tile-type-body {
-    transition: background-color 1s;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: background-color 1s, transform $snakeTransitionTiming linear,
+      border-radius $snakeTransitionTiming linear;
   }
 
   .tile-type-head {
@@ -61,15 +66,24 @@ $snakeEyesSpacing: 2px;
     background: $snakeHead;
     border-color: $snakeHead;
     border: 1px solid transparent;
+    z-index: 20;
     .snake-eyes .eye {
       background: $snakeColor;
     }
   }
   .tile-type-body {
-    position: absolute;
     background: $snakeColor;
     border: 1px solid transparent;
     border-color: $snakeHead;
+    transition: background-color 1s, transform $snakeTransitionTiming linear,
+      border-radius $snakeTransitionTiming linear;
+    &:not(.last) {
+      transition: background-color 1s, transform 0s, border-radius 0s;
+    }
+  }
+  .snake-body-container {
+    border: 1px solid;
+    color: $snakeHead;
   }
   &.Easy {
     .tile-type-head {
@@ -82,6 +96,9 @@ $snakeEyesSpacing: 2px;
     .tile-type-body {
       background: $easyColor;
       border-color: $easyHead;
+    }
+    .snake-body-container {
+      color: $easyHead;
     }
   }
   &.Hard {
@@ -96,6 +113,9 @@ $snakeEyesSpacing: 2px;
       background: $hardColor;
       border-color: $hardHead;
     }
+    .snake-body-container {
+      color: $hardHead;
+    }
   }
   &.hyper-buff {
     .grid {
@@ -105,25 +125,43 @@ $snakeEyesSpacing: 2px;
     .tile-type-head {
       background-color: $hypercubeColor;
       border-color: $hypercubeColor;
-      //   animation: hypersnake 0.42s forwards infinite;
     }
     .tile-type-head {
       background-color: #02083d;
       border-color: $hypercubeColor;
       animation: hypersnake 0.42s forwards infinite;
-      z-index: 2;
       .snake-eyes .eye {
         background: $hypercubeColor;
       }
     }
     .tile-type-body {
       background-color: $hypercubeColor;
-      animation: hypersnakeBody 0.4s forwards infinite;
     }
-    // .tile-type-body,
-    // .tile-type-head {
-    //   box-shadow: 0 0 8px $hypercubeColor;
-    // }
+    .snake-body-container {
+      color: $hypercubeColor;
+    }
+  }
+
+  .snake-body-container {
+    &.last,
+    .tile-type-body.last {
+      &.from-left {
+        border-top-left-radius: $snakeHeadRadius;
+        border-bottom-left-radius: $snakeHeadRadius;
+      }
+      &.from-right {
+        border-top-right-radius: $snakeHeadRadius;
+        border-bottom-right-radius: $snakeHeadRadius;
+      }
+      &.from-top {
+        border-top-right-radius: $snakeHeadRadius;
+        border-top-left-radius: $snakeHeadRadius;
+      }
+      &.from-bottom {
+        border-bottom-right-radius: $snakeHeadRadius;
+        border-bottom-left-radius: $snakeHeadRadius;
+      }
+    }
   }
 
   &.dimensionator-buff {
@@ -131,24 +169,22 @@ $snakeEyesSpacing: 2px;
     .tile-type-head {
       background-color: $dimensionatorColor;
       border-color: $dimensionatorColor;
-      //   animation: dimensionator 0.42s forwards infinite;
     }
     .tile-type-head {
       background-color: $dimensionatorDark;
       border-color: $dimensionatorColor;
       animation: dimensionator 0.42s forwards infinite;
-      z-index: 2;
+      //   z-index: 2;
       .snake-eyes .eye {
         background: $dimensionatorColor;
       }
     }
+    .snake-body-container {
+      color: $dimensionatorColor;
+    }
     .tile-type-body {
       animation: none;
     }
-    // .tile-type-body,
-    // .tile-type-head {
-    //   box-shadow: 0 0 8px $dimensionatorColor;
-    // }
     &.hyper-buff {
       .tile-type-head {
         animation: hypersnake 0.42s forwards infinite;
@@ -159,9 +195,29 @@ $snakeEyesSpacing: 2px;
       .snake-eyes .eye {
         background: $hypercubeColor;
         border: 1px solid $hypercubeColor;
-        // animation: hyperframe 0.42s forwards infinite;
+      }
+      .snake-body-container {
+        color: $hypercubeColor;
       }
     }
+  }
+}
+
+// hide snake tail gap animation
+@keyframes animateX {
+  0% {
+    width: 130%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+@keyframes animateY {
+  0% {
+    height: 130%;
+  }
+  100% {
+    height: 100%;
   }
 }
 
@@ -170,19 +226,29 @@ $snakeEyesSpacing: 2px;
   border-radius: $snakeHeadRadius;
   border-radius: 0;
   &.last {
-    &.to-top {
+    &.animate-x {
+      animation: animateX $snakeTransitionTiming / 2 forwards !important;
+    }
+    &.animate-y {
+      animation: animateY $snakeTransitionTiming / 2 forwards !important;
+    }
+    &.to-top,
+    &.from-top:not(.tail) {
       border-bottom-right-radius: $snakeHeadRadius;
       border-bottom-left-radius: $snakeHeadRadius;
     }
-    &.to-right {
+    &.to-right,
+    &.from-right:not(.tail) {
       border-top-left-radius: $snakeHeadRadius;
       border-bottom-left-radius: $snakeHeadRadius;
     }
-    &.to-left {
+    &.to-left,
+    &.from-left:not(.tail) {
       border-bottom-right-radius: $snakeHeadRadius;
       border-top-right-radius: $snakeHeadRadius;
     }
-    &.to-bottom {
+    &.to-bottom,
+    &.from-bottom:not(.tail) {
       border-top-left-radius: $snakeHeadRadius;
       border-top-right-radius: $snakeHeadRadius;
     }
@@ -213,20 +279,16 @@ $snakeEyesSpacing: 2px;
     border-top-left-radius: $snakeHeadRadius;
   }
 
-  &.to-top,
-  &.from-top:not(.last) {
+  &.hide-border-top {
     border-top: 0 !important;
   }
-  &.to-left,
-  &.from-left:not(.last) {
+  &.hide-border-left {
     border-left: 0 !important;
   }
-  &.to-right,
-  &.from-right:not(.last) {
+  &.hide-border-right {
     border-right: 0 !important;
   }
-  &.to-bottom,
-  &.from-bottom:not(.last) {
+  &.hide-border-bottom {
     border-bottom: 0 !important;
   }
 }
@@ -239,15 +301,19 @@ $eyesShiftDistance: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
   .snake-eyes {
     display: flex;
     flex-direction: row;
     justify-content: center;
     transition: transform 0.12s;
     .eye {
-      width: 4px;
-      height: 3px;
+      border-radius: 12px;
+      width: 5px;
+      height: 4px;
       margin: 1px;
+      transition: transform 0.18s;
+      scale: 1;
     }
   }
   &.top {
@@ -257,12 +323,24 @@ $eyesShiftDistance: 8px;
   }
   &.left {
     .snake-eyes {
-      transform: translate(-$eyesShiftDistance, 0);
+      transform: translate(-$eyesShiftDistance - 5px, 0);
+    }
+    .right.eye {
+      transform: scaleX(1);
+    }
+    .left.eye {
+      transform: scaleX(0);
     }
   }
   &.right {
     .snake-eyes {
-      transform: translate($eyesShiftDistance, 0);
+      transform: translate($eyesShiftDistance + 5px, 0);
+    }
+    .right.eye {
+      transform: scaleX(0);
+    }
+    .left.eye {
+      transform: scaleX(1);
     }
   }
   &.bottom {

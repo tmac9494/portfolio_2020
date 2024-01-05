@@ -1,5 +1,5 @@
 import React from "react";
-import { Directions, TILE_SIZE, TileStates } from "../";
+import { TILE_SIZE, TileStates } from "../";
 import {
   DimensionatorIcon,
   FoodIcon,
@@ -7,7 +7,7 @@ import {
   LightningIcon,
 } from "../icons";
 import classNames from "classnames";
-import { SnakeGameInstance } from "../utils";
+import { SnakeGameInstance } from "../utils/SnakeGameInstance";
 import "./styles.scss";
 
 export const Tile: React.FC<{
@@ -15,10 +15,8 @@ export const Tile: React.FC<{
   gameInstance?: SnakeGameInstance;
   x?: string;
   y?: string;
-  from?: Directions | null;
-  to?: Directions;
   isLast?: boolean;
-}> = ({ tileState, gameInstance, x, y, from, to, isLast }) => {
+}> = ({ tileState, gameInstance, x, y }) => {
   const tileSize = `${TILE_SIZE}px`;
 
   const direction = gameInstance?.direction.direction;
@@ -33,9 +31,6 @@ export const Tile: React.FC<{
       }}
       className={classNames(
         `game-tile tile-type-${tileState}`,
-        from && `from-${from}`,
-        to && `to-${to}`,
-        !!isLast && "last",
         tileState === TileStates.Head && direction
       )}
     >
@@ -43,12 +38,6 @@ export const Tile: React.FC<{
       {tileState === TileStates.Apple && <FoodIcon />}
       {tileState === TileStates.Obstacle && <HazardIcon />}
       {tileState === TileStates.Dimensionator && <DimensionatorIcon />}
-      {tileState === TileStates.Head && (
-        <div className="snake-eyes">
-          {direction !== Directions.Left && <div className="eye" />}
-          {direction !== Directions.Right && <div className="eye" />}
-        </div>
-      )}
     </div>
   );
 };

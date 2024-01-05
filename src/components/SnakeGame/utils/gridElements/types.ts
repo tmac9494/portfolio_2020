@@ -4,6 +4,8 @@ export type SnakeBodyParams = {
   x: number;
   y: number;
   direction: Directions;
+  from?: Directions | null;
+  to?: Directions;
   index?: number;
   gridWidth: number;
   lastPosition?: Coords;

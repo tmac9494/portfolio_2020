@@ -12,6 +12,7 @@ export const SnakeHeadTile: React.FC<SnakeHeadTileProps> = ({
   from,
   to,
   coords,
+  lastCoords,
 }) => {
   const tileSize = `${TILE_SIZE}px`;
 
@@ -26,13 +27,15 @@ export const SnakeHeadTile: React.FC<SnakeHeadTileProps> = ({
       style={{
         width: tileSize,
         height: tileSize,
-        left: coords.x,
-        top: coords.y,
+        // left: coords.x,
+        // top: coords.y,
+
+        transform: `translate(${coords.x}px, ${coords.y}px)`,
       }}
     >
       <div className="snake-eyes">
-        {direction !== Directions.Left && <div className="eye" />}
-        {direction !== Directions.Right && <div className="eye" />}
+        <div className="eye left" />
+        <div className="eye right" />
       </div>
     </div>
   );

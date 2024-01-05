@@ -1,6 +1,6 @@
 import React from "react";
 import { GameState } from "./types";
-import { SnakeGameInstance } from "./utils";
+import { SnakeGameInstance } from "./utils/SnakeGameInstance";
 import { DimensionatorIcon, LightningIcon } from "./icons";
 import { TILE_SIZE } from "./types";
 
@@ -14,7 +14,7 @@ export const SnakeGameContentBox: React.FC<{
 
   const GAME_TITLES: GameContent = {
     [GameState.Dead]: ["Game Over"],
-    [GameState.Pause]: ["Pause"],
+    [GameState.Pause]: ["Game Paused"],
     [GameState.Idle]: ["React Snake"],
     [GameState.Start]: [],
   };

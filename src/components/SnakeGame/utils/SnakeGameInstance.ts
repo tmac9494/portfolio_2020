@@ -1,108 +1,55 @@
 import React, { TouchEvent } from "react";
 import {
+  InstanceConstructorParams,
+  SnakeGameSetup,
   GameState,
   DEFAULT_LENGTH,
   INITIAL_DIRECTION,
-  Directions,
   Difficulty,
   SnakeGameDirectionKeys,
   difficulties,
   TILE_SIZE,
   SnakeGameState,
   SNAKE_GAME_ID,
-  GameDeltas,
   getCoordsFromString,
 } from "../types";
 import {
   SnakeDirection,
   saveSnakeGameHistory,
   SnakeGameTouchHandler,
+  getSnakeGameHistory,
 } from "./";
-import { AppleTile, GridElement, GridElementEffects } from "./gridElements";
-import { SnakeController } from "./gridElements/Snake";
+import { GridElementEffects } from "./gridElements";
 import { Coords } from "./gridElements/types";
+import {
+  shouldShowDimensionator,
+  shouldShowHypercube,
+} from "./gridElements/grid-element-utils";
+import { coordToBuffer, getSnakeHeadBuffer } from "./buffer-utils";
 
-type InstanceConstructorParams = {
-  gridWidth: number;
-  renderDispatch: React.Dispatch<
-    React.SetStateAction<SnakeGameState | undefined>
-  >;
-  debug?: boolean;
-};
-
-export class SnakeGameInstance {
-  debug: boolean;
-  isMobile: boolean;
-  centerPoint: number;
-  gameState: GameState;
-  length: number;
-  max: number;
-  gridWidth: number;
+export class SnakeGameInstance extends SnakeGameSetup {
   direction: SnakeDirection;
-  difficulty: Difficulty;
-  apple: AppleTile;
-  hyperCube?: GridElement;
-  dimensionator?: GridElement;
   touch: SnakeGameTouchHandler;
-  lastUpdateTimestamp: number;
-  time: number;
-  focused: boolean;
   onTouchStart: (e: TouchEvent<HTMLDivElement>) => void;
   onTouchMove: (e: TouchEvent<HTMLDivElement>) => void;
   onTouchEnd: (e: TouchEvent<HTMLDivElement>) => void;
-  renderDispatch: React.Dispatch<
-    React.SetStateAction<SnakeGameState | undefined>
-  >;
-  snake: SnakeController;
 
   constructor({ gridWidth, renderDispatch, debug }: InstanceConstructorParams) {
-    this.focused = false;
-    this.time = 0;
-    this.lastUpdateTimestamp = 0;
-    this.debug = !!debug;
-    const max = gridWidth * gridWidth;
-    const centerPoint = Math.ceil((gridWidth - 1) / 2);
-    this.isMobile = window.innerWidth <= 800;
-    this.max = max;
-    this.centerPoint = centerPoint;
-    this.gridWidth = gridWidth;
-    this.difficulty = Difficulty.Normal;
-    this.gameState = GameState.Idle;
-    this.length = DEFAULT_LENGTH;
-    this.apple = new AppleTile({
-      gridWidth,
-    });
-    this.hyperCube = new GridElement({
-      gridWidth,
-    });
-    this.dimensionator = new GridElement({
-      gridWidth,
-    });
-    const testpoint = Math.ceil((gridWidth - 1) / 2);
-    this.snake = new SnakeController({
-      head: { x: testpoint, y: testpoint },
-      body: [
-        { x: testpoint - 1, y: testpoint },
-        { x: testpoint - 2, y: testpoint },
-      ],
-      difficulty: Difficulty.Normal,
-      gridWidth: gridWidth,
-    });
+    super({ gridWidth, renderDispatch });
     this.direction = new SnakeDirection(
       INITIAL_DIRECTION,
-      { x: testpoint, y: testpoint },
+      { x: this.centerPoint, y: this.centerPoint },
       this.renderGame
     );
     this.touch = new SnakeGameTouchHandler(this.direction);
     this.onTouchStart = this.touch.onTouchStart;
     this.onTouchMove = this.touch.onTouchMove;
     this.onTouchEnd = this.touch.onTouchEnd;
-    this.renderDispatch = renderDispatch;
-    this.generateApple();
   }
 
   // initialize
   initialize = () => {
+    this.generateApple();
     this.renderGame();
     this.startGameTicker();
   };
@@ -145,24 +92,25 @@ export class SnakeGameInstance {
 
   tickerInterval = (time: number) => {
     !this.focused && this.focus();
+    const renderDelta = time - this.lastUpdateTimestamp;
     const tickDelta = time - this.time;
     this.time = time;
     const { interval } = difficulties[this.difficulty];
-    if (this.gameState === GameState.Start) {
+    // render logic at 30fps & game state start
+    if (renderDelta >= 33 && this.gameState === GameState.Start) {
       this.hyperCube?.tick(tickDelta);
       this.dimensionator?.tick(tickDelta);
       const requiredDelta = interval + (this.isMobile ? 50 : 0);
       const isPassedDelta =
-        time - this.lastUpdateTimestamp >=
+        renderDelta >=
         (this?.hyperCube?.effectIsActive ? requiredDelta * 0.8 : requiredDelta);
       if (isPassedDelta) {
         this.gameTick();
-
         this.lastUpdateTimestamp = time;
       }
       this.renderGame();
     }
-    requestAnimationFrame(this.tickerInterval);
+    this.animationFrame = requestAnimationFrame(this.tickerInterval);
   };
 
   gameTick = () => {
@@ -229,56 +177,17 @@ export class SnakeGameInstance {
     }
   };
 
+  // -------- snake elements buffer
   getSnakeBufferCoords = (): Coords[] => {
-    const position = this.snake.head.getCoords();
     return [
       // create larger buffer around snake's head
-      position,
-      {
-        x: position.x + 1,
-        y: position.y,
-      },
-      {
-        x: position.x - 1,
-        y: position.y,
-      },
-      {
-        x: position.x,
-        y: position.y + 1,
-      },
-      {
-        x: position.x,
-        y: position.y - 1,
-      },
-      {
-        x: position.x - 1,
-        y: position.y + 1,
-      },
-      {
-        x: position.x + 1,
-        y: position.y + 1,
-      },
-      {
-        x: position.x - 1,
-        y: position.y - 1,
-      },
-      {
-        x: position.x + 1,
-        y: position.y - 1,
-      },
+      ...getSnakeHeadBuffer(this.snake.head.getCoords()),
       // snake body
       ...Array.from(
         this.snake.body.map((element) => ({ x: element.x, y: element.y }))
       ),
     ].reduce((prev: Coords[], current: Coords): Coords[] => {
-      return [
-        ...prev,
-        current,
-        { x: current.x, y: current.y + 1 },
-        { x: current.x, y: current.y - 1 },
-        { x: current.x + 1, y: current.y },
-        { x: current.x - 1, y: current.y },
-      ];
+      return [...prev, ...coordToBuffer(current)];
     }, []);
   };
 
@@ -286,34 +195,7 @@ export class SnakeGameInstance {
   eatApple = () => {
     this.length++;
     this.generateApple();
-    const value = this.length - DEFAULT_LENGTH;
-    const obstacleBuffer = Array.from(this.apple.boundaries).map((boundary) =>
-      getCoordsFromString(boundary)
-    );
-    if (value === 2 || value % 10 === 0)
-      this.hyperCube?.setOnGrid({
-        max: this.max,
-        bufferCoords: [
-          this.apple.coords as Coords,
-          ...obstacleBuffer,
-          ...this.getSnakeBufferCoords(),
-          this.hyperCube?.coords || this.snake.head.getCoords(),
-          this.dimensionator?.coords || this.snake.head.getCoords(),
-        ],
-        coords: this.snake.head.getCoords(),
-      });
-    if (this.difficulty !== Difficulty.Easy && (value === 1 || value % 8 === 0))
-      this.dimensionator?.setOnGrid({
-        max: this.max,
-        bufferCoords: [
-          this.apple.coords as Coords,
-          ...obstacleBuffer,
-          ...this.getSnakeBufferCoords(),
-          this.hyperCube?.coords || this.snake.head.getCoords(),
-          this.dimensionator?.coords || this.snake.head.getCoords(),
-        ],
-        coords: this.snake.head.getCoords(),
-      });
+    this.setPowerUps();
   };
   generateApple = () =>
     this.apple?.setAppleOnGrid({
@@ -324,6 +206,32 @@ export class SnakeGameInstance {
       ],
       coords: this.snake.head.getCoords(),
     });
+
+  // -------- grid elements
+  setPowerUps = () => {
+    const value = this.length - DEFAULT_LENGTH;
+    const showHyperCube = shouldShowHypercube(value);
+    const showDimensionator = shouldShowDimensionator(value, this.difficulty);
+    if (showHyperCube || showDimensionator) {
+      const obstacleBuffer = Array.from(this.apple.boundaries).map((boundary) =>
+        getCoordsFromString(boundary)
+      );
+      const snakeHeadCoords = this.snake.head.getCoords();
+      const gridParams = {
+        max: this.max,
+        bufferCoords: [
+          this.apple.coords as Coords,
+          ...obstacleBuffer,
+          ...this.getSnakeBufferCoords(),
+          this.hyperCube?.coords || snakeHeadCoords,
+          this.dimensionator?.coords || snakeHeadCoords,
+        ],
+        coords: snakeHeadCoords,
+      };
+      if (showHyperCube) this.hyperCube?.setOnGrid(gridParams);
+      if (showDimensionator) this.dimensionator?.setOnGrid(gridParams);
+    }
+  };
 
   // -------- difficulty event
   changeDifficulty = (difficulty: Difficulty) => {
@@ -337,9 +245,10 @@ export class SnakeGameInstance {
   // -------- User Interaction events
   getDirectionKeyMethods = (key: string) =>
     this.direction.keyEvents[key.toLowerCase() as SnakeGameDirectionKeys];
+
   onKeyDown = (e: React.KeyboardEvent) => {
+    e.preventDefault();
     if (e.key.toLowerCase() === " ") {
-      e.preventDefault();
       if (this.gameState === GameState.Start) {
         this.pauseGame();
       } else {
@@ -353,6 +262,15 @@ export class SnakeGameInstance {
   onKeyUp = (e: React.KeyboardEvent) => {
     const methods = this.getDirectionKeyMethods(e.key);
     methods && methods[1]();
+  };
+
+  //--------- history
+  getGameHistory = () => {
+    const gameHistory = getSnakeGameHistory();
+    const history = gameHistory.filter(
+      (item) => item.difficulty === this.difficulty
+    );
+    return history;
   };
 
   // -------- cleanup

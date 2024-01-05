@@ -15,6 +15,7 @@ export class SnakeBody {
   to: Directions;
   lastPosition: Coords;
   max: number;
+  isNew: boolean;
   constructor({
     x,
     y,
@@ -22,13 +23,17 @@ export class SnakeBody {
     index,
     gridWidth,
     lastPosition,
+    from,
   }: SnakeBodyParams) {
+    this.isNew = true;
     this.x = x;
     this.y = y;
     this.direction = direction;
     this.index = index || 0;
     this.from =
-      this.getFromDirectionX(x, x + 1) || this.getFromDirectionY(y, y + 1);
+      from ||
+      this.getFromDirectionX(x, x + 1) ||
+      this.getFromDirectionY(y, y + 1);
     this.to = direction;
     this.lastPosition = lastPosition || { x: x - 1, y };
     this.max = gridWidth - 1;
@@ -90,35 +95,55 @@ export class SnakeBody {
   };
 
   public follow(nextPosition: Coords, leadingPosition?: Coords): Coords {
-    this.lastPosition = { x: this.x, y: this.y };
-    const x = nextPosition.x;
-    const y = nextPosition.y;
-    const direction = this.getDirection({ x: this.x, y: this.y }, nextPosition);
+    this.isNew = false;
+    const currentPosition = { x: this.x, y: this.y };
+    this.lastPosition = currentPosition;
+    const { x, y } = nextPosition;
+    const xDiff = x - currentPosition.x;
+    const yDiff = y - currentPosition.y;
+    const jumpingX = xDiff > 1 || xDiff < -1;
+    const jumpingY = yDiff > 1 || yDiff < -1;
+    const isJumpingAcrossBorder = jumpingX || jumpingY;
+
+    let isAboutToJumpAcrossBorder = false;
+    const direction = this.getDirection(currentPosition, nextPosition);
     const from = OPPOSITE_DIRECTION[direction];
     this.from = from;
     this.direction = direction;
-    this.to = leadingPosition
-      ? this.getDirection(nextPosition, leadingPosition)
-      : direction;
+    this.to = direction;
+    if (leadingPosition) {
+      this.to = this.getDirection(nextPosition, leadingPosition);
+      const xDiffLeading = leadingPosition.x - x;
+      const yDiffLeading = leadingPosition.y - y;
+      const preparingJumpingX = xDiffLeading > 1 || xDiffLeading < -1;
+      const preparingJumpingY = yDiffLeading > 1 || yDiffLeading < -1;
+      isAboutToJumpAcrossBorder = preparingJumpingX || preparingJumpingY;
+      if (isAboutToJumpAcrossBorder) {
+        this.to =
+          xDiffLeading !== 0
+            ? xDiffLeading < 0
+              ? Directions.Right
+              : Directions.Left
+            : yDiffLeading < 0
+            ? Directions.Bottom
+            : Directions.Top;
+      }
+    }
+
+    if (isJumpingAcrossBorder) {
+      this.from =
+        xDiff !== 0
+          ? xDiff < 0
+            ? Directions.Left
+            : Directions.Right
+          : yDiff < 0
+          ? Directions.Top
+          : Directions.Bottom;
+    }
     this.x = x;
     this.y = y;
     return { x, y };
   }
-
-  // coord translation
-  getCoordsAsArray = (): [number, number] => [this.x, this.y];
-  getCoordsAsString = () => `${this.x}__${this.y}`;
-  getCoordsFromArray = (
-    arrayOfCoords: [number, number] | number[]
-  ): Coords => ({
-    x: arrayOfCoords[0],
-    y: arrayOfCoords[1],
-  });
-  getCoordsFromString = (stringOfCoords: string): Coords => {
-    return this.getCoordsFromArray(
-      stringOfCoords.split("__").map((number) => parseInt(number))
-    );
-  };
 
   // styles
   getGridXPosition = () => this.x * TILE_SIZE;

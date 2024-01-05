@@ -1,8 +1,9 @@
 import React from "react";
-import { GridElementEffects, SnakeGameInstance } from "../utils";
+import { GridElementEffects } from "../utils";
 import { DimensionatorIcon, LightningIcon } from "../icons";
 import classNames from "classnames";
 import "./styles.scss";
+import { SnakeGameInstance } from "../utils/SnakeGameInstance";
 const icons = {
   [GridElementEffects.Dimensionator]: DimensionatorIcon,
   [GridElementEffects.Hypercube]: LightningIcon,

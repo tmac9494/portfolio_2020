@@ -4,7 +4,6 @@ import { SnakeGame } from "../../../SnakeGame";
 
 export const Top: React.FC = () => {
   const [showSnakeGame, setShowSnakeGame] = useState<boolean>();
-
   return (
     <section className="section-container">
       <div className="top-content">

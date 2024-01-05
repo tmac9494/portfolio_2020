@@ -3,7 +3,7 @@ import { GameGrid } from "./GameGrid";
 import "./styles/styles.scss";
 import { GameState, SNAKE_GAME_ID, SnakeGameState, TILE_SIZE } from "./types";
 import { DifficultyOptions } from "./DifficultyOptions";
-import { HighScores } from "./HighScores";
+import { HighScores } from "./HighScores/HighScores";
 import { SnakeGameInstance } from "./utils/SnakeGameInstance";
 import classNames from "classnames";
 import { EffectIndicator } from "./EffectUI";
@@ -47,7 +47,8 @@ export const SnakeGame: React.FC<{
           gameState.difficulty,
           gameInstance.current?.hyperCube?.effectIsActive && "hyper-buff",
           gameInstance.current?.dimensionator?.effectIsActive &&
-            "dimensionator-buff"
+            "dimensionator-buff",
+          gameState.gameState
         )}
         style={{ maxWidth: TILE_SIZE * size + 2 + "px" }}
         onTouchMove={gameInstance.current.onTouchMove}
@@ -79,8 +80,10 @@ export const SnakeGame: React.FC<{
           gridSize={total}
         />
         <HighScores
-          difficulty={gameState.difficulty}
+          gameState={gameState.gameState}
+          gameInstance={gameInstance.current}
           length={gameState.length}
+          difficulty={gameState.difficulty}
         />
       </div>
       <DifficultyOptions

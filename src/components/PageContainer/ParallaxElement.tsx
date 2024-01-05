@@ -6,8 +6,7 @@ export const ParallaxElement: React.FC<{
   data: PageSettingSvgItem;
   delta: number;
 }> = ({ data, delta }) => {
-  const Element = data[0];
-  const elementProps = data[1];
+  const [Element, elementProps] = data;
   return (
     <div key={elementProps.id} {...elementProps}>
       <Element
