@@ -1,43 +1,57 @@
 import {
   Directions,
-  GameDeltas,
+  GAME_DELTAS,
   INITIAL_DIRECTION,
   SnakeGameDirectionKeys,
 } from "../types";
+import { Coords } from "./gridElements/types";
 export class SnakeDirection {
   initialDirection: Directions;
   direction: Directions;
   keystore: Directions[];
-  lastPosition: number;
-  position: number;
-  deltas: GameDeltas;
+  lastPosition: Coords;
+  position: Coords;
   renderGame: (tick?: boolean) => void;
-  keyEvents: Record<SnakeGameDirectionKeys, [() => void, () => void]>;
+  keyEvents: Record<SnakeGameDirectionKeys, (() => void)[]>;
+  initialPositions: Coords[];
+
   constructor(
     initialDirection: Directions,
-    deltas: GameDeltas,
-    position: number,
+    position: Coords,
     renderGame: (tick?: boolean) => void
   ) {
     this.initialDirection = initialDirection;
-    this.deltas = deltas;
+    const initialPositions = [position, { x: position.x - 1, y: position.y }];
+    this.initialPositions = initialPositions;
     this.direction = initialDirection;
-    this.lastPosition = 0;
-    this.position = position;
+    this.lastPosition = initialPositions[1];
+    this.position = initialPositions[0];
     this.keystore = [];
     this.renderGame = renderGame;
+
+    const arrowEventsTop = [this.addTopKey, this.removeTopKey];
+    const arrowEventsBottom = [this.addBottomKey, this.removeBottomKey];
+    const arrowEventsLeft = [this.addLeftKey, this.removeLeftKey];
+    const arrowEventsRight = [this.addRightKey, this.removeRightKey];
+
     this.keyEvents = {
-      [SnakeGameDirectionKeys.W]: [this.addTopKey, this.removeTopKey],
-      [SnakeGameDirectionKeys.S]: [this.addBottomKey, this.removeBottomKey],
-      [SnakeGameDirectionKeys.A]: [this.addLeftKey, this.removeLeftKey],
-      [SnakeGameDirectionKeys.D]: [this.addRightKey, this.removeRightKey],
+      [SnakeGameDirectionKeys.W]: arrowEventsTop,
+      [SnakeGameDirectionKeys.S]: arrowEventsBottom,
+      [SnakeGameDirectionKeys.A]: arrowEventsLeft,
+      [SnakeGameDirectionKeys.D]: arrowEventsRight,
+      [SnakeGameDirectionKeys.ArrowUp]: arrowEventsTop,
+      [SnakeGameDirectionKeys.ArrowLeft]: arrowEventsLeft,
+      [SnakeGameDirectionKeys.ArrowDown]: arrowEventsBottom,
+      [SnakeGameDirectionKeys.ArrowRight]: arrowEventsRight,
     };
   }
 
   // direction handler
   setDirection = (direction: Directions) => {
-    this.direction = direction;
-    this.renderGame();
+    if (this.directionIsNotLastPosition(direction)) {
+      this.direction = direction;
+      this.renderGame();
+    }
   };
 
   // add/remove keyboard direction events
@@ -53,23 +67,22 @@ export class SnakeDirection {
     }
   };
 
+  directionIsNotLastPosition(direction: Directions) {
+    const lastPosition = this.lastPosition;
+    const nextPosition = {
+      x: this.position.x + GAME_DELTAS[direction].x,
+      y: this.position.y + GAME_DELTAS[direction].y,
+    };
+    return (
+      lastPosition.x !== nextPosition.x || lastPosition.y !== nextPosition.y
+    );
+  }
+
   // direction triggers
-  toTop = () => {
-    if (this.lastPosition !== this.position + this.deltas[Directions.Top])
-      this.setDirection(Directions.Top);
-  };
-  toLeft = () => {
-    if (this.lastPosition !== this.position + this.deltas[Directions.Left])
-      this.setDirection(Directions.Left);
-  };
-  toRight = () => {
-    if (this.lastPosition !== this.position + this.deltas[Directions.Right])
-      this.setDirection(Directions.Right);
-  };
-  toBottom = () => {
-    if (this.lastPosition !== this.position + this.deltas[Directions.Bottom])
-      this.setDirection(Directions.Bottom);
-  };
+  toTop = () => this.setDirection(Directions.Top);
+  toLeft = () => this.setDirection(Directions.Left);
+  toRight = () => this.setDirection(Directions.Right);
+  toBottom = () => this.setDirection(Directions.Bottom);
 
   // keyboard events
   removeTopKey = () => this.removeKey(Directions.Top);
@@ -111,10 +124,10 @@ export class SnakeDirection {
   };
 
   // reset
-  reset = (position: number, lastPosition: number) => {
+  reset = () => {
     this.direction = INITIAL_DIRECTION;
-    this.position = position;
-    this.lastPosition = lastPosition;
+    this.position = this.initialPositions[0];
+    this.lastPosition = this.initialPositions[1];
     this.direction = this.initialDirection;
   };
 }

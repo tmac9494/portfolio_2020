@@ -1,40 +1,124 @@
-import React from "react";
-import { GameState, SNAKE_GRID_ID, SnakeGameState, Tile, TileStates } from ".";
+import React, { useMemo, useState } from "react";
+import {
+  OPPOSITE_DIRECTION,
+  SNAKE_GRID_ID,
+  SnakeGameState,
+  TILE_SIZE,
+  Tile,
+  TileStates,
+  getCoordsFromString,
+} from ".";
 import { SnakeGameContentBox } from "./SnakeGameContentBox";
 import { SnakeGameInstance } from "./utils/SnakeGameInstance";
+import classNames from "classnames";
+import { GridToggle } from "./GridToggle";
+import { SnakeBodyTile, SnakeHeadTile } from "./GameTiles";
+import { SakeTailTile } from "./GameTiles/SakeTailTile";
 
 export const GameGrid: React.FC<{
   gameState: SnakeGameState;
   gameInstance: SnakeGameInstance;
-}> = ({ gameState, gameInstance }) => {
+  gridSize: number;
+}> = ({ gameState, gameInstance, gridSize }) => {
+  const [showLines, setShowLines] = useState(false);
+
   // build grid
-  let gridList = [];
-  for (let i = 0; i < gameInstance.max; i++) {
-    const bodyIndex =
-      gameInstance.lastPositions.has(i) &&
-      Array.from(gameInstance.lastPositions).indexOf(i);
-    gridList.push(
-      <Tile
-        key={i}
-        gameInstance={gameInstance}
-        bodyIndex={bodyIndex}
-        index={i}
-        tileState={gameInstance.getTileTypeByIndex(i)}
-      />
-    );
-  }
+  const grid = useMemo(() => {
+    let gridList = [];
+    for (let i = 0; i < gridSize; i++) {
+      gridList.push(<Tile key={i} tileState={TileStates.Inactive} />);
+    }
+    return gridList;
+  }, [gridSize]);
+
+  const lastBodyElement =
+    gameInstance.snake.body[gameInstance.snake.body.length - 1];
+  const lastBodyElementCoords = lastBodyElement.getCoordsInPixels();
 
   return (
     <div
-      className="grid"
+      className={classNames("grid", showLines && "grid-lines")}
       id={SNAKE_GRID_ID}
-      tabIndex={0}
-      onBlur={() =>
-        gameState.gameState === GameState.Start && gameInstance.pauseGame()
-      }
     >
-      {gridList}
-      <SnakeGameContentBox gameState={gameState.gameState} />
+      <div className="grid-tiles flex flex-row">{grid}</div>
+      {gameInstance.snake.body.map((value, i) => (
+        <SnakeBodyTile
+          key={`body-${i}-${gameInstance.length}`}
+          from={value.from}
+          to={value.to}
+          index={i}
+          coords={value.getCoordsInPixels()}
+          lastCoords={value.lastPosition}
+          isLast={i === gameInstance.snake.body.length - 1}
+          isNew={value.isNew}
+        />
+      ))}
+
+      <SakeTailTile
+        key="tail"
+        tileSize={`${TILE_SIZE}px`}
+        x={lastBodyElementCoords.x}
+        y={lastBodyElementCoords.y}
+        index={lastBodyElement.index}
+        from={lastBodyElement.from || OPPOSITE_DIRECTION[lastBodyElement.to]}
+        to={lastBodyElement.to}
+      />
+      {gameInstance.apple.coords && (
+        <Tile
+          key="apple"
+          gameInstance={gameInstance}
+          tileState={TileStates.Apple}
+          x={gameInstance.apple.getGridXPosition() + "px"}
+          y={gameInstance.apple.getGridYPosition() + "px"}
+        />
+      )}
+      {gameInstance.apple.boundaries &&
+        Array.from(gameInstance.apple.boundaries).map((boundary) => {
+          const { x, y } = getCoordsFromString(boundary);
+          return (
+            <Tile
+              key={boundary}
+              gameInstance={gameInstance}
+              tileState={TileStates.Obstacle}
+              x={gameInstance.apple.getGridXPosition(x) + "px"}
+              y={gameInstance.apple.getGridYPosition(y) + "px"}
+            />
+          );
+        })}
+      {gameInstance.hyperCube?.coords && (
+        <Tile
+          key="hypercube"
+          gameInstance={gameInstance}
+          tileState={TileStates.Hypercube}
+          x={gameInstance.hyperCube.getGridXPosition() + "px"}
+          y={gameInstance.hyperCube.getGridYPosition() + "px"}
+        />
+      )}
+      {gameInstance.dimensionator?.coords && (
+        <Tile
+          key="dimensionator"
+          gameInstance={gameInstance}
+          tileState={TileStates.Dimensionator}
+          x={gameInstance.dimensionator.getGridXPosition() + "px"}
+          y={gameInstance.dimensionator.getGridYPosition() + "px"}
+        />
+      )}
+      <SnakeHeadTile
+        index={-1}
+        from={
+          gameInstance.snake.head.from ||
+          OPPOSITE_DIRECTION[gameInstance.direction.direction]
+        }
+        direction={gameInstance.direction.direction}
+        to={gameInstance.snake.head.direction}
+        coords={gameInstance.snake.head.getCoordsInPixels()}
+        lastCoords={gameInstance.snake.head.lastPosition}
+      />
+      <GridToggle callback={setShowLines} showLines={showLines} />
+      <SnakeGameContentBox
+        gameState={gameState.gameState}
+        gameInstance={gameInstance}
+      />
     </div>
   );
 };

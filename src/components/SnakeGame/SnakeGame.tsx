@@ -1,9 +1,9 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { GameGrid } from "./GameGrid";
-import "./styles.scss";
-import { SnakeGameState, TILE_SIZE, difficulties } from "./types";
+import "./styles/styles.scss";
+import { GameState, SNAKE_GAME_ID, SnakeGameState, TILE_SIZE } from "./types";
 import { DifficultyOptions } from "./DifficultyOptions";
-import { HighScores } from "./HighScores";
+import { HighScores } from "./HighScores/HighScores";
 import { SnakeGameInstance } from "./utils/SnakeGameInstance";
 import classNames from "classnames";
 import { EffectIndicator } from "./EffectUI";
@@ -37,15 +37,18 @@ export const SnakeGame: React.FC<{
     return null;
   }
 
+  const total = gameInstance.current.max;
+
   return (
     <>
       <div
-        id="snake-game"
+        id={SNAKE_GAME_ID}
         className={classNames(
           gameState.difficulty,
           gameInstance.current?.hyperCube?.effectIsActive && "hyper-buff",
           gameInstance.current?.dimensionator?.effectIsActive &&
-            "dimensionator-buff"
+            "dimensionator-buff",
+          gameState.gameState
         )}
         style={{ maxWidth: TILE_SIZE * size + 2 + "px" }}
         onTouchMove={gameInstance.current.onTouchMove}
@@ -53,21 +56,34 @@ export const SnakeGame: React.FC<{
         onTouchEnd={gameInstance.current.onTouchEnd}
         onKeyDown={gameInstance.current.onKeyDown}
         onKeyUp={gameInstance.current.onKeyUp}
+        tabIndex={0}
+        onBlur={() =>
+          gameState.gameState === GameState.Start &&
+          gameInstance.current.pauseGame()
+        }
       >
         <div className="snake-game-effect-container flex flex-row">
           <EffectIndicator
+            duration={gameState.effects[GridElementEffects.Dimensionator]}
             gameInstance={gameInstance.current}
             effect={GridElementEffects.Dimensionator}
           />
           <EffectIndicator
+            duration={gameState.effects[GridElementEffects.Hypercube]}
             gameInstance={gameInstance.current}
             effect={GridElementEffects.Hypercube}
           />
         </div>
-        <GameGrid gameState={gameState} gameInstance={gameInstance.current} />
+        <GameGrid
+          gameState={gameState}
+          gameInstance={gameInstance.current}
+          gridSize={total}
+        />
         <HighScores
-          difficulty={gameState.difficulty}
+          gameState={gameState.gameState}
+          gameInstance={gameInstance.current}
           length={gameState.length}
+          difficulty={gameState.difficulty}
         />
       </div>
       <DifficultyOptions

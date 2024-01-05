@@ -1,35 +1,38 @@
 import React from "react";
-import { GridElementEffects, SnakeGameInstance } from "../utils";
+import { GridElementEffects } from "../utils";
 import { DimensionatorIcon, LightningIcon } from "../icons";
 import classNames from "classnames";
 import "./styles.scss";
+import { SnakeGameInstance } from "../utils/SnakeGameInstance";
 const icons = {
   [GridElementEffects.Dimensionator]: DimensionatorIcon,
   [GridElementEffects.Hypercube]: LightningIcon,
 };
 export const EffectIndicator: React.FC<{
+  duration: number;
   gameInstance: SnakeGameInstance;
   effect: GridElementEffects;
-}> = ({ gameInstance, effect }) => {
+}> = ({ gameInstance, effect, duration }) => {
   const Icon = icons[effect];
 
-  const duration = gameInstance[effect]?.effectDuration || 0;
-  const timeElpased = Date.now() - (gameInstance[effect]?.lastActivatedAt || 0);
-  const percentage = 100 - (timeElpased / duration) * 100;
+  const effectDuration = gameInstance[effect]?.effectDuration || 0;
+  const percentage = (duration / effectDuration) * 100;
 
   if (!gameInstance[effect]?.effectIsActive) {
     return null;
   }
+
   return (
-    <div className={classNames("snake-game-effect flex flex-row", effect)}>
+    <div
+      className={classNames(
+        "snake-game-effect flex flex-row",
+        effect,
+        percentage < 15 && "hurry"
+      )}
+    >
       <Icon />
       <div className={classNames("duration-bar", effect)}>
-        <span
-          style={{
-            // animation: `timeoutBar ${gameInstance[effect]?.effectDuration}ms linear forwards`,
-            height: percentage + "%",
-          }}
-        />
+        <span style={{ height: `${percentage}%` }} />
       </div>
     </div>
   );

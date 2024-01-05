@@ -1,0 +1,184 @@
+@import "../../../styles/mixins.scss";
+@import "./colors.scss";
+@keyframes obstacle {
+  0% {
+    box-shadow: inset 0 0 0px $hazardColor;
+  }
+  50% {
+    box-shadow: inset 0 0 12px $hazardColor;
+  }
+  100% {
+    box-shadow: inset 0 0 0px $hazardColor;
+  }
+}
+@keyframes hypercube {
+  0% {
+    box-shadow: 0 0 8px $hypercubeColor;
+  }
+  50% {
+    box-shadow: 0 0 12px #75ddf0;
+  }
+  100% {
+    box-shadow: 0 0 8px $hypercubeColor;
+  }
+}
+@keyframes dimensionator {
+  0% {
+    box-shadow: 2px -1px 0px $dimensionatorColor,
+      -1px 0px 0px $dimensionatorColor;
+  }
+  50% {
+    box-shadow: 0px -1px 0px $dimensionatorColor,
+      -0px 1px 0px $dimensionatorColor;
+  }
+  100% {
+    box-shadow: 1px 0px 0px $dimensionatorColor,
+      -2px 0px 0px $dimensionatorColor;
+  }
+}
+@keyframes bolt {
+  0% {
+    fill: $hypercubeColor;
+  }
+  50% {
+    fill: #75ddf0;
+  }
+  100% {
+    fill: $hypercubeColor;
+  }
+}
+@keyframes hyperframe {
+  0% {
+    border-color: $hypercubeColor;
+  }
+  50% {
+    border-color: #9bdfeb;
+  }
+  100% {
+    border-color: $hypercubeColor;
+  }
+}
+@keyframes hypersnake {
+  0% {
+    box-shadow: 0 0 8px $hypercubeColor;
+  }
+  50% {
+    box-shadow: 0 0 12px $hypercubeColor;
+  }
+  100% {
+    box-shadow: 0 0 8px $hypercubeColor;
+  }
+}
+@keyframes hypersnakeBody {
+  0% {
+    background-color: $hypercubeColor;
+  }
+  50% {
+    background-color: #29b6cf;
+  }
+  100% {
+    background-color: $hypercubeColor;
+  }
+}
+@keyframes bounce {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+// grid icons
+.snake-game-icon {
+  width: 18px;
+  height: 18px;
+}
+.snake-lightning-icon {
+  fill: $hypercubeColor;
+  animation: bounce 0.38s 0.5s ease-out forwards infinite;
+}
+.dimensionator-icon {
+  fill: $dimensionatorColor;
+}
+
+#snake-game {
+  text-align: center;
+  margin: 60px auto 0;
+  position: relative;
+  touch-action: none;
+  z-index: 400;
+  opacity: 0.8;
+  outline: 0;
+  &:focus {
+    opacity: 1;
+  }
+  .grid {
+    background: $backgroundColor;
+    border: 1px solid;
+    border-color: $borderColor;
+    box-shadow: 0 28px 50px -28px #000;
+    position: relative;
+    outline: 0;
+    .grid-tiles {
+      flex-wrap: wrap;
+    }
+    &.grid-lines {
+      .tile-type-inactive {
+        border-color: $borderColor;
+      }
+    }
+  }
+}
+
+.game-settings-container {
+  margin-top: 18px;
+  text-align: center;
+  .difficulty-btn {
+    background: #000;
+    color: #fff;
+    border: 0;
+    outline: 0;
+    margin: 4px;
+    padding: 8px;
+    border-radius: 4px;
+    &.active {
+      background: #6f04c7;
+      box-shadow: 0 8px 6px -8px #000;
+    }
+  }
+}
+
+@keyframes info-box {
+  0% {
+    transform: scale(0.4) translate(-50%, -50%);
+  }
+  60% {
+    transform: scale(1.1) translate(-50%, -50%);
+  }
+  100% {
+    transform: scale(1) translate(-50%, -50%);
+  }
+}
+
+.snake-game-info-box {
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 4px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform-origin: 0 0;
+  transform: translate(-50%, -50%);
+  padding: 12px 24px;
+  margin-right: -50%;
+  animation: info-box 0.2s ease-out;
+  z-index: 100;
+  .game-tile {
+    position: static !important;
+  }
+}
+$btnSize: 100px;

@@ -166,7 +166,7 @@ export const pageSettings: Record<string, PageSettings> = {
         {
           id: "skill_blob_sm_9",
           className: "skill-blob-sm",
-          weight: 10,
+          weight: 20,
         },
       ],
     ],

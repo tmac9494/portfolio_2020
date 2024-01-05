@@ -1,0 +1,31 @@
+@import "../../../styles/mixins.scss";
+@import "../styles/colors.scss";
+
+.btn.grid-lines-btn {
+  fill: #fff;
+  border-radius: 200px;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: auto;
+  top: auto;
+  right: 8px;
+  bottom: -60px;
+  z-index: 20;
+  box-shadow: 0 8px 6px -8px #000;
+  svg {
+    display: block;
+    width: 18px;
+    height: 18px;
+  }
+  @include tablet {
+    left: auto;
+    top: auto;
+    bottom: 18px;
+    right: -50px;
+  }
+}

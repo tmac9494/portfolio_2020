@@ -1,60 +1,87 @@
+import { TILE_SIZE, getCoordsAsString, getCoordsFromString } from "../../types";
+import { Coords } from "./types";
+
 export class AppleTile {
-  location?: number;
   hasBoundaries: boolean;
-  boundaries: Set<number>;
+  boundaries: Set<string>;
+  coords?: Coords;
   gridWidth: number;
   constructor({
-    location,
+    coords,
     hasBoundaries,
     gridWidth,
   }: {
-    location?: number;
+    coords?: Coords;
     hasBoundaries?: boolean;
     gridWidth: number;
   }) {
     this.gridWidth = gridWidth;
-    this.location = location;
     this.boundaries = new Set([]);
+    this.coords = coords;
     this.hasBoundaries = !!hasBoundaries;
     // traps
   }
 
   getBoundaries = () => {
-    if (this.location && this.hasBoundaries) {
-      const prevRow = this.location - this.gridWidth;
-      const nextRow = this.location + this.gridWidth;
-      if ((this.location + 1) % this.gridWidth !== 0) {
-        this.boundaries.add(nextRow + 1);
-        this.boundaries.add(prevRow + 1);
+    if (this.coords && this.hasBoundaries) {
+      if (this.coords.x > 0) {
+        if (this.coords.y > 0) {
+          this.boundaries.add(
+            getCoordsAsString({ x: this.coords.x - 1, y: this.coords.y - 1 })
+          );
+        }
+        if (this.coords.y < this.gridWidth - 1) {
+          this.boundaries.add(
+            getCoordsAsString({ x: this.coords.x - 1, y: this.coords.y + 1 })
+          );
+        }
       }
-      if (this.location % this.gridWidth !== 0) {
-        this.boundaries.add(nextRow - 1);
-        this.boundaries.add(prevRow - 1);
+      if (this.coords.x < this.gridWidth - 1) {
+        if (this.coords.y > 0) {
+          this.boundaries.add(
+            getCoordsAsString({ x: this.coords.x + 1, y: this.coords.y - 1 })
+          );
+        }
+        if (this.coords.y < this.gridWidth - 1) {
+          this.boundaries.add(
+            getCoordsAsString({ x: this.coords.x + 1, y: this.coords.y + 1 })
+          );
+        }
       }
     }
   };
 
   setAppleOnGrid = ({
-    position,
-    max,
-    buffer,
+    coords,
+    bufferCoords,
   }: {
-    position: number;
-    max: number;
-    buffer: number[];
+    bufferCoords: Coords[];
+    coords: Coords;
   }) => {
-    const generatePosition = () => Math.floor(Math.random() * max);
-    const snakeBuffer = new Set(buffer);
-    let newPosition = position;
+    this.clear();
+    const generateCoords = (): Coords => ({
+      x: Math.floor(Math.random() * this.gridWidth),
+      y: Math.floor(Math.random() * this.gridWidth),
+    });
+    const snakeBufferCoords = new Set(
+      bufferCoords.map((coord) => getCoordsAsString(coord))
+    );
+
+    let newCoords = getCoordsAsString(coords);
     do {
-      newPosition = generatePosition();
-    } while (snakeBuffer.has(newPosition));
-    this.location = newPosition;
+      newCoords = getCoordsAsString(generateCoords());
+    } while (snakeBufferCoords.has(newCoords));
+    this.coords = getCoordsFromString(newCoords);
     this.getBoundaries();
   };
 
+  getGridXPosition = (x?: number) =>
+    (x !== undefined ? x : (this.coords && this.coords.x) || 0) * TILE_SIZE;
+  getGridYPosition = (y?: number) =>
+    (y !== undefined ? y : (this.coords && this.coords.y) || 0) * TILE_SIZE;
+
   clear = () => {
-    this.location = undefined;
+    this.coords = undefined;
     this.boundaries.clear();
   };
 }

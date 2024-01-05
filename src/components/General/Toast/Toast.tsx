@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./styles.scss";
 import { useSpring, animated, easings, config } from "react-spring";
 
+const CONSTRUCTION_COOKIE_KEY = "under_construction_notification";
+
 export const Toast: React.FC<{
   title?: string;
   message: string;
@@ -13,7 +15,9 @@ export const Toast: React.FC<{
   const [render, setRender] = useState<boolean>(false);
 
   useEffect(() => {
-    setTimeout(() => setVisible(true), 500);
+    const cookie = localStorage.getItem(CONSTRUCTION_COOKIE_KEY);
+    const timeout = setTimeout(() => !cookie && setVisible(true), 500);
+    return () => clearTimeout(timeout);
   }, []);
 
   useEffect(() => {
@@ -25,7 +29,10 @@ export const Toast: React.FC<{
   // hide after timeout
   useEffect(() => {
     if (!persist) {
-      const hideEvent = setTimeout(() => setVisible(false), timeout);
+      const hideEvent = setTimeout(() => {
+        setVisible(false);
+        localStorage.setItem(CONSTRUCTION_COOKIE_KEY, Date.now().toString());
+      }, timeout);
       return () => clearTimeout(hideEvent);
     }
   }, [timeout, persist]);
@@ -62,7 +69,13 @@ export const Toast: React.FC<{
 
           <div className="text-right margin-top-1">
             <button
-              onClick={() => setVisible(false)}
+              onClick={() => {
+                setVisible(false);
+                localStorage.setItem(
+                  CONSTRUCTION_COOKIE_KEY,
+                  Date.now().toString()
+                );
+              }}
               id="toast-btn"
               className="btn"
             >

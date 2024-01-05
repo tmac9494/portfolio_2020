@@ -1,17 +1,55 @@
+@import "../styles/colors.scss";
+
+$borderRadius: 4px;
+@keyframes hurry {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 .snake-game-effect-container {
   position: absolute;
   top: 0;
   left: 0;
   transform: translateY(-100%);
+  padding-bottom: 8px;
   .snake-game-effect {
+    border-radius: $borderRadius;
+    padding-left: 8px;
     justify-content: center;
     align-items: center;
+    border: 1px solid;
+    margin-right: 12px;
+    .snake-game-icon {
+      width: 24px;
+      height: 24px;
+    }
+    &.hyperCube {
+      background: $hypercubeDark;
+      border-color: $hypercubeColor;
+    }
+    &.dimensionator {
+      background: $dimensionatorDark;
+      border-color: $dimensionatorColor;
+    }
+    &.hurry {
+      animation: hurry 0.32s forwards infinite;
+    }
   }
+
   .duration-bar {
     width: 10px;
     height: 45px;
     position: relative;
-    margin: 0 6px;
+    margin-left: 6px;
+    border-left: 1px solid;
+    overflow: hidden;
     span {
       position: absolute;
       display: block;
@@ -21,6 +59,18 @@
       bottom: 0;
       height: 100%;
       width: 100%;
+    }
+    &.hyperCube {
+      border-color: $hypercubeColor;
+      span {
+        background: $hypercubeColor;
+      }
+    }
+    &.dimensionator {
+      border-color: $dimensionatorColor;
+      span {
+        background: $dimensionatorColor;
+      }
     }
   }
 }

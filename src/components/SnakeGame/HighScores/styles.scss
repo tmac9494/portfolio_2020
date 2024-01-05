@@ -1,0 +1,145 @@
+@import "../../../styles/mixins.scss";
+@import "../styles/colors.scss";
+
+$elementShadow: 0 8px 6px -9px #000;
+
+@keyframes blink-score {
+  0% {
+    border-color: $borderColor;
+    box-shadow: inset 1px 1px 4px -2px #000, $elementShadow;
+  }
+  50% {
+    border-color: #d1d1d1;
+    box-shadow: inset 1px 1px 4px -2px #2c2c2c, 0 0px 8px 0px #a8a8a8;
+  }
+  100% {
+    border-color: $borderColor;
+    box-shadow: inset 1px 1px 4px -2px #000, $elementShadow;
+  }
+}
+@keyframes score-counter {
+  0% {
+    transform: translateY(0%);
+  }
+  80% {
+    transform: translateY(-52%);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+@keyframes number-in {
+  0% {
+    transform: scale(0.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes number-out {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0.1);
+  }
+}
+
+.scores-container {
+  //   width: 120px;
+  align-items: flex-end;
+  position: absolute;
+  top: auto;
+  left: auto;
+  right: 0;
+  bottom: 100%;
+  border-top-right-radius: 2px;
+  border-top-left-radius: 2px;
+  padding-bottom: 6px;
+  h4 {
+    margin-top: 0;
+    margin-bottom: 6px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+}
+
+.game-score,
+.high-scores-container {
+  border-radius: 4px;
+  box-shadow: $elementShadow;
+}
+
+.high-scores-container {
+  background-color: $borderColor;
+  padding: 3px;
+  width: 80px;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: width 0.2s, opacity 0.16s, padding-left 0.25s, padding-right 0.25s;
+  opacity: 1;
+  #snake-game.start & {
+    width: 0px;
+    opacity: 0;
+  }
+  .high-score-item {
+    padding: 4px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 4px;
+    &:not(:last-child) {
+      margin-bottom: 3px;
+    }
+  }
+  .trophy-icon {
+    width: 18px;
+    height: 18px;
+    &.gold {
+      fill: $gold;
+    }
+    &.silver {
+      fill: $silver;
+    }
+    &.bronze {
+      fill: $bronze;
+    }
+  }
+}
+
+.game-score {
+  margin-right: 4px;
+  box-shadow: inset 1px 1px 4px -2px #000, $elementShadow;
+  background: $backgroundColor;
+  border: 3px solid $borderColor;
+  max-height: 50px;
+  overflow: hidden;
+  min-width: 85px;
+  &.blink {
+    animation: blink-score 0.5s forwards;
+  }
+  .scoreboard-counter {
+    animation: score-counter 0.38s forwards ease-out;
+    h1 {
+      animation: number-out 0.32s forwards;
+      &:last-child {
+        animation: number-in 0.38s forwards ease-out;
+      }
+    }
+  }
+  h1 {
+    margin: 0;
+    padding: 4px;
+  }
+}
+
+// @include desktop {
+//   .game-score {
+//     border-left: none;
+//   }
+//   .scores-container {
+//     left: 100%;
+//     top: 0;
+//     bottom: auto;
+//     right: auto;
+//     border-bottom-right-radius: 2px;
+//     border-top-left-radius: 0px;
+//   }
+// }

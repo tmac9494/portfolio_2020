@@ -1,115 +1,70 @@
 import React, { TouchEvent } from "react";
 import {
+  InstanceConstructorParams,
+  SnakeGameSetup,
   GameState,
   DEFAULT_LENGTH,
   INITIAL_DIRECTION,
-  Directions,
   Difficulty,
   SnakeGameDirectionKeys,
   difficulties,
   TILE_SIZE,
   SnakeGameState,
-  TileStates,
+  SNAKE_GAME_ID,
+  getCoordsFromString,
 } from "../types";
-import { SnakeDirection } from "./SnakeDirection";
-import { saveSnakeGameHistory } from "./get-game-history";
-import { SnakeGameTouchHandler } from "./SnakeGameTouchHandler";
-import { AppleTile, GridElement } from "./gridElements";
+import {
+  SnakeDirection,
+  saveSnakeGameHistory,
+  SnakeGameTouchHandler,
+  getSnakeGameHistory,
+} from "./";
+import { GridElementEffects } from "./gridElements";
+import { Coords } from "./gridElements/types";
+import {
+  shouldShowDimensionator,
+  shouldShowHypercube,
+} from "./gridElements/grid-element-utils";
+import { coordToBuffer, getSnakeHeadBuffer } from "./buffer-utils";
 
-type InstanceConstructorParams = {
-  gridWidth: number;
-  renderDispatch: React.Dispatch<
-    React.SetStateAction<SnakeGameState | undefined>
-  >;
-  debug?: boolean;
-};
-
-export class SnakeGameInstance {
-  debug: boolean;
-  isMobile: boolean;
-  centerPoint: number;
-  gameState: GameState;
-  length: number;
-  position: number;
-  max: number;
-  gridWidth: number;
-  lastPositions: Set<number>;
+export class SnakeGameInstance extends SnakeGameSetup {
   direction: SnakeDirection;
-  deltas: Record<Directions, number>;
-  difficulty: Difficulty;
-  apple: AppleTile;
-  hyperCube?: GridElement;
-  dimensionator?: GridElement;
   touch: SnakeGameTouchHandler;
-  lastUpdateTimestamp: number;
-  tickerInterval?: NodeJS.Timeout;
   onTouchStart: (e: TouchEvent<HTMLDivElement>) => void;
   onTouchMove: (e: TouchEvent<HTMLDivElement>) => void;
   onTouchEnd: (e: TouchEvent<HTMLDivElement>) => void;
-  renderDispatch: React.Dispatch<
-    React.SetStateAction<SnakeGameState | undefined>
-  >;
 
   constructor({ gridWidth, renderDispatch, debug }: InstanceConstructorParams) {
-    this.lastUpdateTimestamp = Date.now();
-    this.debug = !!debug;
-    const max = gridWidth * gridWidth;
-    const centerPoint = Math.ceil((max - 1) / 2);
-    const deltas = {
-      [Directions.Right]: 1,
-      [Directions.Left]: -1,
-      [Directions.Top]: -gridWidth,
-      [Directions.Bottom]: gridWidth,
-    };
-    this.isMobile = window.innerWidth <= 800;
-    this.max = max;
-    this.centerPoint = centerPoint;
-    this.gridWidth = gridWidth;
-    this.difficulty = Difficulty.Normal;
-    this.gameState = GameState.Idle;
-    this.length = DEFAULT_LENGTH;
-    this.position = centerPoint;
-    this.lastPositions = new Set([centerPoint - 1, centerPoint - 2]);
-    this.deltas = deltas;
-    this.apple = new AppleTile({
-      gridWidth,
-    });
-    this.hyperCube = new GridElement({
-      gridWidth,
-    });
-    this.dimensionator = new GridElement({
-      gridWidth,
-    });
+    super({ gridWidth, renderDispatch });
     this.direction = new SnakeDirection(
       INITIAL_DIRECTION,
-      deltas,
-      centerPoint,
+      { x: this.centerPoint, y: this.centerPoint },
       this.renderGame
     );
     this.touch = new SnakeGameTouchHandler(this.direction);
-    this.onTouchStart = (e) => {
-      this.gameStateHandler();
-      this.touch.onTouchStart(e);
-    };
+    this.onTouchStart = this.touch.onTouchStart;
     this.onTouchMove = this.touch.onTouchMove;
     this.onTouchEnd = this.touch.onTouchEnd;
-    this.renderDispatch = renderDispatch;
-    this.generateApple();
   }
 
   // initialize
   initialize = () => {
+    this.generateApple();
     this.renderGame();
     this.startGameTicker();
   };
+  focus = () => {
+    if (!this.focused) {
+      const element = document.getElementById(SNAKE_GAME_ID);
+      if (element) {
+        this.focused = true;
+        element.focus();
+      }
+    }
+  };
 
   // -------- render event
-  renderGame = (shouldTick?: boolean) => {
-    if (shouldTick) {
-      this.gameTick();
-
-      this.lastUpdateTimestamp = Date.now();
-    }
+  renderGame = () => {
     this.renderDispatch(this.getCurrentGameState());
   };
   getCurrentGameState = (): SnakeGameState => {
@@ -117,91 +72,60 @@ export class SnakeGameInstance {
       gameState: this.gameState,
       length: this.length,
       apple: this.apple,
-      position: this.position,
       size: TILE_SIZE,
       width: this.gridWidth,
       interval: difficulties[this.difficulty].interval,
       borderOutOfBounds: difficulties[this.difficulty].borderOutOfBounds,
       difficulty: this.difficulty,
+      effects: {
+        [GridElementEffects.Hypercube]: this.hyperCube?.duration || 0,
+        [GridElementEffects.Dimensionator]: this.dimensionator?.duration || 0,
+      },
+      snake: this.snake,
     };
   };
 
   // ------- render ticker callback to react
   startGameTicker = () => {
-    this.clearGameTicker();
-    const { interval } = difficulties[this.difficulty];
-    this.tickerInterval = setInterval(() => {
-      if (this.gameState === GameState.Start) {
-        const requiredDelta = interval + (this.isMobile ? 50 : 0);
-        if (
-          Date.now() - this.lastUpdateTimestamp >=
-          (this?.hyperCube?.effectIsActive
-            ? requiredDelta * 0.8
-            : requiredDelta)
-        ) {
-          this.renderGame(true);
-        }
-      }
-    }, 17);
+    requestAnimationFrame(this.tickerInterval);
   };
 
-  clearGameTicker = () => clearInterval(this.tickerInterval);
+  tickerInterval = (time: number) => {
+    !this.focused && this.focus();
+    const renderDelta = time - this.lastUpdateTimestamp;
+    const tickDelta = time - this.time;
+    this.time = time;
+    const { interval } = difficulties[this.difficulty];
+    // render logic at 30fps & game state start
+    if (renderDelta >= 33 && this.gameState === GameState.Start) {
+      this.hyperCube?.tick(tickDelta);
+      this.dimensionator?.tick(tickDelta);
+      const requiredDelta = interval + (this.isMobile ? 50 : 0);
+      const isPassedDelta =
+        renderDelta >=
+        (this?.hyperCube?.effectIsActive ? requiredDelta * 0.8 : requiredDelta);
+      if (isPassedDelta) {
+        this.gameTick();
+        this.lastUpdateTimestamp = time;
+      }
+      this.renderGame();
+    }
+    this.animationFrame = requestAnimationFrame(this.tickerInterval);
+  };
 
   gameTick = () => {
-    let newPosition = this.position + this.deltas[this.direction.direction];
-    const borderOutOfBounds = difficulties[this.difficulty].borderOutOfBounds;
     if (this.gameState === GameState.Start) {
-      const positionsAsArray = Array.from(this.lastPositions);
-      positionsAsArray.unshift(this.position);
-      if (this.lastPositions.size > this.max - 2) {
-        positionsAsArray.pop();
-      }
-      this.lastPositions = new Set(positionsAsArray);
-      this.direction.lastPosition = positionsAsArray[0];
+      this.snake.move({
+        direction: this.direction.direction,
+        dimensionator: this.dimensionator,
+        hyperCube: this.hyperCube,
+        apple: this.apple,
+        eatApple: this.eatApple,
+        endGame: this.endGame,
+      });
+      this.direction.lastPosition = this.direction.position;
+      this.direction.position = this.snake.head.getCoords();
 
-      // out of bounds positions
-      const isPassedRight =
-        (this.position + 1) % this.gridWidth === 0 &&
-        this.direction.direction === Directions.Right;
-      const isPassedLeft =
-        this.position % this.gridWidth === 0 &&
-        this.direction.direction === Directions.Left;
-      const isPassedTop = newPosition < 0;
-      const isPassedBottom = newPosition > this.max - 1;
-
-      // player died
-      const playerAteBody =
-        this.lastPositions.has(newPosition) &&
-        positionsAsArray.indexOf(newPosition) < this.length;
-
-      const playerOutOfBounds =
-        !this.dimensionator?.effectIsActive &&
-        borderOutOfBounds &&
-        (isPassedRight || isPassedBottom || isPassedLeft || isPassedTop);
-
-      const playerHitObstacle = this.apple?.boundaries.has(newPosition);
-
-      // end game if player died
-      if (playerAteBody || playerOutOfBounds || playerHitObstacle) {
-        this.endGame();
-      } else {
-        // border out of bounds is false pathfinder
-        if (this.dimensionator?.effectIsActive || !borderOutOfBounds) {
-          if (isPassedRight) newPosition = this.position - this.gridWidth + 1;
-          else if (isPassedLeft)
-            newPosition = this.position + this.gridWidth - 1;
-          else if (isPassedTop)
-            newPosition = this.position + this.max - this.gridWidth;
-          else if (isPassedBottom)
-            newPosition = this.position - this.max + this.gridWidth;
-        }
-        this.position = newPosition;
-        this.direction.position = newPosition;
-        if (newPosition === this.apple?.location) this.eatApple();
-        if (newPosition === this.hyperCube?.location) this.hyperCube?.eat();
-        if (newPosition === this.dimensionator?.location)
-          this.dimensionator?.eat();
-      }
       this.renderGame();
     }
     // check keys after tick for responsive controls
@@ -212,13 +136,12 @@ export class SnakeGameInstance {
   setNewGameState = () => {
     this.gameState = GameState.Idle;
     this.length = DEFAULT_LENGTH;
-    this.position = this.centerPoint;
-    this.direction.reset(this.centerPoint, this.centerPoint - 1);
+    this.snake.head.x = this.centerPoint;
+    this.snake.head.y = this.centerPoint;
+    this.direction.reset();
+    this.snake.reset();
     this.apple.clear();
-    this?.hyperCube?.cleanUp();
-    this.lastPositions.clear();
-    this.lastPositions.add(this.centerPoint - 1);
-    this.lastPositions.add(this.centerPoint - 2);
+    this.cleanUpGridElements();
     this.generateApple();
     this.renderGame();
   };
@@ -229,7 +152,6 @@ export class SnakeGameInstance {
   };
   startGame = () => {
     this.gameState = GameState.Start;
-    this.renderGame();
   };
   pauseGame = () => {
     this.gameState = GameState.Pause;
@@ -241,7 +163,6 @@ export class SnakeGameInstance {
       difficulty: this.difficulty,
     });
     this.gameState = GameState.Dead;
-    this.cleanUpGridElements();
     this.renderGame();
   };
 
@@ -256,72 +177,67 @@ export class SnakeGameInstance {
     }
   };
 
-  // --------- Snake buffer for item spacing
-  getSnakeBuffer = () => {
-    const position = this.position;
+  // -------- snake elements buffer
+  getSnakeBufferCoords = (): Coords[] => {
     return [
       // create larger buffer around snake's head
-      position,
-      position + 1,
-      position - 1,
-      position + this.gridWidth,
-      position - this.gridWidth,
-      position + this.gridWidth + 1,
-      position - this.gridWidth + 1,
-      position + this.gridWidth - 1,
-      position - this.gridWidth - 1,
+      ...getSnakeHeadBuffer(this.snake.head.getCoords()),
       // snake body
-      ...Array.from(this.lastPositions).slice(0, this.length + 1),
-    ].reduce((prev: number[], current) => {
-      return [
-        ...prev,
-        current,
-        current - this.gridWidth,
-        current + this.gridWidth,
-        current - 1,
-        current + 1,
-      ];
+      ...Array.from(
+        this.snake.body.map((element) => ({ x: element.x, y: element.y }))
+      ),
+    ].reduce((prev: Coords[], current: Coords): Coords[] => {
+      return [...prev, ...coordToBuffer(current)];
     }, []);
   };
 
   // -------- apple stuff
   eatApple = () => {
     this.length++;
-    this.apple?.clear();
     this.generateApple();
-    const value = this.length - DEFAULT_LENGTH;
-    if (value === 2 || value % 10 === 0)
-      this.hyperCube?.setOnGrid({
-        position: this.position,
-        max: this.max,
-        buffer: [
-          ...this.getSnakeBuffer(),
-          this?.apple?.location || 0,
-          this.dimensionator?.location || 0,
-        ],
-      });
-    if (this.difficulty !== Difficulty.Easy && (value === 1 || value % 8 === 0))
-      this.dimensionator?.setOnGrid({
-        position: this.position,
-        max: this.max,
-        buffer: [
-          ...this.getSnakeBuffer(),
-          this.apple?.location || 0,
-          this.hyperCube?.location || 0,
-        ],
-      });
+    this.setPowerUps();
   };
   generateApple = () =>
     this.apple?.setAppleOnGrid({
-      position: this.position,
-      max: this.max,
-      buffer: [...this.getSnakeBuffer(), this?.hyperCube?.location || 0],
+      bufferCoords: [
+        ...this.getSnakeBufferCoords(),
+        this.hyperCube?.coords || this.snake.head.getCoords(),
+        this.dimensionator?.coords || this.snake.head.getCoords(),
+      ],
+      coords: this.snake.head.getCoords(),
     });
+
+  // -------- grid elements
+  setPowerUps = () => {
+    const value = this.length - DEFAULT_LENGTH;
+    const showHyperCube = shouldShowHypercube(value);
+    const showDimensionator = shouldShowDimensionator(value, this.difficulty);
+    if (showHyperCube || showDimensionator) {
+      const obstacleBuffer = Array.from(this.apple.boundaries).map((boundary) =>
+        getCoordsFromString(boundary)
+      );
+      const snakeHeadCoords = this.snake.head.getCoords();
+      const gridParams = {
+        max: this.max,
+        bufferCoords: [
+          this.apple.coords as Coords,
+          ...obstacleBuffer,
+          ...this.getSnakeBufferCoords(),
+          this.hyperCube?.coords || snakeHeadCoords,
+          this.dimensionator?.coords || snakeHeadCoords,
+        ],
+        coords: snakeHeadCoords,
+      };
+      if (showHyperCube) this.hyperCube?.setOnGrid(gridParams);
+      if (showDimensionator) this.dimensionator?.setOnGrid(gridParams);
+    }
+  };
 
   // -------- difficulty event
   changeDifficulty = (difficulty: Difficulty) => {
     this.difficulty = difficulty;
     this.apple.hasBoundaries = difficulty === Difficulty.Hard;
+    this.snake.difficulty = difficulty;
     this.startGameTicker();
     this.setNewGameState();
   };
@@ -329,9 +245,10 @@ export class SnakeGameInstance {
   // -------- User Interaction events
   getDirectionKeyMethods = (key: string) =>
     this.direction.keyEvents[key.toLowerCase() as SnakeGameDirectionKeys];
+
   onKeyDown = (e: React.KeyboardEvent) => {
+    e.preventDefault();
     if (e.key.toLowerCase() === " ") {
-      e.preventDefault();
       if (this.gameState === GameState.Start) {
         this.pauseGame();
       } else {
@@ -347,38 +264,13 @@ export class SnakeGameInstance {
     methods && methods[1]();
   };
 
-  // -------- get tile type by index
-  getTileTypeByIndex = (index: number) => {
-    let tileType: TileStates = TileStates.Inactive;
-
-    if (this.debug && this.getSnakeBuffer().includes(index)) {
-      tileType = TileStates.Buffer;
-    }
-
-    if (this.apple?.boundaries.has(index)) {
-      tileType = TileStates.Obstacle;
-    } else if (
-      this.lastPositions.has(index) &&
-      Array.from(this.lastPositions).indexOf(index) < this.length
-    ) {
-      tileType = TileStates.Body;
-    } else {
-      switch (index) {
-        case this.position:
-          tileType = TileStates.Head;
-          break;
-        case this.apple.location:
-          tileType = TileStates.Apple;
-          break;
-        case this.hyperCube?.location:
-          tileType = TileStates.Hypercube;
-          break;
-        case this.dimensionator?.location:
-          tileType = TileStates.Dimensionator;
-          break;
-      }
-    }
-    return tileType;
+  //--------- history
+  getGameHistory = () => {
+    const gameHistory = getSnakeGameHistory();
+    const history = gameHistory.filter(
+      (item) => item.difficulty === this.difficulty
+    );
+    return history;
   };
 
   // -------- cleanup
@@ -387,7 +279,6 @@ export class SnakeGameInstance {
     this.dimensionator?.cleanUp();
   };
   cleanUp = () => {
-    this.clearGameTicker();
     this.cleanUpGridElements();
   };
 }
