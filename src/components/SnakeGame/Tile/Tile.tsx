@@ -9,14 +9,22 @@ import {
 import classNames from "classnames";
 import { SnakeGameInstance } from "../utils/SnakeGameInstance";
 import "./styles.scss";
+import { Coords } from "../utils/gridElements/types";
 
-export const Tile: React.FC<{
+type TileProps = {
   tileState: TileStates;
   gameInstance?: SnakeGameInstance;
   x?: string;
   y?: string;
   isLast?: boolean;
-}> = ({ tileState, gameInstance, x, y }) => {
+};
+
+export const Tile: React.FC<TileProps> = ({
+  tileState,
+  gameInstance,
+  x,
+  y,
+}) => {
   const tileSize = `${TILE_SIZE}px`;
 
   const direction = gameInstance?.direction.direction;
@@ -41,3 +49,15 @@ export const Tile: React.FC<{
     </div>
   );
 };
+
+const compareCoords = (prev?: TileProps, next?: TileProps) => {
+  return prev?.x === next?.x && prev?.y === next?.y;
+};
+
+export const HypercubeGameTile = React.memo(Tile, compareCoords);
+
+export const AppleGameTile = React.memo(Tile, compareCoords);
+
+export const ObstacleGameTile = React.memo(Tile, compareCoords);
+
+export const DimensionatorGameTile = React.memo(Tile, compareCoords);

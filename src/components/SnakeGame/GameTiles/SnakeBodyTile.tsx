@@ -135,3 +135,14 @@ export const SnakeBodyTile: React.FC<SnakeBodyTileProps> = ({
     </div>
   );
 };
+
+export const SnakeBodyGameTile = React.memo(SnakeBodyTile, (prev, next) => {
+  return (
+    prev.from === next.from &&
+    prev.to === next.to &&
+    prev?.coords?.x === next?.coords?.x &&
+    prev?.coords?.y === next?.coords?.y &&
+    prev?.isLast === next?.isLast &&
+    prev?.isNew === next?.isNew
+  );
+});

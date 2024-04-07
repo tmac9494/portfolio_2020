@@ -132,7 +132,9 @@ export class SnakeController {
   }
 
   // reset snake state
-  reset() {
+  reset(centerPoint: number) {
+    this.head.x = centerPoint;
+    this.head.y = centerPoint;
     this.setCoreParameters(this.initialParams);
   }
 }

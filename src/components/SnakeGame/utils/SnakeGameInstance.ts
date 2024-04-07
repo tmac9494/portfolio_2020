@@ -19,7 +19,6 @@ import {
   SnakeGameTouchHandler,
   getSnakeGameHistory,
 } from "./";
-import { GridElementEffects } from "./gridElements";
 import { Coords } from "./gridElements/types";
 import {
   shouldShowDimensionator,
@@ -49,7 +48,7 @@ export class SnakeGameInstance extends SnakeGameSetup {
 
   // initialize
   initialize = () => {
-    this.generateApple();
+    this.generateApple(this.getSnakeBufferCoords());
     this.renderGame();
     this.startGameTicker();
   };
@@ -77,10 +76,6 @@ export class SnakeGameInstance extends SnakeGameSetup {
       interval: difficulties[this.difficulty].interval,
       borderOutOfBounds: difficulties[this.difficulty].borderOutOfBounds,
       difficulty: this.difficulty,
-      effects: {
-        [GridElementEffects.Hypercube]: this.hyperCube?.duration || 0,
-        [GridElementEffects.Dimensionator]: this.dimensionator?.duration || 0,
-      },
       snake: this.snake,
     };
   };
@@ -93,11 +88,10 @@ export class SnakeGameInstance extends SnakeGameSetup {
   tickerInterval = (time: number) => {
     !this.focused && this.focus();
     const renderDelta = time - this.lastUpdateTimestamp;
-    const tickDelta = time - this.time;
-    this.time = time;
     const { interval } = difficulties[this.difficulty];
     // render logic at 30fps & game state start
     if (renderDelta >= 33 && this.gameState === GameState.Start) {
+      const tickDelta = time - this.time;
       this.hyperCube?.tick(tickDelta);
       this.dimensionator?.tick(tickDelta);
       const requiredDelta = interval + (this.isMobile ? 50 : 0);
@@ -111,6 +105,7 @@ export class SnakeGameInstance extends SnakeGameSetup {
       this.renderGame();
     }
     this.animationFrame = requestAnimationFrame(this.tickerInterval);
+    this.time = time;
   };
 
   gameTick = () => {
@@ -136,13 +131,11 @@ export class SnakeGameInstance extends SnakeGameSetup {
   setNewGameState = () => {
     this.gameState = GameState.Idle;
     this.length = DEFAULT_LENGTH;
-    this.snake.head.x = this.centerPoint;
-    this.snake.head.y = this.centerPoint;
     this.direction.reset();
-    this.snake.reset();
+    this.snake.reset(this.centerPoint);
     this.apple.clear();
     this.cleanUpGridElements();
-    this.generateApple();
+    this.generateApple(this.getSnakeBufferCoords());
     this.renderGame();
   };
 
@@ -183,9 +176,7 @@ export class SnakeGameInstance extends SnakeGameSetup {
       // create larger buffer around snake's head
       ...getSnakeHeadBuffer(this.snake.head.getCoords()),
       // snake body
-      ...Array.from(
-        this.snake.body.map((element) => ({ x: element.x, y: element.y }))
-      ),
+      ...this.snake.body.map((element) => element.getCoords()),
     ].reduce((prev: Coords[], current: Coords): Coords[] => {
       return [...prev, ...coordToBuffer(current)];
     }, []);
@@ -194,13 +185,15 @@ export class SnakeGameInstance extends SnakeGameSetup {
   // -------- apple stuff
   eatApple = () => {
     this.length++;
-    this.generateApple();
-    this.setPowerUps();
+
+    const snakeBuffer = this.getSnakeBufferCoords();
+    this.generateApple(snakeBuffer);
+    this.setPowerUps(snakeBuffer);
   };
-  generateApple = () =>
+  generateApple = (snakeBuffer: Coords[]) =>
     this.apple?.setAppleOnGrid({
       bufferCoords: [
-        ...this.getSnakeBufferCoords(),
+        ...snakeBuffer,
         this.hyperCube?.coords || this.snake.head.getCoords(),
         this.dimensionator?.coords || this.snake.head.getCoords(),
       ],
@@ -208,7 +201,7 @@ export class SnakeGameInstance extends SnakeGameSetup {
     });
 
   // -------- grid elements
-  setPowerUps = () => {
+  setPowerUps = (snakeBuffer: Coords[]) => {
     const value = this.length - DEFAULT_LENGTH;
     const showHyperCube = shouldShowHypercube(value);
     const showDimensionator = shouldShowDimensionator(value, this.difficulty);
@@ -222,13 +215,16 @@ export class SnakeGameInstance extends SnakeGameSetup {
         bufferCoords: [
           this.apple.coords as Coords,
           ...obstacleBuffer,
-          ...this.getSnakeBufferCoords(),
+          ...snakeBuffer,
           this.hyperCube?.coords || snakeHeadCoords,
           this.dimensionator?.coords || snakeHeadCoords,
         ],
         coords: snakeHeadCoords,
       };
+
       if (showHyperCube) this.hyperCube?.setOnGrid(gridParams);
+
+      gridParams.bufferCoords.push(this.hyperCube?.coords || snakeHeadCoords); // prevent stacking
       if (showDimensionator) this.dimensionator?.setOnGrid(gridParams);
     }
   };

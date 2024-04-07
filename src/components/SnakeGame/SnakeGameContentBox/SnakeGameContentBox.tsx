@@ -1,13 +1,14 @@
-import React from "react";
-import { GameState } from "./types";
-import { SnakeGameInstance } from "./utils/SnakeGameInstance";
-import { DimensionatorIcon, LightningIcon } from "./icons";
-import { TILE_SIZE } from "./types";
+import React, { memo } from "react";
+import { Difficulty, GameState, TileStates } from "../types";
+import { SnakeGameInstance } from "../utils/SnakeGameInstance";
+import { TILE_SIZE } from "../types";
+import { PowerUpDescription } from "./PowerUpDescription";
 
 type GameContent = Record<GameState, string[]>;
 
-export const SnakeGameContentBox: React.FC<{
+const ContentBox: React.FC<{
   gameState: GameState;
+  difficultyLevel: Difficulty;
   gameInstance: SnakeGameInstance;
 }> = ({ gameState, gameInstance }) => {
   const isMobile = window.innerWidth < 800;
@@ -49,24 +50,16 @@ export const SnakeGameContentBox: React.FC<{
       {description && description.map((text) => <p key={text}>{text}</p>)}
       {gameState === GameState.Idle && (
         <div className="grid-elements-info">
-          <div className="margin-bottom-2 flex flex-row align-center">
-            <div
-              style={tileStyle}
-              className="game-tile tile-type-hypercube margin-right-2"
-            >
-              <LightningIcon />
-            </div>
-            <span>Increases snake speed by 20%</span>
-          </div>
-          <div className="margin-bottom-3 flex flex-row align-center">
-            <div
-              style={tileStyle}
-              className="game-tile tile-type-dimensionator margin-right-2"
-            >
-              <DimensionatorIcon />
-            </div>
-            <span>Allows snake to safely cross borders</span>
-          </div>
+          <PowerUpDescription
+            powerup={TileStates.Hypercube}
+            tileStyle={tileStyle}
+          />
+          {gameInstance.difficulty !== Difficulty.Easy && (
+            <PowerUpDescription
+              powerup={TileStates.Dimensionator}
+              tileStyle={tileStyle}
+            />
+          )}
         </div>
       )}
       {isMobile && (
@@ -84,3 +77,10 @@ export const SnakeGameContentBox: React.FC<{
     </div>
   );
 };
+
+export const SnakeGameContentBox = memo(
+  ContentBox,
+  (prev, next) =>
+    prev.gameState === next.gameState &&
+    prev?.difficultyLevel === next?.difficultyLevel
+);
