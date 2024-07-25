@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   AppleGameTile,
+  Difficulty,
   DimensionatorGameTile,
+  GameState,
   HypercubeGameTile,
   OPPOSITE_DIRECTION,
   ObstacleGameTile,
@@ -21,6 +23,8 @@ import {
 } from "./GameTiles";
 import { SnakeGameTailTile } from "./GameTiles/SakeTailTile";
 import { SnakeGameContentBox } from "./SnakeGameContentBox";
+import { Coords } from "./utils/gridElements/types";
+import { NomNom } from "./icons/NomNom";
 
 export const GameGrid: React.FC<{
   gameState: SnakeGameState;
@@ -28,6 +32,34 @@ export const GameGrid: React.FC<{
   gridSize: number;
 }> = ({ gameState, gameInstance, gridSize }) => {
   const [showLines, setShowLines] = useState(false);
+  const [nomCoords, setNomCoords] = useState<Coords>();
+  const appleCoords = gameInstance?.apple?.coords;
+  const currentGameState = gameState.gameState;
+  const currentDifficulty = gameState.difficulty;
+  const lastAppleCoords = useRef<Coords>();
+  const lastDifficulty = useRef<Difficulty>(currentDifficulty);
+  if (!lastAppleCoords.current && currentGameState === GameState.Start) {
+    lastAppleCoords.current = appleCoords;
+  }
+
+  useEffect(() => {
+    if (
+      currentGameState === GameState.Dead ||
+      currentDifficulty !== lastDifficulty.current
+    ) {
+      setNomCoords(undefined);
+      lastAppleCoords.current = undefined;
+      lastDifficulty.current = currentDifficulty;
+    } else if (
+      currentGameState === GameState.Start &&
+      nomCoords === undefined &&
+      (appleCoords?.x !== lastAppleCoords?.current?.x ||
+        appleCoords?.y !== lastAppleCoords?.current?.y)
+    ) {
+      setNomCoords(lastAppleCoords.current);
+      lastAppleCoords.current = appleCoords;
+    }
+  }, [currentGameState, appleCoords, nomCoords, currentDifficulty]);
 
   const lastBodyElement =
     gameInstance.snake.body[gameInstance.snake.body.length - 1];
@@ -69,6 +101,9 @@ export const GameGrid: React.FC<{
           x={gameInstance.apple.getGridXPosition() + "px"}
           y={gameInstance.apple.getGridYPosition() + "px"}
         />
+      )}
+      {nomCoords && (
+        <NomNom clear={() => setNomCoords(undefined)} coords={nomCoords} />
       )}
       {gameInstance.apple.boundaries &&
         Array.from(gameInstance.apple.boundaries).map((boundary) => {

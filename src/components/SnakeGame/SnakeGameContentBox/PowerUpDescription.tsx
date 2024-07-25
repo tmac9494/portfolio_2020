@@ -30,7 +30,7 @@ export const PowerUpDescription = ({
       >
         <Icon />
       </div>
-      <span>{description}</span>
+      <span className="text-left">{description}</span>
     </div>
   );
 };

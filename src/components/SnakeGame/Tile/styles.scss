@@ -26,6 +26,7 @@ $snakeTransitionTiming: 0.1s;
     fill: $appleColor;
     border-color: $appleColor;
     box-shadow: 0 0 12px $appleColor;
+    z-index: 21;
   }
   .tile-type-hypercube {
     position: absolute;
@@ -33,6 +34,7 @@ $snakeTransitionTiming: 0.1s;
     background: $hypercubeDark;
     animation: hypercube 0.38s 0.5s forwards infinite,
       bolt 0.38s 0.5s forwards infinite;
+    z-index: 21;
   }
   .tile-type-dimensionator {
     position: absolute;

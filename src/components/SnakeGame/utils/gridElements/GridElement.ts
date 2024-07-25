@@ -31,6 +31,7 @@ export class GridElement {
   effectDuration: EffectDuration;
   duration?: number;
   visibleDuration?: number;
+  position?: string;
 
   constructor({
     gridWidth,
@@ -43,6 +44,7 @@ export class GridElement {
     this.effectIsActive = false;
     this.hideDelay = hideDelay !== false ? 5000 : hideDelay;
     this.effectDuration = effectDuration !== false ? 15000 : effectDuration;
+    this.position = coords && getCoordsAsString(coords);
   }
 
   tick(ms: number) {
@@ -55,7 +57,7 @@ export class GridElement {
           this.visibleDuration = 0;
         }
       } else {
-        this.coords = undefined;
+        this.clearCoordinates();
       }
     }
 
@@ -83,18 +85,23 @@ export class GridElement {
         bufferCoords.map((cord) => getCoordsAsString(cord))
       );
       let newCoords = getCoordsAsString(coords);
+
       do {
         newCoords = getCoordsAsString(generateCoords());
       } while (snakeCoordsBuffer.has(newCoords));
+
       if (this.hideDelay) {
         this.visibleDuration = this.hideDelay;
       }
+
+      this.position = newCoords;
       this.coords = getCoordsFromString(newCoords);
     }
   };
 
   eat = () => {
     this.coords = undefined;
+    this.position = undefined;
     this.duration = this.effectDuration || 0;
     if (this.effectDuration) {
       this.effectIsActive = true;
@@ -106,8 +113,12 @@ export class GridElement {
 
   cleanUp = () => {
     this.effectIsActive = false;
-    this.coords = undefined;
+    this.clearCoordinates();
     this.duration = 0;
     this.visibleDuration = 0;
+  };
+  clearCoordinates = () => {
+    this.coords = undefined;
+    this.position = undefined;
   };
 }
