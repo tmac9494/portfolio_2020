@@ -1,5 +1,5 @@
 import React from "react";
-import { StoryImage } from "../../Pages/Home/Sections";
+import { StoryImage } from "../../../Pages/Home/Sections";
 import { useSpring, animated } from "react-spring";
 
 import "./styles.scss";

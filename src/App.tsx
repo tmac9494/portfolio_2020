@@ -1,13 +1,13 @@
 import React from "react";
 import Navigation from "./components/Navigation";
 import PageContainer from "./components/PageContainer";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 import "./styles/App.scss";
 import { Toast } from "./components/General/Toast";
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Toast
         title="Under Construction"
         message="My Portfolio is still in the process of a re-design, some sections may appear abnormal."
@@ -17,7 +17,7 @@ function App() {
         <Navigation />
         <PageContainer />
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 

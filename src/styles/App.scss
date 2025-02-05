@@ -17,11 +17,14 @@ body {
   width: 100%;
   overflow-y: auto;
   background-size: cover;
+  &.stop-scrolling {
+    height: 100%;
+    overflow-y: hidden;
+  }
 }
 a {
   text-decoration: none;
 }
-
 // common buttons/elements
 .btn {
   outline: none;
@@ -116,6 +119,9 @@ a {
 .flex {
   display: flex;
   flex-direction: row;
+}
+.flex-wrap {
+  flex-wrap: wrap;
 }
 .flex-col {
   flex-direction: column;
@@ -437,6 +443,11 @@ $spacingSize5: 32px;
 }
 .custom-scrollbar::-webkit-scrollbar {
   width: 8px;
+  height: 8px;
+}
+.custom-scrollbar.hide-scrollbar::-webkit-scrollbar {
+  height: 0px;
+  width: 0px;
 }
 .custom-scrollbar::-webkit-scrollbar-track {
   background: none;

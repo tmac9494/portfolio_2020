@@ -13,6 +13,7 @@ export class SnakeDirection {
   position: Coords;
   renderGame: (tick?: boolean) => void;
   keyEvents: Record<SnakeGameDirectionKeys, (() => void)[]>;
+  directionEvents: Record<Directions, () => void>;
   initialPositions: Coords[];
 
   constructor(
@@ -43,6 +44,12 @@ export class SnakeDirection {
       [SnakeGameDirectionKeys.ArrowLeft]: arrowEventsLeft,
       [SnakeGameDirectionKeys.ArrowDown]: arrowEventsBottom,
       [SnakeGameDirectionKeys.ArrowRight]: arrowEventsRight,
+    };
+    this.directionEvents = {
+      [Directions.Top]: this.toTop,
+      [Directions.Left]: this.toLeft,
+      [Directions.Bottom]: this.toBottom,
+      [Directions.Right]: this.toRight,
     };
   }
 
@@ -89,38 +96,17 @@ export class SnakeDirection {
   removeLeftKey = () => this.removeKey(Directions.Left);
   removeRightKey = () => this.removeKey(Directions.Right);
   removeBottomKey = () => this.removeKey(Directions.Bottom);
-  addTopKey = () => {
-    this.addKey(Directions.Top);
-  };
-  addLeftKey = () => {
-    this.addKey(Directions.Left);
-  };
-  addRightKey = () => {
-    this.addKey(Directions.Right);
-  };
-  addBottomKey = () => {
-    this.addKey(Directions.Bottom);
-  };
+
+  addTopKey = () => this.addKey(Directions.Top);
+  addLeftKey = () => this.addKey(Directions.Left);
+  addRightKey = () => this.addKey(Directions.Right);
+  addBottomKey = () => this.addKey(Directions.Bottom);
 
   // check keys and set direction
   checkKeys = () => {
     const lastDirection = this.keystore[this.keystore.length - 1];
-    if (this.direction !== lastDirection) {
-      switch (lastDirection) {
-        case Directions.Top:
-          this.toTop();
-          break;
-        case Directions.Left:
-          this.toLeft();
-          break;
-        case Directions.Right:
-          this.toRight();
-          break;
-        case Directions.Bottom:
-          this.toBottom();
-          break;
-      }
-    }
+    if (lastDirection && this.direction !== lastDirection)
+      this.directionEvents[lastDirection]();
   };
 
   // reset

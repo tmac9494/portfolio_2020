@@ -182,3 +182,30 @@
   }
 }
 $btnSize: 100px;
+
+@keyframes nomnom {
+  0% {
+    transform: scale(0) translateY(0px);
+    opacity: 1;
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) translateY(-24px);
+    opacity: 0;
+  }
+}
+
+.nomnom-effect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 200;
+  h1 {
+    font-size: 14px;
+    color: #fff;
+    animation-timing-function: cubic-bezier(0.12, 1.12, 0.56, 1.09);
+    animation: nomnom 1s forwards;
+  }
+}

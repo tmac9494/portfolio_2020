@@ -6,6 +6,7 @@ export class AppleTile {
   boundaries: Set<string>;
   coords?: Coords;
   gridWidth: number;
+  position?: string;
   constructor({
     coords,
     hasBoundaries,
@@ -19,7 +20,7 @@ export class AppleTile {
     this.boundaries = new Set([]);
     this.coords = coords;
     this.hasBoundaries = !!hasBoundaries;
-    // traps
+    this.position = coords && getCoordsAsString(coords);
   }
 
   getBoundaries = () => {
@@ -72,6 +73,7 @@ export class AppleTile {
       newCoords = getCoordsAsString(generateCoords());
     } while (snakeBufferCoords.has(newCoords));
     this.coords = getCoordsFromString(newCoords);
+    this.position = newCoords;
     this.getBoundaries();
   };
 

@@ -32,6 +32,8 @@ export const IconAccordion: React.FC<AccordionProps> = ({
 
   const zIndexMax: number = list.length + 10;
   const iconWidth = width ? width : 32;
+  const isHoveringOverFirstIcon = hoverState.hoverIndex === 0;
+  const isHoveringOverLastIcon = hoverState.hoverIndex === list.length - 1;
 
   const handleHover = (e: any, value: boolean, index?: number): void => {
     setHoverState({
@@ -42,7 +44,10 @@ export const IconAccordion: React.FC<AccordionProps> = ({
 
   return (
     <div
-      className={"icon-accordion" + conditionClass(className)}
+      className={
+        "icon-accordion custom-scrollbar hide-scrollbar" +
+        conditionClass(className)
+      }
       onMouseLeave={(e) => handleHover(e, false)}
     >
       <div className="accordion-content-container relative">
@@ -70,7 +75,16 @@ export const IconAccordion: React.FC<AccordionProps> = ({
         <div
           className="accordion-icon-tooltip-wrap"
           style={{
-            left: Math.floor((hoverState.hoverIndex + 0.5) * iconWidth) + "px",
+            left: isHoveringOverFirstIcon
+              ? 0
+              : isHoveringOverLastIcon
+              ? "auto"
+              : Math.floor((hoverState.hoverIndex + 0.5) * iconWidth) + "px",
+            right: isHoveringOverLastIcon ? "0px" : "auto",
+            transform:
+              isHoveringOverLastIcon || isHoveringOverFirstIcon
+                ? "translateX(0%)"
+                : "translateX(-50%)",
           }}
         >
           <AnimationParent

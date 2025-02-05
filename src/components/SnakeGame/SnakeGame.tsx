@@ -33,7 +33,7 @@ export const SnakeGame: React.FC<{
   }, []);
 
   // null until state setup
-  if (gameState === undefined) {
+  if (!gameState) {
     return null;
   }
 
@@ -64,12 +64,17 @@ export const SnakeGame: React.FC<{
       >
         <div className="snake-game-effect-container flex flex-row">
           <EffectIndicator
-            duration={gameState.effects[GridElementEffects.Dimensionator]}
+            duration={
+              gameInstance.current[GridElementEffects.Dimensionator]
+                ?.duration || 0
+            }
             gameInstance={gameInstance.current}
             effect={GridElementEffects.Dimensionator}
           />
           <EffectIndicator
-            duration={gameState.effects[GridElementEffects.Hypercube]}
+            duration={
+              gameInstance.current[GridElementEffects.Hypercube]?.duration || 0
+            }
             gameInstance={gameInstance.current}
             effect={GridElementEffects.Hypercube}
           />

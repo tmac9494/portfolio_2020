@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 import "./styles.scss";
 import { Route, useLocation, Routes } from "react-router-dom";
 import pageSettings from "./pageSettings";
-import { Home } from "../Pages";
-import Work from "../Pages/Work";
-import Contact from "../Pages/Contact";
-import Skills from "../Pages/Skills";
-import Resume from "../Pages/Resume";
+import { Home } from "../../Pages";
+import Work from "../../Pages/Work";
+import Contact from "../../Pages/Contact";
+import Skills from "../../Pages/Skills";
+import Resume from "../../Pages/Resume";
 import { FloatingSvgs } from "./FloatingSvgs";
 
 const PageContainer: React.FC<{

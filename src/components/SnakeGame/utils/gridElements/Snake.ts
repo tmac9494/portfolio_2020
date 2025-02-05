@@ -3,30 +3,13 @@ import {
   Directions,
   OPPOSITE_DIRECTION,
   difficulties,
-  getCoordsAsString,
 } from "../../types";
 import { AppleTile } from "./AppleTile";
+import { mapNewBodyElements, mapSnakeHead } from "./grid-element-utils";
 import { GridElement } from "./GridElement";
 import { SnakeBody } from "./SnakeBody";
 import { SnakeHead } from "./SnakeHead";
-import { Coords, SnakeParams } from "./types";
-
-const mapNewBodyElements = (body: Coords[], gridWidth: number) =>
-  body.map(
-    (position, index) =>
-      new SnakeBody({
-        ...position,
-        direction: Directions.Right,
-        gridWidth: gridWidth,
-        index,
-      })
-  );
-const mapSnakeHead = (coords: Coords, gridWidth: number) =>
-  new SnakeHead({
-    ...coords,
-    direction: Directions.Right,
-    gridWidth: gridWidth,
-  });
+import { SnakeParams } from "./types";
 
 export class SnakeController {
   body: SnakeBody[];
@@ -64,48 +47,44 @@ export class SnakeController {
     // move head
     this.head.move(direction, outOfBoundsAllowed);
     // move body
+    const bodyPositionSet = new Set<string>();
     for (let i = 0; i < this.body.length; i++) {
       this.body[i].follow(
         i > 0 ? this.body[i - 1].lastPosition : this.head.lastPosition,
         i > 0 ? this.body[i - 1].getCoords() : this.head.getCoords()
       );
+      bodyPositionSet.add(this.body[i].position);
     }
 
-    // react to state
-    const positionAsString = getCoordsAsString(this.head);
-
-    // hazards
-    const playerAteBody = new Set(
-      this.body.map((item) => getCoordsAsString(item))
-    ).has(positionAsString);
-
-    const playerOutOfBounds =
-      this.head.x > this.head.max ||
-      this.head.y > this.head.max ||
-      this.head.x < 0 ||
-      this.head.y < 0;
-
-    const playerHitObstacle = apple.boundaries.has(positionAsString);
-
     // player died
-    const playerDied = playerAteBody || playerOutOfBounds || playerHitObstacle;
+    const playerDied =
+      this.isPlayerOutOfBounds() ||
+      this.hasPlayerAteBody(bodyPositionSet) ||
+      this.hasPlayerHitObstacle(apple);
 
     if (playerDied) endGame();
 
     // grid elements
-    switch (positionAsString) {
-      case !!apple?.coords && getCoordsAsString(apple.coords):
+    const gridElementEffects = {
+      [apple?.position ?? ""]: () => {
         this.grow();
         eatApple();
-        break;
-      case !!dimensionator?.coords && getCoordsAsString(dimensionator.coords):
-        dimensionator?.eat();
-        break;
-      case !!hyperCube?.coords && getCoordsAsString(hyperCube?.coords):
-        hyperCube?.eat();
-        break;
-    }
+      },
+      [dimensionator?.position ?? ""]: () => dimensionator?.eat(),
+      [hyperCube?.position ?? ""]: () => hyperCube?.eat(),
+    };
+
+    gridElementEffects[this.head.position]?.();
   }
+
+  // death checks
+  isPlayerOutOfBounds = () => this.head.isHeadOutOfBounds();
+
+  hasPlayerAteBody = (bodyPositionSet: Set<string>) =>
+    bodyPositionSet.has(this.head.position);
+
+  hasPlayerHitObstacle = (apple: AppleTile) =>
+    apple.boundaries.has(this.head.position);
 
   // grow snake by 1
   grow() {
@@ -126,13 +105,15 @@ export class SnakeController {
   }
 
   // core parameters change/reset
-  setCoreParameters(params: SnakeParams) {
+  mapParameterInput(params: SnakeParams) {
     this.body = mapNewBodyElements(params.body, params.gridWidth);
     this.head = mapSnakeHead(params.head, params.gridWidth);
   }
 
   // reset snake state
-  reset() {
-    this.setCoreParameters(this.initialParams);
+  reset(centerPoint: number) {
+    this.head.x = centerPoint;
+    this.head.y = centerPoint;
+    this.mapParameterInput(this.initialParams);
   }
 }

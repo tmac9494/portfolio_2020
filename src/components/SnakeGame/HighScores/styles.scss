@@ -9,8 +9,8 @@ $elementShadow: 0 8px 6px -9px #000;
     box-shadow: inset 1px 1px 4px -2px #000, $elementShadow;
   }
   50% {
-    border-color: #d1d1d1;
-    box-shadow: inset 1px 1px 4px -2px #2c2c2c, 0 0px 8px 0px #a8a8a8;
+    border-color: #fff7cf;
+    box-shadow: inset 1px 1px 4px -2px #2c2c2c, 0 0px 18px 0px #f3eb77;
   }
   100% {
     border-color: $borderColor;
@@ -113,7 +113,8 @@ $elementShadow: 0 8px 6px -9px #000;
   overflow: hidden;
   min-width: 85px;
   &.blink {
-    animation: blink-score 0.5s forwards;
+    animation-timing-function: cubic-bezier(0.12, 1.12, 0.56, 1.09);
+    animation: blink-score 0.8s forwards;
   }
   .scoreboard-counter {
     animation: score-counter 0.38s forwards ease-out;
@@ -129,17 +130,3 @@ $elementShadow: 0 8px 6px -9px #000;
     padding: 4px;
   }
 }
-
-// @include desktop {
-//   .game-score {
-//     border-left: none;
-//   }
-//   .scores-container {
-//     left: 100%;
-//     top: 0;
-//     bottom: auto;
-//     right: auto;
-//     border-bottom-right-radius: 2px;
-//     border-top-left-radius: 0px;
-//   }
-// }

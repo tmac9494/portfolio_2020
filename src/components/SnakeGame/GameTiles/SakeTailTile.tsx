@@ -2,7 +2,7 @@ import React from "react";
 import { Directions, OPPOSITE_DIRECTION } from "../types";
 import classNames from "classnames";
 
-export const SakeTailTile: React.FC<{
+export const SnakeTailTile: React.FC<{
   index: number;
   from: Directions;
   to: Directions;
@@ -37,3 +37,12 @@ export const SakeTailTile: React.FC<{
     </>
   );
 };
+
+export const SnakeGameTailTile = React.memo(SnakeTailTile, (prev, next) => {
+  return (
+    prev.from === next.from &&
+    prev.to === next.to &&
+    prev?.x === next?.x &&
+    prev?.y === next?.y
+  );
+});

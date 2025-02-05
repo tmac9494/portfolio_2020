@@ -3,7 +3,7 @@
 $snakeHeadRadius: 14px;
 $snakeEyesSpacing: 2px;
 
-$snakeTransitionTiming: 0.11s;
+$snakeTransitionTiming: 0.1s;
 #snake-game {
   .game-tile {
     border: 1px solid;
@@ -26,6 +26,7 @@ $snakeTransitionTiming: 0.11s;
     fill: $appleColor;
     border-color: $appleColor;
     box-shadow: 0 0 12px $appleColor;
+    z-index: 21;
   }
   .tile-type-hypercube {
     position: absolute;
@@ -33,6 +34,7 @@ $snakeTransitionTiming: 0.11s;
     background: $hypercubeDark;
     animation: hypercube 0.38s 0.5s forwards infinite,
       bolt 0.38s 0.5s forwards infinite;
+    z-index: 21;
   }
   .tile-type-dimensionator {
     position: absolute;
@@ -52,6 +54,7 @@ $snakeTransitionTiming: 0.11s;
     animation: obstacle 1s 0.5s forwards infinite;
   }
 
+  .snake-head-container,
   .tile-type-head,
   .tile-type-body {
     position: absolute;
@@ -61,15 +64,22 @@ $snakeTransitionTiming: 0.11s;
       border-radius $snakeTransitionTiming linear;
   }
 
+  .snake-head-container {
+    position: absolute;
+    z-index: 20;
+  }
   .tile-type-head {
     position: absolute;
     background: $snakeHead;
     border-color: $snakeHead;
     border: 1px solid transparent;
-    z-index: 20;
     .snake-eyes .eye {
       background: $snakeColor;
     }
+  }
+  .head-hide-lower-layer {
+    position: absolute;
+    background: $backgroundColor;
   }
   .tile-type-body {
     background: $snakeColor;
@@ -218,6 +228,15 @@ $snakeTransitionTiming: 0.11s;
   }
   100% {
     height: 100%;
+  }
+}
+
+@keyframes animateXInvert {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
   }
 }
 

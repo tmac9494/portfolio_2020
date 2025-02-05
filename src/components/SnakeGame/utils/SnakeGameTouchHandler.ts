@@ -23,22 +23,26 @@ export class SnakeGameTouchHandler {
 
   onTouchEnd = () => {
     if (!this.touchStart || !this.touchEnd) return;
+
     const xDistance = this.touchStart[0] - this.touchEnd[0];
     const yDistance = this.touchStart[1] - this.touchEnd[1];
-    const xIsGreeater =
+    const xIsGreater =
       (xDistance < 0 ? xDistance * -1 : xDistance) >
       (yDistance < 0 ? yDistance * -1 : yDistance);
-    const isLeftSwipe = xDistance > MINIMUM_SWIPE_DISTANCE;
-    const isRightSwipe = xDistance < -MINIMUM_SWIPE_DISTANCE;
-    const isUpSwipe = yDistance > MINIMUM_SWIPE_DISTANCE;
-    const isDownSwipe = yDistance < -MINIMUM_SWIPE_DISTANCE;
-    if (xIsGreeater) {
+
+    if (xIsGreater) {
+      const isLeftSwipe = xDistance > MINIMUM_SWIPE_DISTANCE;
+      const isRightSwipe = xDistance < -MINIMUM_SWIPE_DISTANCE;
+
       if (isLeftSwipe) {
         this.direction.toLeft();
       } else if (isRightSwipe) {
         this.direction.toRight();
       }
     } else {
+      const isUpSwipe = yDistance > MINIMUM_SWIPE_DISTANCE;
+      const isDownSwipe = yDistance < -MINIMUM_SWIPE_DISTANCE;
+
       if (isUpSwipe) {
         this.direction.toTop();
       } else if (isDownSwipe) {

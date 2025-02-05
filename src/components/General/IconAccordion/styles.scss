@@ -2,9 +2,14 @@
 
 .icon-accordion {
   width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 16px;
   .accordion-content-container {
     width: auto;
     display: inline-block;
+    max-width: 100%;
+    white-space: nowrap;
   }
   .accordion-icon-container {
     display: inline-block;
@@ -19,9 +24,6 @@
       }
     }
   }
-  // .company-icon-container:not(:first-child) {
-  //   transform: translateX(-12px);
-  // }
   &:hover {
     .accordion-icon-container {
       margin-left: 0px !important;
@@ -35,7 +37,7 @@
   left: 50%;
   bottom: 0;
   margin-bottom: -14px;
-  transition: left 0.2s ease-out;
+  transition: left 0.2s ease-out, transform 0.2s ease-out;
   transform: translateX(-50%);
   z-index: 500;
 }

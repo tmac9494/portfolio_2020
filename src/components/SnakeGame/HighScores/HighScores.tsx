@@ -15,7 +15,7 @@ export type HighScoreSchema = {
   difficulty: Difficulty;
 };
 
-export const HighScores: React.FC<{
+export const HighScoresContent: React.FC<{
   difficulty: Difficulty;
   length: number;
   gameInstance: SnakeGameInstance;
@@ -91,3 +91,14 @@ export const HighScores: React.FC<{
     </div>
   );
 };
+
+export const HighScores = React.memo(
+  HighScoresContent,
+  (prevProps, nextProps) => {
+    return (
+      prevProps.gameState === nextProps.gameState &&
+      prevProps.difficulty === nextProps.difficulty &&
+      prevProps.length === nextProps.length
+    );
+  }
+);

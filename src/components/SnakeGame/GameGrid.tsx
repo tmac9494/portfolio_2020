@@ -1,19 +1,30 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
+  AppleGameTile,
+  Difficulty,
+  DimensionatorGameTile,
+  GameState,
+  HypercubeGameTile,
   OPPOSITE_DIRECTION,
+  ObstacleGameTile,
   SNAKE_GRID_ID,
   SnakeGameState,
   TILE_SIZE,
-  Tile,
   TileStates,
   getCoordsFromString,
 } from ".";
-import { SnakeGameContentBox } from "./SnakeGameContentBox";
 import { SnakeGameInstance } from "./utils/SnakeGameInstance";
 import classNames from "classnames";
 import { GridToggle } from "./GridToggle";
-import { SnakeBodyTile, SnakeHeadTile } from "./GameTiles";
-import { SakeTailTile } from "./GameTiles/SakeTailTile";
+import {
+  SnakeBodyGameTile,
+  SnakeHeadGameTile,
+  StaticTileGrid,
+} from "./GameTiles";
+import { SnakeGameTailTile } from "./GameTiles/SakeTailTile";
+import { SnakeGameContentBox } from "./SnakeGameContentBox";
+import { Coords } from "./utils/gridElements/types";
+import { NomNom } from "./icons/NomNom";
 
 export const GameGrid: React.FC<{
   gameState: SnakeGameState;
@@ -21,15 +32,34 @@ export const GameGrid: React.FC<{
   gridSize: number;
 }> = ({ gameState, gameInstance, gridSize }) => {
   const [showLines, setShowLines] = useState(false);
+  const [nomCoords, setNomCoords] = useState<Coords>();
+  const appleCoords = gameInstance?.apple?.coords;
+  const currentGameState = gameState.gameState;
+  const currentDifficulty = gameState.difficulty;
+  const lastAppleCoords = useRef<Coords>();
+  const lastDifficulty = useRef<Difficulty>(currentDifficulty);
+  if (!lastAppleCoords.current && currentGameState === GameState.Start) {
+    lastAppleCoords.current = appleCoords;
+  }
 
-  // build grid
-  const grid = useMemo(() => {
-    let gridList = [];
-    for (let i = 0; i < gridSize; i++) {
-      gridList.push(<Tile key={i} tileState={TileStates.Inactive} />);
+  useEffect(() => {
+    if (
+      currentGameState === GameState.Dead ||
+      currentDifficulty !== lastDifficulty.current
+    ) {
+      setNomCoords(undefined);
+      lastAppleCoords.current = undefined;
+      lastDifficulty.current = currentDifficulty;
+    } else if (
+      currentGameState === GameState.Start &&
+      nomCoords === undefined &&
+      (appleCoords?.x !== lastAppleCoords?.current?.x ||
+        appleCoords?.y !== lastAppleCoords?.current?.y)
+    ) {
+      setNomCoords(lastAppleCoords.current);
+      lastAppleCoords.current = appleCoords;
     }
-    return gridList;
-  }, [gridSize]);
+  }, [currentGameState, appleCoords, nomCoords, currentDifficulty]);
 
   const lastBodyElement =
     gameInstance.snake.body[gameInstance.snake.body.length - 1];
@@ -40,9 +70,9 @@ export const GameGrid: React.FC<{
       className={classNames("grid", showLines && "grid-lines")}
       id={SNAKE_GRID_ID}
     >
-      <div className="grid-tiles flex flex-row">{grid}</div>
+      <StaticTileGrid size={gridSize} />
       {gameInstance.snake.body.map((value, i) => (
-        <SnakeBodyTile
+        <SnakeBodyGameTile
           key={`body-${i}-${gameInstance.length}`}
           from={value.from}
           to={value.to}
@@ -54,7 +84,7 @@ export const GameGrid: React.FC<{
         />
       ))}
 
-      <SakeTailTile
+      <SnakeGameTailTile
         key="tail"
         tileSize={`${TILE_SIZE}px`}
         x={lastBodyElementCoords.x}
@@ -64,7 +94,7 @@ export const GameGrid: React.FC<{
         to={lastBodyElement.to}
       />
       {gameInstance.apple.coords && (
-        <Tile
+        <AppleGameTile
           key="apple"
           gameInstance={gameInstance}
           tileState={TileStates.Apple}
@@ -72,11 +102,14 @@ export const GameGrid: React.FC<{
           y={gameInstance.apple.getGridYPosition() + "px"}
         />
       )}
+      {nomCoords && (
+        <NomNom clear={() => setNomCoords(undefined)} coords={nomCoords} />
+      )}
       {gameInstance.apple.boundaries &&
         Array.from(gameInstance.apple.boundaries).map((boundary) => {
           const { x, y } = getCoordsFromString(boundary);
           return (
-            <Tile
+            <ObstacleGameTile
               key={boundary}
               gameInstance={gameInstance}
               tileState={TileStates.Obstacle}
@@ -86,7 +119,7 @@ export const GameGrid: React.FC<{
           );
         })}
       {gameInstance.hyperCube?.coords && (
-        <Tile
+        <HypercubeGameTile
           key="hypercube"
           gameInstance={gameInstance}
           tileState={TileStates.Hypercube}
@@ -95,7 +128,7 @@ export const GameGrid: React.FC<{
         />
       )}
       {gameInstance.dimensionator?.coords && (
-        <Tile
+        <DimensionatorGameTile
           key="dimensionator"
           gameInstance={gameInstance}
           tileState={TileStates.Dimensionator}
@@ -103,7 +136,7 @@ export const GameGrid: React.FC<{
           y={gameInstance.dimensionator.getGridYPosition() + "px"}
         />
       )}
-      <SnakeHeadTile
+      <SnakeHeadGameTile
         index={-1}
         from={
           gameInstance.snake.head.from ||
@@ -117,6 +150,7 @@ export const GameGrid: React.FC<{
       <GridToggle callback={setShowLines} showLines={showLines} />
       <SnakeGameContentBox
         gameState={gameState.gameState}
+        difficultyLevel={gameState.difficulty}
         gameInstance={gameInstance}
       />
     </div>

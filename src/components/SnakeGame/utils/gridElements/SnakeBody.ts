@@ -1,6 +1,7 @@
 import {
   Directions,
   GAME_DELTAS,
+  getCoordsAsString,
   OPPOSITE_DIRECTION,
   TILE_SIZE,
 } from "../../types";
@@ -14,6 +15,7 @@ export class SnakeBody {
   from: Directions | null;
   to: Directions;
   lastPosition: Coords;
+  position: string;
   max: number;
   isNew: boolean;
   constructor({
@@ -37,6 +39,7 @@ export class SnakeBody {
     this.to = direction;
     this.lastPosition = lastPosition || { x: x - 1, y };
     this.max = gridWidth - 1;
+    this.position = getCoordsAsString(this.getCoords());
   }
   getDirection = (coordsA: Coords, coordsB: Coords): Directions => {
     if (coordsA.x === coordsB.x && coordsB.y === coordsA.y) {
@@ -93,6 +96,9 @@ export class SnakeBody {
 
     return next;
   };
+  setPosition = () => {
+    this.position = getCoordsAsString(this.getCoords());
+  };
 
   public follow(nextPosition: Coords, leadingPosition?: Coords): Coords {
     this.isNew = false;
@@ -142,6 +148,7 @@ export class SnakeBody {
     }
     this.x = x;
     this.y = y;
+    this.setPosition();
     return { x, y };
   }
 

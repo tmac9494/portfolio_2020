@@ -1,4 +1,4 @@
-import { AppleTile, GridElement, GridElementEffects } from "./utils";
+import { AppleTile, GridElement } from "./utils";
 import { SnakeDirection } from "./utils/SnakeDirection";
 import { SnakeController } from "./utils/gridElements/Snake";
 import { Coords } from "./utils/gridElements/types";
@@ -19,7 +19,6 @@ export interface SnakeGameState extends SnakeGameConfig {
   length: number;
   apple?: AppleTile;
   difficulty: Difficulty;
-  effects: Record<GridElementEffects, number>;
   snake: SnakeController;
 }
 
@@ -189,10 +188,6 @@ export const INITIAL_GAME_STATE: SnakeGameState = {
   length: DEFAULT_LENGTH,
   borderOutOfBounds: difficulties.Normal.borderOutOfBounds,
   difficulty: Difficulty.Normal,
-  effects: {
-    [GridElementEffects.Dimensionator]: 0,
-    [GridElementEffects.Hypercube]: 0,
-  },
   snake: new SnakeController({
     head: { x: testpoint, y: testpoint },
     body: [

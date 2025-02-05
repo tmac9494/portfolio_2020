@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StoryImage } from "../../Pages/Home/Sections";
+import { StoryImage } from "../../../Pages/Home/Sections";
 import { TimelineImage } from "./TimlineImage";
 import "./styles.scss";
 
