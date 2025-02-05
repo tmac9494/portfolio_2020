@@ -21,7 +21,6 @@ export class AppleTile {
     this.coords = coords;
     this.hasBoundaries = !!hasBoundaries;
     this.position = coords && getCoordsAsString(coords);
-    // traps
   }
 
   getBoundaries = () => {

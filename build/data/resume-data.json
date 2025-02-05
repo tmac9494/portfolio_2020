@@ -6,7 +6,7 @@
       "cityState": "Milwaukee, WI",
       "startDate": "March 2023",
       "endDate": "Present",
-      "title": "Senior Frontend Software Engineer",
+      "title": "Senior Software Engineer",
       "description": "N/A",
       "bullets": [
         "Work with designers and product on brand new application design/UX iterations.",
@@ -15,6 +15,21 @@
         "Work with project managers translating difficult to understand finance language into digestible UX goals and functionality.",
         "Created the financial data visualization portion of the application using D3 with visX.",
         "Unit test implementation on frontend and backend components."
+      ]
+    },
+    {
+      "id": "mit",
+      "company": "Massachusetts Institute of Technology",
+      "cityState": "Cambridge, Massachusetts",
+      "startDate": "January 2024",
+      "endDate": "January 2025",
+      "title": "Senior Software Engineer",
+      "description": "N/A",
+      "bullets": [
+        "Worked with the CRIPT team to build the data visualization portion of the CRIPT application.",
+        "Used the VisX framework to create controlled data visualization of Polymer research data.",
+        "Responsible for updating/refactoring NodeJS and Python code to import the Research data into a CRIPT project.",
+        "Worked with product management to design and develop a feature rich UI for researchers to quickly and clearly create visualizations of complex research data."
       ]
     },
     {

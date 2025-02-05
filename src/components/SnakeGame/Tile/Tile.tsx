@@ -9,7 +9,6 @@ import {
 import classNames from "classnames";
 import { SnakeGameInstance } from "../utils/SnakeGameInstance";
 import "./styles.scss";
-import { Coords } from "../utils/gridElements/types";
 
 type TileProps = {
   tileState: TileStates;

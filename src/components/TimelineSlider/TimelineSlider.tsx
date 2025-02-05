@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StoryBlock } from "../Pages/Home/Sections";
+import { StoryBlock } from "../../Pages/Home/Sections";
 import { Timeline } from "./Timeline";
 import "./styles.scss";
 import { TimelineContent } from "./TimelineContent";

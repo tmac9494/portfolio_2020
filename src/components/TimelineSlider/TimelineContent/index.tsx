@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { StoryBlock } from "../../Pages/Home/Sections";
+import { StoryBlock } from "../../../Pages/Home/Sections";
 import { TimelineImages } from "../TimlineImages";
 import { useSpring, animated, easings } from "react-spring";
 import "./styles.scss";

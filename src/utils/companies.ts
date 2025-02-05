@@ -13,54 +13,8 @@ import gcioLogoFull from "../assets/gcio.jpg";
 import carallelLogoFull from "../assets/carallel_logo.svg";
 import nmLogo from "../assets/nm.png";
 import nmLogoFull from "../assets/nm-full.png";
-import { SkillImage } from "./";
-import CSS from "csstype";
-
-export enum CompanyIds {
-  NM = "nm",
-  Evernote = "evern",
-  GCIO = "gcio",
-  Carallel = "cara",
-  XpertDox = "xpdx",
-  StandardFurniture = "stnfn",
-  SVM = "svm",
-  PlusSum = "ps",
-  AFM = "afm",
-}
-
-export interface Employer {
-  id: CompanyIds;
-  company: string;
-  logo: string;
-  cityState: string;
-  startDate: string;
-  endDate: string;
-  title: string;
-  description: string;
-  bullets: string[];
-  logoClass?: string;
-}
-
-export interface Education {
-  title: string;
-  issuer: string;
-  type: string;
-  startDate: string;
-  endDate: string;
-  url?: string;
-}
-
-export interface ResumeData {
-  jobs: Employer[];
-  education: Education[];
-}
-
-export type CompanyImage = {
-  name: string;
-  img: string;
-  iconStyle?: CSS.Properties;
-  fullLogo?: string;
-};
+import mitLogo from "../assets/mit.png";
+import { CompanyImage, CompanyIds } from "./types";
 
 export const companyImages: {
   [key: string]: CompanyImage;
@@ -110,5 +64,9 @@ export const companyImages: {
     name: "A-Factor Marketing",
     img: afmLogo,
     iconStyle: { borderRadius: "100%" },
+  },
+  [CompanyIds.MIT]: {
+    name: "MIT",
+    img: mitLogo,
   },
 };

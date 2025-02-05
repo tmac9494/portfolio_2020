@@ -4,88 +4,104 @@
     "level": 5,
     "id": "react",
     "tags": ["lib", "fw", "star", "hrt", "fe"],
-    "companies": ["nm", "evern", "gcio", "cara", "xpdx", "stnfn", "svm", "ps"],
+    "companies": [
+      "nm",
+      "evern",
+      "gcio",
+      "cara",
+      "xpdx",
+      "stnfn",
+      "svm",
+      "ps",
+      "mit"
+    ],
     "description": "My specialty. I chose to focus on React exclusively in 2015 for frontend development and I have loved every minute of it.",
     "accolades": [
-      "8+ years of professional experience.",
       "Built multiple reusable libraries.",
       "Mentored Junior Developers on React best practices.",
       "Taught a React class for the Innovate Birmingham bootcamp.",
       "Built many applications from the ground up using React.",
       "Experience with React+Electron stacks."
-    ]
+    ],
+    "yearsOfExp": 10
   },
+
   {
     "title": "React Native",
-    "level": 5,
+    "level": 4,
     "id": "reactnative",
     "tags": ["fw", "star", "hrt", "fe"],
     "companies": ["evern", "svm", "ps"],
     "description": "After years focusing on React in the web, it was fairly simple to transition into native. Animations being the most challenging to translate over.",
     "accolades": [
-      "3+ years of professional experience.",
       "Worked on an application with millions of DAUs.",
       "Experience porting React web applications into React Native.",
       "Have launched applications to Google Play & App Store using React Native."
-    ]
+    ],
+    "yearsOfExp": 4
   },
+
   {
     "title": "Node JS",
     "level": 5,
     "id": "nodejs",
     "tags": ["fw", "lang", "star", "be"],
-    "companies": ["nm", "evern", "gcio", "xpdx", "stnfn"],
+    "companies": ["nm", "evern", "gcio", "xpdx", "stnfn", "mit"],
     "description": "I love Node! I started my career with a focus on front-end development, so NodeJS was a perfect match to get APIs up quickly early in my career.",
     "accolades": [
-      "6+ years of professional experience.",
       "Created custom APIs that scale to thousands of DAUs.",
       "Experience with websockets in Node for Real Time updates.",
       "Created a secure custom SSO API that integrated with Stanford University's Azure server.",
       "Experience managing, architecting, and building a Node API server in a large company intranet."
-    ]
+    ],
+    "yearsOfExp": 7
   },
+
   {
     "title": "Redux",
     "level": 4,
     "id": "redux",
     "tags": ["lib", "star", "fe"],
-    "companies": ["evern", "gcio", "cara", "xpdx", "stnfn", "ps"],
+    "companies": ["evern", "gcio", "cara", "xpdx", "stnfn", "ps", "mit"],
     "description": "The most popular state management module for React. It can be a divisive topic, but I personally think in  most cases it is better to use React context instead of the cumbersome Redux setup. That being said, Redux's performance is unmatched when you need it.",
     "accolades": [
-      "5+ years of professional experience.",
       "Experience refactoring old Redux implementations into Redux hooks",
       "Experience refactoring Redux stores into native Context providers."
-    ]
+    ],
+    "yearsOfExp": 5
   },
+
   {
     "title": "TypeScript",
     "level": 4,
     "id": "typescript",
     "tags": ["fw", "lang", "fe", "be"],
-    "companies": ["nm", "evern", "gcio"],
+    "companies": ["nm", "evern", "gcio", "mit"],
     "description": "JavaScript's more successful younger brother. I did not use typescript professionaly for most of my career. Now that it's become much more standard across the industry I have had the oppurtunity to use it and grown fond of it's effect on the architecture of components.",
     "accolades": [
-      "2+ years of professional experience.",
       "Experience in Typescript + React environments.",
       "Experience in Typescript + NodeJS environments.",
       "Linkedin Learning certification in React + Typescript."
-    ]
+    ],
+    "yearsOfExp": 4
   },
+
   {
     "title": "Three JS",
-    "level": 4,
+    "level": 3,
     "id": "threejs",
     "tags": ["fw", "hrt", "fe"],
     "companies": ["stnfn"],
     "description": "My dream job would be a ThreeJS application with a custom React Layer on top. ThreeJS is a ton of fun to work with and always comes with some tough math problems.",
     "accolades": [
-      "1 year of professional experience.",
       "Created a 3D furniture viewing application that allowed for changing models and textures for different pre-defined furniture sets.",
       "Re-created a 3D terrain generator from Java to ThreeJS in order to better understand Perlin Noise algorithms(github).",
       "Created a custom 3D world using home made textures with normal maps(github).",
       "Linkedin Learning certification in ThreeJS"
-    ]
+    ],
+    "yearsOfExp": 1
   },
+
   {
     "title": "Sass",
     "level": 5,
@@ -100,15 +116,17 @@
       "stnfn",
       "svm",
       "ps",
-      "afm"
+      "afm",
+      "mit"
     ],
     "description": "What happens when CSS goes Super Saiyan. Anyone not using Sass for their stylesheets is basically a cave man.",
     "accolades": [
-      "7+ years of professional experience.",
       "Experience with advanced features of Sass(variables, mixins, functions, etc)",
       "Extensive experience refactoring bloated CSS into Sass."
-    ]
+    ],
+    "yearsOfExp": 10
   },
+
   {
     "title": "Angular",
     "level": 1,
@@ -116,8 +134,10 @@
     "tags": ["fw", "fe"],
     "companies": [],
     "description": "I chose React over Angular long ago, but I love Google and most of their Technology so I can never write it off. I have an understanding of the basics of Angular but would need to put in some learning time before using it professionally.",
-    "accolades": ["Not much going on here:)"]
+    "accolades": ["Not much going on here:)"],
+    "yearsOfExp": 1
   },
+
   {
     "title": "HTML",
     "level": 5,
@@ -132,16 +152,18 @@
       "stnfn",
       "svm",
       "ps",
-      "afm"
+      "afm",
+      "mit"
     ],
     "description": "The frame and drywall of the internet. As a frontend engineer I would say I know html inside and out.",
     "accolades": [
-      "8+ years of professional experience.",
       "Experience with and Understanding of latest HTML5 standards and element heirarchy.",
       "WCAG focused courses through Team Treehouse Tech Degree.",
       "Experience updating web pages/applications to WCAG compliance."
-    ]
+    ],
+    "yearsOfExp": 10
   },
+
   {
     "title": "CSS",
     "level": 5,
@@ -156,16 +178,18 @@
       "stnfn",
       "svm",
       "ps",
-      "afm"
+      "afm",
+      "mit"
     ],
     "description": "The paint and decorations of the internet. CSS is what hooked me into web development and I have spent extensive time learning advanced css animation/transition tricks to create eye candy UI.",
     "accolades": [
-      "8+ years of professional experience.",
       "Extensive CSS animation experiience.",
       "Extensive experience refactoring and optimizing CSS.",
       "Extensive Experience in CSS in JS patterns."
-    ]
+    ],
+    "yearsOfExp": 10
   },
+
   {
     "title": "JavaScript",
     "level": 5,
@@ -180,17 +204,19 @@
       "stnfn",
       "svm",
       "ps",
-      "afm"
+      "afm",
+      "mit"
     ],
     "description": "The pipes and wires of the web. A build-it-yourself mentality helped me understand it on a fundamental level, but I still find myself learning something new every few months. I look forward to and dread the day that stops occurring.",
     "accolades": [
-      "8+ years of professional experience.",
       "Extensive experience with multiple JS libraries.",
       "Extensive experience with Vanilla JS development.",
       "Soley developed multiple JavaScript web applications.",
       "Extensive Experience in JS powered animation techniques."
-    ]
+    ],
+    "yearsOfExp": 10
   },
+
   {
     "title": "Jquery",
     "level": 4,
@@ -199,10 +225,11 @@
     "companies": ["stnfn", "svm", "ps", "afm"],
     "description": "I hardly touch it nowadays but when I was cutting my teeth in JS, building custom sliders and UI effects; Jquery was a great tool to simplify the syntax and focus on the logic.",
     "accolades": [
-      "4+ years of professional experience.",
       "Extensive Experience creating Jquery modules for frontend effects."
-    ]
+    ],
+    "yearsOfExp": 4
   },
+
   {
     "title": "PHP",
     "level": 3,
@@ -211,12 +238,13 @@
     "companies": ["cara", "stnfn", "svm", "ps", "afm"],
     "description": "I much prefer NodeJS but with many CMS clients comes the need to interact with PHP in some form. I cut my teeth in PHP earlier in my career building websites for Marketing Firms and local Businesses.",
     "accolades": [
-      "4+ years of professional experience.",
       "Light Experience with custom PHP servers",
       "Experience with PHP in Wordpress CMS",
       "Experience with PHP in Magento CMS"
-    ]
+    ],
+    "yearsOfExp": 4
   },
+
   {
     "title": "MongoDB",
     "level": 4,
@@ -225,11 +253,11 @@
     "companies": ["nm", "cara", "xpdx", "stnfn"],
     "description": "My favourite solution for databases. I discovered mongo early in my career and loved how easy it was to understand with a background in JavaScript and OOP.",
     "accolades": [
-      "5+ years of professional experience.",
       "Experience using mongoDB at scale with thousands of DAUs",
       "Experience with query optimization techniques in the server.",
       "Experience with MongoDB advanced features like: expireAt and populate(mongoose)"
-    ]
+    ],
+    "yearsOfExp": 5
   },
 
   {
@@ -240,9 +268,9 @@
     "companies": ["evern", "gcio", "cara", "xpdx", "stnfn"],
     "description": "Technically I've been working with webpack nearly my entire career but I never dove into the deep technical hows and whys of webpack. I've had some experience optimizing webpack payloads.",
     "accolades": [
-      "6+ years of professional experience.",
       "Light experience configuring compressed payloads from a SSR environment."
-    ]
+    ],
+    "yearsOfExp": 6
   },
 
   {
@@ -253,45 +281,80 @@
     "companies": ["cara", "xpdx", "stnfn", "svm", "ps", "afm"],
     "description": "I've built many websites over the years using wordpress. I prefer to create custom themes or use wordpress as an api/cms with a PWA.",
     "accolades": [
-      "5+ years of professional experience.",
       "Experience in custom theme development.",
       "Experience in plugin development.",
       "Experience using Wordpress with a React web application.",
       "Experience in woocommerce"
-    ]
+    ],
+    "yearsOfExp": 6
   },
 
   {
     "title": "Illustrator",
     "level": 4,
     "id": "illustrator",
-    "tags": ["crtv", "tool"],
-    "companies": ["xpdx", "stnfn", "svm", "ps", "afm"],
+    "tags": ["dsign"],
+    "companies": ["xpdx", "stnfn", "svm", "ps", "afm", "mit"],
     "description": "Illustrator has been extremely useful over the years for creating custom svgs and icons as well as other advanced features like generating normal maps for textures.",
     "accolades": [
-      "5+ years of professional experience.",
       "Extensive experience in custom svg creation for animation.",
       "Experience with texture creation using Illustrator."
-    ]
+    ],
+    "yearsOfExp": 6
   },
 
   {
     "title": "Adobe XD",
     "level": 4,
     "id": "adobexd",
-    "tags": ["crtv", "tool"],
-    "companies": ["xpdx", "stnfn"],
+    "tags": ["dsign"],
+    "companies": ["xpdx", "stnfn", "mit"],
     "description": "My favorite tool for quickly spinning up design ideas, wire frames, and prototypes.",
-    "accolades": ["4+ years of professional experience."]
+    "accolades": [],
+    "yearsOfExp": 5
   },
 
   {
     "title": "Photoshop",
     "level": 3,
     "id": "photoshop",
-    "tags": ["crtv", "tool"],
-    "companies": ["xpdx", "stnfn", "svm", "ps", "afm"],
-    "description": "Doom dom deem doo",
-    "accolades": ["5+ years of professional experience."]
+    "tags": ["dsign"],
+    "companies": ["xpdx", "stnfn", "svm", "ps", "afm", "mit"],
+    "description": "A great tool for automatating image processing and quickly making adjustments to photos for design purposes.",
+    "accolades": [],
+    "yearsOfExp": 6
+  },
+
+  {
+    "title": "Express JS",
+    "level": 4,
+    "id": "express",
+    "tags": ["be", "lib"],
+    "companies": ["xpdx", "stnfn", "mit", "nm", "evern", "gcio"],
+    "description": "Description",
+    "accolades": [],
+    "yearsOfExp": 5
+  },
+
+  {
+    "title": "GraphQL",
+    "level": 3,
+    "id": "graphql",
+    "tags": ["be", "fe", "lib"],
+    "companies": ["nm", "evern"],
+    "description": "Description",
+    "accolades": [],
+    "yearsOfExp": 3
+  },
+
+  {
+    "title": "VisX",
+    "level": 3,
+    "id": "visx",
+    "tags": ["fe", "lib"],
+    "companies": ["nm", "mit"],
+    "description": "Description",
+    "accolades": [],
+    "yearsOfExp": 3
   }
 ]

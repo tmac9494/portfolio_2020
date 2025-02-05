@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { StoryBlock } from "../../Pages/Home/Sections";
+import { StoryBlock } from "../../../Pages/Home/Sections";
 import "./styles.scss";
 import classNames from "classnames";
 import { TimelineRadioButton } from "./TimelineRadioButton";
