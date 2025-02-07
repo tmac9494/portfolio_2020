@@ -1,5 +1,5 @@
-import xdLogo from "../assets/xdfav.png";
-import evernoteLogo from "../assets/evernote.svg";
+import xdLogo from "../assets/xd-fav.png";
+import evernoteLogo from "../assets/evernote-fav.png";
 import standardLogo from "../assets/standard-furniture-fav.png";
 import svmLogo from "../assets/svm.png";
 import afmLogo from "../assets/afm.png";
@@ -29,6 +29,9 @@ export const companyImages: {
     name: "Evernote",
     img: evernoteLogo,
     fullLogo: evernoteLogoFull,
+    iconStyle: {
+      borderRadius: "100%",
+    },
   },
   [CompanyIds.GCIO]: {
     name: "Government CIO",
@@ -50,6 +53,10 @@ export const companyImages: {
     name: "Standard Furniture",
     img: standardLogo,
     fullLogo: standardLogoFull,
+    iconStyle: {
+      backgroundColor: "#000",
+      borderRadius: "100%",
+    },
   },
   [CompanyIds.SVM]: {
     name: "Southern View Media",

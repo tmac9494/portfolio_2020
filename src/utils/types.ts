@@ -1,4 +1,4 @@
-import CSS from "csstype";
+import { CSSProperties } from "react";
 
 // work types
 export enum WorkInstanceType {
@@ -43,6 +43,12 @@ export enum CompanyIds {
   MIT = "mit",
 }
 
+export enum EmploymentTypes {
+  FullTime = "Full-time",
+  PartTIme = "Part-time",
+  Contract = "Contract",
+}
+
 export interface Employer {
   id: CompanyIds;
   company: string;
@@ -54,6 +60,7 @@ export interface Employer {
   description: string;
   bullets: string[];
   logoClass?: string;
+  type: EmploymentTypes;
 }
 
 export interface Education {
@@ -73,7 +80,7 @@ export interface ResumeData {
 export type CompanyImage = {
   name: string;
   img: string;
-  iconStyle?: CSS.Properties;
+  iconStyle?: CSSProperties;
   fullLogo?: string;
 };
 

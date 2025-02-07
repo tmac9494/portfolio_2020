@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import resumeData from "../public/data/resume-data.json";
 import skillsData from "../public/data/skills-data.json";
-import { CompanyIds, SkillTags } from "./utils";
+import { CompanyIds, EmploymentTypes, SkillTags } from "./utils";
 
 describe("app render", () => {
   it("should render without crashing", () => {
@@ -18,7 +18,14 @@ describe("json data validation", () => {
   describe("resume-data.json", () => {
     it("should only use ids that correlate to companyId enum", () => {
       resumeData.jobs.forEach((job) => {
-        expect(companyIds.has(job.id as CompanyIds));
+        expect(companyIds.has(job.id as CompanyIds)).toEqual(true);
+      });
+    });
+
+    it("shyould only use types that correlate to EmplymentType enum", () => {
+      const employmentTypes = new Set(Object.values(EmploymentTypes));
+      resumeData.jobs.forEach((job) => {
+        expect(employmentTypes.has(job.type as EmploymentTypes)).toEqual(true);
       });
     });
   });

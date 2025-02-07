@@ -2,6 +2,7 @@
   "jobs": [
     {
       "id": "nm",
+      "type": "Full-time",
       "company": "Northwestern Mutual",
       "cityState": "Milwaukee, WI",
       "startDate": "March 2023",
@@ -19,6 +20,7 @@
     },
     {
       "id": "mit",
+      "type": "Contract",
       "company": "Massachusetts Institute of Technology",
       "cityState": "Cambridge, Massachusetts",
       "startDate": "January 2024",
@@ -34,6 +36,7 @@
     },
     {
       "id": "evern",
+      "type": "Full-time",
       "company": "Evernote",
       "cityState": "Redwood City, CA",
       "startDate": "April 2022",
@@ -42,7 +45,6 @@
       "description": "N/A",
       "bullets": [
         "Member of the Growth/Monetization team.",
-        "Architect and develop new apps and features.",
         "Take designs, analytic configurations, and direction from product team and translate that into AB experiments on the component level.",
         "Implement code in React Native for mobile application.",
         "Implement code in React+Typescript for web/desktop application.",
@@ -52,6 +54,7 @@
     },
     {
       "id": "gcio",
+      "type": "Full-time",
       "company": "GovernementCIO",
       "cityState": "Washington, DC",
       "startDate": "September 2021",
@@ -66,6 +69,7 @@
     },
     {
       "id": "cara",
+      "type": "Part-time",
       "company": "Carallel LLC",
       "cityState": "Lake Forest, IL",
       "startDate": "October 2020",
@@ -80,6 +84,7 @@
     },
     {
       "id": "xpdx",
+      "type": "Full-time",
       "company": "XpertDox LLC",
       "cityState": "Birmingham, AL",
       "startDate": "June 2019",
@@ -88,7 +93,6 @@
       "description": "N/A",
       "bullets": [
         "Refactor application suite to use React 16+.",
-        "Architect and develop new apps and features.",
         "Design new applications and redesign old applications to improve UI/UX across the suite.",
         "Manage India based team education on react updates and coding standards, and development progress on applications. Perform code reviews for India team.",
         "Revamped entire development process from a “Develop First” process to a “Design First” process.",
@@ -99,11 +103,12 @@
     },
     {
       "id": "stnfn",
+      "type": "Full-time",
       "company": "Standard Furniture",
       "cityState": "Bay Minette, AL",
       "startDate": "September 2018",
       "endDate": "June 2019",
-      "title": "Web Designer/Full Stack Javascript Developer",
+      "title": "Web Designer/Javascript Developer",
       "description": "N/A",
       "bullets": [
         "Help diagnose core problems around the current Ecomm platform and ensure they do not persist into the new platform.",
@@ -114,12 +119,12 @@
         "Maintain Linux server on the intranet that hosts the suite of applications.",
         "Developed KitBuilder: to quickly aggregate multiple products into a single kit and upload it to our cloud server.",
         "Developed ImageBot: upload multiple images instantly and the bot will analyze the image names and compare them with matched products and sort them Into the correct image attributes. The bot will also clean other image data during the scan process to slowly perfect our data structure.",
-        "Developed wordBot: breaks product data down from the api and generate keywords, content, and a wsywig editor for custom content creation on the fly.",
         "Developed QA submission: a web app that runs on a tablet and auto generates information and performs automatic calculations to drastically increase the speed of the product quality assurance process."
       ]
     },
     {
       "id": "svm",
+      "type": "Full-time",
       "company": "Southern View Media",
       "logoClass": "square",
       "cityState": "Mobile, AL",
@@ -137,6 +142,7 @@
     },
     {
       "id": "ps",
+      "type": "Full-time",
       "company": "Plus Sum Internet Marketing",
       "logoClass": "square",
       "cityState": "Mobile, AL",
@@ -155,6 +161,7 @@
     },
     {
       "id": "afm",
+      "type": "Full-time",
       "company": "A Factor Marketing",
       "cityState": "Mobile, AL",
       "logoClass": "square",
