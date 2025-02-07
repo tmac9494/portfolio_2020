@@ -83,7 +83,7 @@ const stateMachine = (state: SkillContextValue, action: any) => {
     ...prepareSkills({
       ...state,
       query,
-      skillsList: query === "" ? state.origin : state.skillsList,
+      skillsList: state.origin,
     }),
     skillDescriptionVisibility: false,
   });

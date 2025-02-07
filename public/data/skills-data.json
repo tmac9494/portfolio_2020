@@ -75,7 +75,7 @@
     "title": "TypeScript",
     "level": 4,
     "id": "typescript",
-    "tags": ["fw", "lang", "fe", "be"],
+    "tags": ["fw", "lang", "fe", "be", "star"],
     "companies": ["nm", "evern", "gcio", "mit"],
     "description": "JavaScript's more successful younger brother. I did not use typescript professionaly for most of my career. Now that it's become much more standard across the industry I have had the oppurtunity to use it and grown fond of it's effect on the architecture of components.",
     "accolades": [
@@ -349,9 +349,9 @@
 
   {
     "title": "VisX",
-    "level": 3,
+    "level": 4,
     "id": "visx",
-    "tags": ["fe", "lib"],
+    "tags": ["fe", "lib", "star"],
     "companies": ["nm", "mit"],
     "description": "Description",
     "accolades": [],

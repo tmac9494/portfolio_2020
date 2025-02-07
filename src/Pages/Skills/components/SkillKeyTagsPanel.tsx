@@ -10,7 +10,7 @@ export const SkillKeyTagsPanel = (props: {
       {props.extensiveExperience && (
         <div className="tag star">
           <StarIcon className="icon star gen-img" />
-          <span>Pro</span>
+          <span>Extensive Experience</span>
         </div>
       )}
     </div>

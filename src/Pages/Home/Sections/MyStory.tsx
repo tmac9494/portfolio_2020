@@ -1,28 +1,30 @@
 import React from "react";
 import { TimelineSlider } from "../../../components/TimelineSlider";
-import sampleImage from "../../../assets/barton.jpg";
-import sampleImage2 from "../../../assets/nm.png";
-import sampleImage3 from "../../../assets/afm.png";
+import plussumlogo from "../../../assets/plussum.png";
 import childhoodImage1 from "../../../assets/story/childhood1.jpg";
 import childhoodImage2 from "../../../assets/story/childhood2.jpg";
-import childhoodImage3 from "../../../assets/story/childhood3.jpg";
-import childhoodImage4 from "../../../assets/story/childhood4.jpg";
 import childhoodImage5 from "../../../assets/story/childhood5.jpg";
-import childhoodImage6 from "../../../assets/story/childhood6.jpg";
-import childhoodImage7 from "../../../assets/story/childhood7.jpg";
-import childhoodImage8 from "../../../assets/story/childhood8.jpg";
-import childhoodImage9 from "../../../assets/story/childhood9.jpg";
 import childhoodImage10 from "../../../assets/story/childhood10.jpg";
 import collegeImage1 from "../../../assets/story/college1.jpg";
 import collegeImage2 from "../../../assets/story/college2.jpg";
-import collegeImage3 from "../../../assets/story/college3.jpg";
 import collegeImage4 from "../../../assets/story/college.jpg";
-import collegeImage5 from "../../../assets/story/college4.jpg";
 import hopeImage1 from "../../../assets/story/hope1.jpg";
 import hopeImage2 from "../../../assets/story/hope2.jpg";
 import hopeImage3 from "../../../assets/story/hope3.jpg";
 import humbleImage2 from "../../../assets/story/humble2.jpg";
 import humbleImage3 from "../../../assets/story/humble3.jpg";
+import pitImage1 from "../../../assets/story/pit1.jpg";
+import pitImage2 from "../../../assets/story/pt2.jpg";
+import ltlImage1 from "../../../assets/story/ltl1.jpg";
+import ltlImage2 from "../../../assets/story/ltl2.jpg";
+import ltlImage3 from "../../../assets/story/ltl3.jpg";
+import growImage1 from "../../../assets/story/grow1.jpg";
+import growImage2 from "../../../assets/story/grow2.jpg";
+import growImage3 from "../../../assets/evernote-logo.png";
+import greatImage1 from "../../../assets//story/great1.jpg";
+import greatImage2 from "../../../assets//story/great2.jpg";
+import greatImage3 from "../../../assets//story/great3.jpg";
+import greatImage4 from "../../../assets//story/great4.jpg";
 
 export type StoryBlock = {
   subject: string;
@@ -34,19 +36,6 @@ export type StoryBlock = {
 export type StoryImage = {
   src: string;
   alt?: string;
-};
-
-const image = {
-  src: sampleImage,
-  alt: "test",
-};
-const image1 = {
-  src: sampleImage2,
-  alt: "test",
-};
-const image2 = {
-  src: sampleImage3,
-  alt: "test",
 };
 
 const dataSet: StoryBlock[] = [
@@ -140,7 +129,7 @@ const dataSet: StoryBlock[] = [
         alt: "",
       },
       {
-        src: sampleImage3,
+        src: plussumlogo,
         alt: "",
       },
       {
@@ -159,34 +148,89 @@ const dataSet: StoryBlock[] = [
       "This combination of fear and passion created a rate of learning I haven't matched since. In one year I went from a good front end web developer to understanding web sockets, server management, api integrations, how to communicate to stakeholders, and what it feels like to have a team where everyone is passionate about what you're doing.",
       "I didn’t have any coders to help me at that time but I did  have an amazing coworker by the name of Tom Ascher. He always said he couldn’t write code but he could read it. Together we were unstoppable. Tom would feed off of my passion for the applications and effectively communicate to higher ups the development goals and progress.",
     ],
-    images: [image, image1, image2],
+    images: [
+      {
+        src: pitImage2,
+        alt: "",
+      },
+      {
+        src: pitImage1,
+        alt: "",
+      },
+    ],
   },
   {
     subject: "Learning to Lead",
-    title: "Engineering is Challenging, but People Even More So",
+    title: "New City, New Challenges",
     content: [
-      "Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.",
-      "Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.",
+      "I moved to Birmingham Alabama with Haley to pursue more challenging application development. While in the moving process we also found out Haley was pregnant with our first child. I worked at XpertDox for a number of years coming in with the responsibility of leading the front end development of the suite of applications.",
+      "We were a small startup team with big challenges. I began with refactoring the applications to use React hooks and implementing a design system. I also developed the company into a “design first” mindset, quickly removing some of the tech-debt building habits that had developed over the years. I designed every UX/UI change and iterated on them with the stakeholders and leadership. At this time I began coaching our small offshore team on the new standards and patterns to use on the frontend in order to share the knowledge amongst the engineers.",
+      "I am very proud of my growth at XpertDox. It was hard work but I developed a custom SSO, started my love of data visualization, learned how to lead and work through engineering disagreements in a healthy way. Covid-19 hurt XpertDox and I went part time with them for a year before leaving for new opportunities.",
     ],
-    images: [image, image1, image2],
+    images: [
+      {
+        src: ltlImage2,
+        alt: "",
+      },
+      {
+        src: ltlImage3,
+        alt: "",
+      },
+      {
+        src: ltlImage1,
+        alt: "",
+      },
+    ],
   },
   {
     subject: "Finding Balance",
-    title: "Growing The Family, Going Remote, and Entering a Pandemic",
+    title: "Growing The Family and Going Remote",
     content: [
-      "Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.",
-      "Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.",
+      "I had always planned on eventually working remotely because my wife wanted to stay close to family, especially after we decided to have our second child. The pandemic accelerated my plans and I began working part-time with Xpertdox as well as Carallel. I would eventually leave the part-time contract roles for another position with GovermentCIO, specifically working on their VA contract.",
+      "The teams at this time were invaluable for learning more about the professional non-startup work culture. Jira ticketing systems, and sprint planning was a breath of fresh air from my last 5 years on unorganized fast paced teams. At this time I began to struggle with my productivity, I did not receive any bad remarks from my superiors but it was something I would volunteer in one on one meetings. ",
+      "I knew what my pace and work ethic was but I was in a bit of a lull I could not place. After some reflection I realized that going to remote work was a big mental shift for me. My entire life my social skills have been a trait I was proud of but I never realized how much of a social creature I was until I was alone all the time. I changed my habits and began to make sure I was taking time to be social for my mental health but Evernote is where I really began to understand the solution.",
     ],
-    images: [image, image1, image2],
+    images: [
+      {
+        src: growImage3,
+        alt: "",
+      },
+      {
+        src: growImage2,
+        alt: "",
+      },
+      {
+        src: growImage1,
+        alt: "",
+      },
+    ],
   },
   {
     subject: "Looking Forward",
-    title: "Great Cultures, Great Products, and a Little More Fire",
+    title: "Great Cultures, Great Products",
     content: [
-      "Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.",
-      "Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede.",
+      "At Evernote I found a team culture that was next to none that had come before. I immediately felt welcome and we cultivated a practice of engaging communication. Everyone voiced their input and the meetings had a sense of social fun to them outside of the day to day grind of tickets. I think the key factors in this social remote culture we created was a habit of always keeping our cameras on, quickly working to understand and get to know new members of the team, and having an open war room to jump into and ask questions and talk whenever you ran into issues.",
+      "I felt my productivity fully return and I learned how to properly work in a remote setting without sacrificing the benefits of being next to team members in the office. Leaving Evernote was heartbreaking, our entire team really developed a strong social bond and the company was bought out without any of us being aware. Our lead engineer at the time, Roberto Olivares; was a fantastic engineering manager and left all of us with a single word that he would use to describe us. For me he chose ‘Tenacious’, it really spoke to me about how I felt about my history getting to that point.",
+      "I would go on to work with Northwestern Mutual and luckily found another amazing team culture. I brought with me the habits and practices we developed at Evernote to create the same culture of communication and social comradery that I have grown to love. I began work on a new AIP product with the Comprehensive Asset Allocation team and began a part-time contract with MIT on the weekends working on polymer research data visualization.",
     ],
-    images: [image, image1, image2],
+    images: [
+      {
+        src: greatImage3,
+        alt: "",
+      },
+      {
+        src: greatImage2,
+        alt: "",
+      },
+      {
+        src: greatImage4,
+        alt: "",
+      },
+      {
+        src: greatImage1,
+        alt: "",
+      },
+    ],
   },
 ];
 

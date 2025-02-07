@@ -64,26 +64,25 @@ export const SkillDescriptionPanel = () => {
             ))}
           </ul>
         </div>
+        {skillInfo?.companies.length > 0 && (
+          <>
+            <h3>Where:</h3>
+            <div className="companies-list">
+              {skillInfo && (
+                <IconAccordion
+                  className="white-scrollbar"
+                  key={skillDescription}
+                  list={skillInfo?.companies.map((val, i) => ({
+                    title: companyImages[val].name,
+                    image: companyImages[val].img,
+                    style: companyImages[val]?.iconStyle,
+                  }))}
+                />
+              )}
+            </div>
+          </>
+        )}
       </ScrollShadows>
-
-      {skillInfo?.companies.length > 0 && (
-        <>
-          <h3>Where:</h3>
-          <div className="companies-list">
-            {skillInfo && (
-              <IconAccordion
-                className="white-scrollbar"
-                key={skillDescription}
-                list={skillInfo?.companies.map((val, i) => ({
-                  title: companyImages[val].name,
-                  image: companyImages[val].img,
-                  style: companyImages[val]?.iconStyle,
-                }))}
-              />
-            )}
-          </div>
-        </>
-      )}
     </AnimationParent>
   );
 };
