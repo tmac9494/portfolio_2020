@@ -1,28 +1,21 @@
 import React from "react";
 
-import { View, Text } from "@react-pdf/renderer";
-import { Skill, SkillSorts, sortAlgorithms } from "../../../utils";
+import { View, Image } from "@react-pdf/renderer";
+import { Skill, skillImages, SkillSorts, sortAlgorithms } from "../../../utils";
 import { pdfStyles } from "../pdfStyles";
-import { PdfRow } from "./PdfRow";
+import { PdfRow, PdfHelperText, PdfHeading } from ".";
 
 export const PdfSkills = ({ skills }: { skills: Skill[] }) => {
   return (
-    <View
-      style={{
-        paddingRight: 5,
-      }}
-    >
-      <Text
-        style={[
-          pdfStyles.heading,
-          {
-            marginBottom: 8,
-            borderBottom: "1px solid #fff",
-          },
-        ]}
+    <View>
+      <PdfHeading
+        style={{
+          marginBottom: 8,
+          borderBottom: "1px solid #fff",
+        }}
       >
         Skills:
-      </Text>
+      </PdfHeading>
       {skills.sort(sortAlgorithms[SkillSorts.BestToWorst]).map((skill) => {
         return (
           <View
@@ -33,7 +26,13 @@ export const PdfSkills = ({ skills }: { skills: Skill[] }) => {
           >
             <PdfRow style={{ marginBottom: 2 }}>
               <View style={pdfStyles.half}>
-                <Text style={pdfStyles.helperText}>{skill.title}</Text>
+                <PdfRow>
+                  <Image
+                    style={{ width: 12, height: "auto", marginRight: 3 }}
+                    src={skillImages[skill.id]?.img}
+                  />
+                  <PdfHelperText>{skill.title}</PdfHelperText>
+                </PdfRow>
               </View>
               <View style={[pdfStyles.half, pdfStyles.textRight]}>
                 {/* <Text style={[pdfStyles.tinyText]}>
@@ -46,12 +45,14 @@ export const PdfSkills = ({ skills }: { skills: Skill[] }) => {
                 backgroundColor: "#888",
                 width: "100%",
                 height: 2,
+                borderRadius: 4,
               }}
             >
               <View
                 style={{
                   backgroundColor: "#00CED1",
                   height: 2,
+                  borderRadius: 4,
                   width: skill.level * 2 * 10 + "%",
                 }}
               />

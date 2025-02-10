@@ -1,8 +1,20 @@
-import { StyleSheet } from "@react-pdf/renderer";
+import { StyleSheet, Font } from "@react-pdf/renderer";
+
+Font.register({
+  family: "Roboto",
+  src: "http://fonts.gstatic.com/s/roboto/v16/zN7GBFwfMP4uA6AR0HCoLQ.ttf",
+});
+Font.register({
+  family: "Roboto Condensed",
+  src: "http://fonts.gstatic.com/s/robotocondensed/v14/Zd2E9abXLFGSr9G3YK2MsDR-eWpsHSw83BRsAQElGgc.ttf",
+});
+
+const pageMarginY = 14;
+const pageMarginX = 10;
 
 export const pdfStyles = StyleSheet.create({
   // layout
-  page: { backgroundColor: "#fff" },
+  page: { backgroundColor: "#fff", padding: `${pageMarginY} ${pageMarginX}` },
   container: {
     display: "flex",
     flexDirection: "row",
@@ -14,19 +26,22 @@ export const pdfStyles = StyleSheet.create({
     backgroundColor: "#003366",
     position: "absolute",
     minHeight: 3508 /* height of A4 page */,
-    left: 0,
+    left: -1 * pageMarginX,
     right: "auto",
-    top: 0,
+    top: -1 * pageMarginY,
     bottom: 0,
   },
   left: {
-    paddingLeft: 4,
+    padding: "0 5px",
     width: "22%",
     height: "100%",
     color: "#fff",
+    transform: `translateX(${-1 * pageMarginX}px)`,
   },
   right: {
+    padding: "0px 5px 0px 8px",
     width: "78%",
+    transform: `translateX(${-1 * (pageMarginX / 2)}px)`,
   },
   half: {
     width: "50%",
@@ -53,29 +68,35 @@ export const pdfStyles = StyleSheet.create({
   // text
   heading: {
     fontSize: 13,
+    fontFamily: "Roboto",
   },
   helperText: {
     fontSize: 9,
+    fontFamily: "Roboto Condensed",
   },
   tinyText: {
     fontSize: 8,
+    fontFamily: "Roboto Condensed",
   },
   text: {
     fontSize: 10,
+    fontFamily: "Roboto Condensed",
   },
   textBlack: {
-    color: "#000",
+    color: "#031112",
   },
   textWhite: {
     color: "#fff",
   },
   textGray: {
-    color: "#555",
+    color: "#677070",
+  },
+  textDarkGray: {
+    color: "#1c2829",
   },
 
   // experience
   experienceContainer: {
-    margin: 6,
     marginBottom: 8,
   },
   experienceTitle: {

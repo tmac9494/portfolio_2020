@@ -1,8 +1,10 @@
 import React from "react";
 
-import { View, Text, Image } from "@react-pdf/renderer";
+import { View, Image, Link } from "@react-pdf/renderer";
 import { pdfStyles } from "../pdfStyles";
 import myImage from "../../../assets/story/profile.jpg";
+import { PdfHeading } from "./PdfHeading";
+import { PdfHelperText } from "./PdfHelperText";
 
 export const PdfMyInfo = () => {
   return (
@@ -10,6 +12,7 @@ export const PdfMyInfo = () => {
       <View
         style={{
           marginBottom: 10,
+          textAlign: "center",
         }}
       >
         <Image
@@ -17,60 +20,43 @@ export const PdfMyInfo = () => {
             width: "60%",
             height: "auto",
             borderRadius: "100%",
-            marginBottom: 4,
-            // margin: "0 auto",
+            margin: "0 auto 10",
           }}
           src={myImage}
         />
-        <Text>Trent McDole</Text>
-        <Text
-          style={{
-            fontSize: 10,
-          }}
-        >
-          Senior Software Engineer
-        </Text>
+        <PdfHeading>Trent McDole</PdfHeading>
+        <PdfHelperText>Senior Software Engineer</PdfHelperText>
       </View>
-      <Text
-        style={[
-          pdfStyles.helperText,
-          {
-            marginBottom: 3,
-          },
-        ]}
+      <PdfHelperText
+        style={{
+          marginBottom: 3,
+        }}
       >
         (251) 753-1816
-      </Text>
-      <Text
-        style={[
-          pdfStyles.helperText,
-          {
-            marginBottom: 3,
-          },
-        ]}
+      </PdfHelperText>
+      <PdfHelperText
+        style={{
+          marginBottom: 3,
+        }}
       >
-        tmac9494.github.io
-      </Text>
-      <Text
-        style={[
-          pdfStyles.helperText,
-          {
-            marginBottom: 3,
-          },
-        ]}
+        <Link style={pdfStyles.textWhite} src="https://tmac9494.github.io">
+          tmac9494.github.io
+        </Link>
+      </PdfHelperText>
+      <PdfHelperText
+        style={{
+          marginBottom: 3,
+        }}
       >
         trentmcdole94@gmail.com
-      </Text>
-      <Text
-        style={[
-          pdfStyles.helperText,
-          {
-            marginBottom: 3,
-          },
-        ]}
+      </PdfHelperText>
+      <PdfHelperText
+        style={{
+          marginBottom: 3,
+        }}
       >
         Daphne, AL
-      </Text>
+      </PdfHelperText>
     </>
   );
 };

@@ -1,5 +1,7 @@
 import { CSSProperties } from "react";
 
+import { Style } from "@react-pdf/types";
+
 // work types
 export enum WorkInstanceType {
   Application = "Application",
@@ -84,6 +86,8 @@ export type CompanyImage = {
   fullLogo?: string;
 };
 
+export type PdfStyle = Style;
+
 // skill types
 export enum SkillIds {
   React = "react",
@@ -108,6 +112,7 @@ export enum SkillIds {
   Express = "express",
   GraphQL = "graphql",
   VisX = "visx",
+  Jest = "jest",
 }
 
 export enum SkillTags {

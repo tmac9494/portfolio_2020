@@ -1,12 +1,16 @@
+import React, { PropsWithChildren } from "react";
 import { View } from "@react-pdf/renderer";
-import React, { CSSProperties, PropsWithChildren } from "react";
 
-export const PdfRow: React.FC<
-  PropsWithChildren<{
-    style?: any;
-    wrap?: boolean;
-  }>
-> = ({ children, style, wrap = true }) => {
+import { PdfStyle } from "../../../utils";
+
+export const PdfRow = ({
+  children,
+  style,
+  wrap = true,
+}: PropsWithChildren<{
+  style?: PdfStyle;
+  wrap?: boolean;
+}>) => {
   return (
     <View
       style={{

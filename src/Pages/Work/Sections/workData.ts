@@ -17,6 +17,7 @@ import intVideoImg from "../../../assets/tech-degree-projects/proj-7.jpg";
 import accessibilityImg from "../../../assets/tech-degree-projects/proj-8.jpg";
 import webAppImg from "../../../assets/tech-degree-projects/proj-9.jpg";
 import employeeApiImg from "../../../assets/tech-degree-projects/proj-10.jpg";
+import criptImg from "../../../assets/apps/cript.jpg";
 import {
   CompanyIds,
   TechDegreeProjectInstance,
@@ -31,6 +32,16 @@ type WorkData = {
 
 const workData: WorkData = {
   projects: [
+    {
+      title: "Cript Polymer Data Visualization",
+      image: criptImg,
+      type: WorkInstanceType.Application,
+      company: "MIT",
+      role: "Senior Software Engineer",
+      tech: ["js", "css", "react", "visx", "sass", "html", "nodejs"],
+      brief_description: "Description",
+      companyId: CompanyIds.MIT,
+    },
     {
       title: "XpertDox SSO",
       image: ssoImg,

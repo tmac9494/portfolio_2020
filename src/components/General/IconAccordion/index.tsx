@@ -33,7 +33,6 @@ export const IconAccordion: React.FC<AccordionProps> = ({
   const zIndexMax: number = list.length + 10;
   const iconWidth = width ? width : 32;
   const isHoveringOverFirstIcon = hoverState.hoverIndex === 0;
-  const isHoveringOverLastIcon = hoverState.hoverIndex === list.length - 1;
 
   const handleHover = (e: any, value: boolean, index?: number): void => {
     setHoverState({
@@ -75,16 +74,14 @@ export const IconAccordion: React.FC<AccordionProps> = ({
         <div
           className="accordion-icon-tooltip-wrap"
           style={{
-            left: isHoveringOverFirstIcon
-              ? 0
-              : isHoveringOverLastIcon
-              ? "auto"
-              : Math.floor((hoverState.hoverIndex + 0.5) * iconWidth) + "px",
-            right: isHoveringOverLastIcon ? "0px" : "auto",
-            transform:
-              isHoveringOverLastIcon || isHoveringOverFirstIcon
-                ? "translateX(0%)"
-                : "translateX(-50%)",
+            left:
+              isHoveringOverFirstIcon || !hoverState.hover
+                ? 0
+                : Math.floor((hoverState.hoverIndex + 0.5) * iconWidth) + "px",
+            right: "auto",
+            transform: isHoveringOverFirstIcon
+              ? "translateX(0%)"
+              : "translateX(-50%)",
           }}
         >
           <AnimationParent

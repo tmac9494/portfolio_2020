@@ -1,0 +1,50 @@
+.pill-tabs-container,
+.pill-tab,
+.pill-tab-container,
+.pill-tab-fill {
+  border-radius: 50px;
+}
+
+.pill-tabs-container {
+  overflow: hidden;
+  background: #303030;
+  display: inline-block;
+  padding: 4px 2px 0px;
+}
+
+.pill-tab-container {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  margin: 0 2px;
+
+  .pill-tab-fill {
+    background: #6c01b3;
+    position: absolute;
+    box-shadow: 0px 0px 4px #000;
+    width: 0%;
+    height: 0%;
+    transition: width 0.2s, height 0.2s;
+  }
+  &.active {
+    .pill-tab-fill {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  &:hover,
+  &:focus {
+    background: #414141;
+    outline: 0;
+  }
+}
+
+.pill-tab {
+  position: relative;
+  z-index: 10;
+  background: none;
+  border: 0;
+  color: #fff;
+  padding: 12px 25px;
+  overflow: hidden;
+}

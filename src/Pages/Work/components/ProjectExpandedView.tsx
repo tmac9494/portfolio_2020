@@ -81,6 +81,7 @@ export const ProjectExpandedView: React.FC<{
           ))}
         </div>
       </div>
+      {/* Main content */}
       <div id="expanded_content">
         <div className="header">
           <div className="inner-content relative">

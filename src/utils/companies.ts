@@ -48,6 +48,7 @@ export const companyImages: {
     name: "XpertDox",
     img: xdLogo,
     fullLogo: xdLogoFull,
+    iconStyle: { borderRadius: "100%" },
   },
   [CompanyIds.StandardFurniture]: {
     name: "Standard Furniture",

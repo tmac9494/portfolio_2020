@@ -58,6 +58,44 @@
   },
 
   {
+    "title": "Express JS",
+    "level": 4,
+    "id": "express",
+    "tags": ["be", "lib"],
+    "companies": ["xpdx", "stnfn", "mit", "nm", "evern", "gcio"],
+    "description": "Description",
+    "accolades": [],
+    "yearsOfExp": 5
+  },
+
+  {
+    "title": "JavaScript",
+    "level": 5,
+    "id": "js",
+    "tags": ["fe", "lang", "star", "hrt"],
+    "companies": [
+      "nm",
+      "evern",
+      "gcio",
+      "cara",
+      "xpdx",
+      "stnfn",
+      "svm",
+      "ps",
+      "afm",
+      "mit"
+    ],
+    "description": "The pipes and wires of the web. A build-it-yourself mentality helped me understand it on a fundamental level, but I still find myself learning something new every few months. I look forward to and dread the day that stops occurring.",
+    "accolades": [
+      "Extensive experience with multiple JS libraries.",
+      "Extensive experience with Vanilla JS development.",
+      "Soley developed multiple JavaScript web applications.",
+      "Extensive Experience in JS powered animation techniques."
+    ],
+    "yearsOfExp": 10
+  },
+
+  {
     "title": "Redux",
     "level": 4,
     "id": "redux",
@@ -73,7 +111,7 @@
 
   {
     "title": "TypeScript",
-    "level": 4,
+    "level": 5,
     "id": "typescript",
     "tags": ["fw", "lang", "fe", "be", "star"],
     "companies": ["nm", "evern", "gcio", "mit"],
@@ -100,31 +138,6 @@
       "Linkedin Learning certification in ThreeJS"
     ],
     "yearsOfExp": 1
-  },
-
-  {
-    "title": "Sass",
-    "level": 5,
-    "id": "sass",
-    "tags": ["fw", "hrt", "star", "fe"],
-    "companies": [
-      "nm",
-      "evern",
-      "gcio",
-      "cara",
-      "xpdx",
-      "stnfn",
-      "svm",
-      "ps",
-      "afm",
-      "mit"
-    ],
-    "description": "What happens when CSS goes Super Saiyan. Anyone not using Sass for their stylesheets is basically a cave man.",
-    "accolades": [
-      "Experience with advanced features of Sass(variables, mixins, functions, etc)",
-      "Extensive experience refactoring bloated CSS into Sass."
-    ],
-    "yearsOfExp": 10
   },
 
   {
@@ -191,10 +204,10 @@
   },
 
   {
-    "title": "JavaScript",
+    "title": "Sass",
     "level": 5,
-    "id": "js",
-    "tags": ["fe", "lang", "star", "hrt"],
+    "id": "sass",
+    "tags": ["fw", "hrt", "star", "fe"],
     "companies": [
       "nm",
       "evern",
@@ -207,12 +220,10 @@
       "afm",
       "mit"
     ],
-    "description": "The pipes and wires of the web. A build-it-yourself mentality helped me understand it on a fundamental level, but I still find myself learning something new every few months. I look forward to and dread the day that stops occurring.",
+    "description": "What happens when CSS goes Super Saiyan. Anyone not using Sass for their stylesheets is basically a cave man.",
     "accolades": [
-      "Extensive experience with multiple JS libraries.",
-      "Extensive experience with Vanilla JS development.",
-      "Soley developed multiple JavaScript web applications.",
-      "Extensive Experience in JS powered animation techniques."
+      "Experience with advanced features of Sass(variables, mixins, functions, etc)",
+      "Extensive experience refactoring bloated CSS into Sass."
     ],
     "yearsOfExp": 10
   },
@@ -323,17 +334,6 @@
     "description": "A great tool for automatating image processing and quickly making adjustments to photos for design purposes.",
     "accolades": [],
     "yearsOfExp": 6
-  },
-
-  {
-    "title": "Express JS",
-    "level": 4,
-    "id": "express",
-    "tags": ["be", "lib"],
-    "companies": ["xpdx", "stnfn", "mit", "nm", "evern", "gcio"],
-    "description": "Description",
-    "accolades": [],
-    "yearsOfExp": 5
   },
 
   {

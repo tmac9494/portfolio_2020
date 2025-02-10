@@ -58,13 +58,15 @@ export const prepareSkills = (update: SkillContextValue) => {
   };
 
   // reduce active filters array and check for concurrent id mathes
-  const handleFilter = (value: Skill) =>
-    update.filters.reduce((isValid, activeFilter) => {
+  const handleFilter = (value: Skill) => {
+    const skillTags = new Set(value.tags);
+    return update.filters.reduce((isValid, activeFilter) => {
       if (isValid) {
-        return value.tags.includes(activeFilter);
+        return skillTags.has(activeFilter);
       }
       return isValid;
     }, true);
+  };
 
   // sorts
   const sortValueFromState = update.sort;

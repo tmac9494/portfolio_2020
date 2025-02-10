@@ -5,7 +5,6 @@ import {
   TechDegreeProjectInstance,
   WorkInstance,
 } from "../../../utils";
-import { ImageFill } from "./ImageFill";
 import scrollHandler from "../../scrollPropagationHandler";
 
 export const ProjectCard: React.FC<{
@@ -16,13 +15,14 @@ export const ProjectCard: React.FC<{
   return (
     <>
       <div className="block-content">
-        <div className="image-container relative">
-          <ImageFill image={project.image} alt={project.title}>
-            {(project as WorkInstance).type && (
-              <span className="type-tag">{(project as WorkInstance).type}</span>
-            )}
-          </ImageFill>
-        </div>
+        <div
+          className="image-container relative"
+          style={{
+            background: `url(${project.image}) no-repeat`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        ></div>
         <div className="content">
           <h4>{project.title}</h4>
           <p

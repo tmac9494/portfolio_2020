@@ -10,12 +10,11 @@
       "title": "Senior Software Engineer",
       "description": "N/A",
       "bullets": [
-        "Work with designers and product on brand new application design/UX iterations.",
-        "Ground up UI and GraphQL API development on a new product using a ReactJS & GraphQL environment.",
+        "Ground up application development on a new product using React JS, Node JS, GraphQL, and TypeScript.",
         "Personal collaboration with lead designer to iterate on UI/UX concerns gained from user research.",
         "Work with project managers translating difficult to understand finance language into digestible UX goals and functionality.",
         "Created the financial data visualization portion of the application using D3 with visX.",
-        "Unit test implementation on frontend and backend components."
+        "Unit test implementation with Jest on frontend and backend components."
       ]
     },
     {
@@ -29,8 +28,8 @@
       "description": "N/A",
       "bullets": [
         "Worked with the CRIPT team to build the data visualization portion of the CRIPT application.",
-        "Used the VisX framework to create controlled data visualization of Polymer research data.",
-        "Responsible for updating/refactoring NodeJS and Python code to import the Research data into a CRIPT project.",
+        "Used the VisX framework along with React and TypeScript to create controlled data visualization of Polymer research data.",
+        "Update/Refactor NodeJS and Python code to import the Research data into a CRIPT project.",
         "Worked with product management to design and develop a feature rich UI for researchers to quickly and clearly create visualizations of complex research data."
       ]
     },
@@ -44,10 +43,10 @@
       "title": "Software Engineer II",
       "description": "N/A",
       "bullets": [
-        "Member of the Growth/Monetization team.",
-        "Take designs, analytic configurations, and direction from product team and translate that into AB experiments on the component level.",
-        "Implement code in React Native for mobile application.",
-        "Implement code in React+Typescript for web/desktop application.",
+        "Member of the Growth and Monetization team.",
+        "Take designs, analytic configurations, and direction from product team and translate that into A/B experiments on the component level.",
+        "Implement monetization features in React Native for mobile application.",
+        "Implement monetization features in React+Typescript for web/desktop application.",
         "Fastest on the team to finish an entire epic alone after start date.",
         "Spearheaded New Years Campaign monetization goals."
       ]
@@ -69,7 +68,7 @@
     },
     {
       "id": "cara",
-      "type": "Part-time",
+      "type": "Contract",
       "company": "Carallel LLC",
       "cityState": "Lake Forest, IL",
       "startDate": "October 2020",
@@ -92,13 +91,12 @@
       "title": "Lead Developer",
       "description": "N/A",
       "bullets": [
-        "Refactor application suite to use React 16+.",
-        "Design new applications and redesign old applications to improve UI/UX across the suite.",
+        "Refactor application suite to use React Hooks.",
+        "Design new applications and redesign old applications to improve UI/UX across the suite using ReactJS, NodeJS, Express, and MongoDB.",
         "Manage India based team education on react updates and coding standards, and development progress on applications. Perform code reviews for India team.",
         "Revamped entire development process from a “Develop First” process to a “Design First” process.",
         "Architect, design, and develop SSO app to centralize user login across applications.",
-        "Build a reusable component library to speed up the development process and phase out unreliable/unsecure third party components. Write Readme files for components so the team could easily understand how to use them.",
-        "Replaced overly complex and resource heavy redux providers with React Context providers which decreased load times and reduced developer confusion."
+        "Build a reusable component library to speed up the development process and phase out unreliable/unsecure third party components."
       ]
     },
     {
@@ -108,18 +106,16 @@
       "cityState": "Bay Minette, AL",
       "startDate": "September 2018",
       "endDate": "June 2019",
-      "title": "Web Designer/Javascript Developer",
+      "title": "Javascript Developer",
       "description": "N/A",
       "bullets": [
-        "Help diagnose core problems around the current Ecomm platform and ensure they do not persist into the new platform.",
         "Assist contracted teams in design and development of the new Ecomm website platform.",
         "Advise leadership on technical decisions in the design and development process as well as accessibility and SEO concerns.",
-        "Expand the finished platform into a highly iterable PWA for marketing and Ecomm needs.",
         "Use ReactJS, MongoDB, NodeJS, and Express to create Web applications to automate and speed up workflows throughout the company.",
         "Maintain Linux server on the intranet that hosts the suite of applications.",
-        "Developed KitBuilder: to quickly aggregate multiple products into a single kit and upload it to our cloud server.",
-        "Developed ImageBot: upload multiple images instantly and the bot will analyze the image names and compare them with matched products and sort them Into the correct image attributes. The bot will also clean other image data during the scan process to slowly perfect our data structure.",
-        "Developed QA submission: a web app that runs on a tablet and auto generates information and performs automatic calculations to drastically increase the speed of the product quality assurance process."
+        "Created KitBuilder: to quickly aggregate multiple products into a single kit and upload it to our cloud server.",
+        "Created ImageBot: upload multiple images instantly and the bot will analyze the image names and compare them with matched products and sort them Into the correct image attributes. The bot will also clean other image data during the scan process to slowly perfect our data structure.",
+        "Created QA submission: a web app that runs on a tablet and auto generates information and performs automatic calculations to drastically increase the speed of the product quality assurance process."
       ]
     },
     {

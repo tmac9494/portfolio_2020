@@ -1,94 +1,77 @@
 import React from "react";
 
-import { View, Text, Image } from "@react-pdf/renderer";
+import { View, Image } from "@react-pdf/renderer";
 import { pdfStyles } from "../pdfStyles";
 import { PdfRow } from "./PdfRow";
 import { companyImages, Employer } from "../../../utils";
+import { PdfListItem, PdfHelperText, PdfTinyText, PdfHeading } from ".";
 
 export const PdfJobCard = ({ job }: { job: Employer }) => {
+  const firstBullet = job.bullets[0];
+  const restOfBullets = job.bullets.slice(1, job.bullets.length);
+  console.log(firstBullet, restOfBullets);
+
   return (
     <View key={job.id} style={pdfStyles.experienceContainer}>
-      <PdfRow wrap={false}>
-        <View style={pdfStyles.half} wrap={false}>
-          <PdfRow wrap={false}>
-            <View
-              style={{
-                marginRight: 4,
-                width: 20,
-                height: "100%",
-                display: "flex",
-                alignContent: "center",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Image
-                src={companyImages[job.id].img}
+      {/* prevents wrapping if atleast one bullet is not followed by the header section */}
+      <View wrap={false}>
+        <PdfRow wrap={false}>
+          <View style={pdfStyles.half} wrap={false}>
+            <PdfRow wrap={false}>
+              <View
                 style={{
-                  width: "100%",
-                  height: "auto",
-                  alignSelf: "center",
-                  ...(companyImages[job.id]?.iconStyle as any),
+                  marginRight: 4,
+                  width: 20,
+                  height: "100%",
+                  display: "flex",
+                  justifyContent: "center",
                 }}
-              />
-            </View>
-            <View>
-              <Text style={pdfStyles.experienceTitle}>{job.title}</Text>
-              <Text style={[pdfStyles.helperText, pdfStyles.textGray]}>
-                {job.company}
-              </Text>
-            </View>
-          </PdfRow>
-        </View>
-        <View style={[pdfStyles.half, pdfStyles.textRight]}>
-          <Text
-            style={[
-              pdfStyles.tinyText,
-              pdfStyles.textGray,
-              {
-                marginTop: 5,
-              },
-            ]}
-          >
-            {job.startDate} - {job.endDate}
-          </Text>
-          <Text style={[pdfStyles.tinyText, pdfStyles.textGray]}>
-            {job.type}
-          </Text>
-        </View>
-      </PdfRow>
-
-      <View
-        style={{
-          marginTop: 10,
-          paddingRight: 4,
-        }}
-      >
-        {job.bullets.map((bullet, i) => {
-          return (
-            <View
-              key={bullet}
-              style={{
-                marginBottom: 4,
-              }}
-            >
-              <PdfRow>
-                <View
+              >
+                <Image
+                  src={companyImages[job.id].img}
                   style={{
-                    width: 4,
-                    height: 4,
-                    backgroundColor: "#000",
-                    borderRadius: 8,
-                    marginTop: 4,
-                    marginRight: 3,
+                    width: "100%",
+                    height: "auto",
+                    alignSelf: "center",
+                    ...(companyImages[job.id]?.iconStyle as any),
                   }}
                 />
-                <Text style={pdfStyles.text}>{bullet}</Text>
-              </PdfRow>
-            </View>
-          );
-        })}
+              </View>
+              <View>
+                <PdfHeading
+                  style={{
+                    ...pdfStyles.experienceTitle,
+                    ...pdfStyles.textBlack,
+                  }}
+                >
+                  {job.title}
+                </PdfHeading>
+                <PdfHelperText style={pdfStyles.textGray}>
+                  {job.company}
+                </PdfHelperText>
+              </View>
+            </PdfRow>
+          </View>
+          <View style={[pdfStyles.half, pdfStyles.textRight]}>
+            <PdfTinyText
+              style={{
+                ...pdfStyles.textGray,
+                marginTop: 5,
+              }}
+            >
+              {job.startDate} - {job.endDate}
+            </PdfTinyText>
+            <PdfTinyText style={pdfStyles.textGray}>{job.type}</PdfTinyText>
+          </View>
+        </PdfRow>
+        <PdfListItem key="first" style={{ marginTop: 10 }}>
+          {firstBullet}
+        </PdfListItem>
       </View>
+
+      {restOfBullets.map((bullet, i) => {
+        return <PdfListItem key={bullet}>{bullet}</PdfListItem>;
+      })}
     </View>
   );
 };
