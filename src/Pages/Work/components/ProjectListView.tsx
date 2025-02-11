@@ -1,7 +1,6 @@
 import React from "react";
 
-import { ImageFill, TechDegreeProject, WorkProject } from ".";
-import { useDevice } from "../../../components/General";
+import { TechDegreeProject, WorkProject } from ".";
 import scrollHandler from "../../scrollPropagationHandler";
 import {
   ProjectListTypes,
@@ -15,10 +14,7 @@ export const ProjectListView: React.FC<{
   projects: WorkInstance[] | TechDegreeProjectInstance[];
   setExpanded?: (value: number | null) => void;
 }> = ({ headerTitle, type, projects, setExpanded }) => {
-  const device = useDevice();
-  const containerClassName = `work-block ${
-    device !== "mobile" ? "one-fourth" : ""
-  }`;
+  const containerClassName = "work-block";
 
   return (
     <>

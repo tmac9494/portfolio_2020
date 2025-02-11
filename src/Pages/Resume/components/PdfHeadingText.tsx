@@ -4,7 +4,7 @@ import { Text } from "@react-pdf/renderer";
 import { PdfStyle } from "../../../utils";
 import { pdfStyles } from "../pdfStyles";
 
-export const PdfHeading = ({
+export const PdfHeadingText = ({
   children,
   style = {},
 }: PropsWithChildren<{ style?: PdfStyle }>) => {

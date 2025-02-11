@@ -2,7 +2,7 @@ import React from "react";
 
 const Intro: React.FC = () => {
   return (
-    <section className="section-container">
+    <section className="section-container" id="skills_intro">
       <div className="top-content">
         <div className="description">
           <h1 className="section-title">My Skills</h1>

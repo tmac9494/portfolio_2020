@@ -13,7 +13,14 @@ export const PdfListItem = ({
 }>) => {
   return (
     <PdfRow
-      style={{ marginBottom: 2, paddingLeft: 1, paddingRight: 10, ...style }}
+      style={{
+        marginBottom: 2,
+        paddingLeft: 1,
+        paddingRight: 10,
+        alignItems: "center",
+        gap: 4,
+        ...style,
+      }}
       wrap={false}
     >
       <View
@@ -22,8 +29,6 @@ export const PdfListItem = ({
           height: 3,
           backgroundColor: pdfStyles.textDarkGray.color,
           borderRadius: 8,
-          marginTop: 4,
-          marginRight: 4,
         }}
       />
       <PdfHelperText style={{ ...pdfStyles.textDarkGray, lineHeight: 0 }}>

@@ -7,5 +7,5 @@ export * from "./PdfSkills";
 export * from "./PdfListItem";
 export * from "./PdfHelperText";
 export * from "./PdfText";
-export * from "./PdfHeading";
+export * from "./PdfHeadingText";
 export * from "./PdfTinyText";

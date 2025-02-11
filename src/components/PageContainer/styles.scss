@@ -91,14 +91,9 @@
 .section-container {
   min-height: 100vh;
   padding-top: 50px;
-  // width: 100vw;
   position: relative;
   z-index: 5;
   padding-top: 80px;
-  padding-left: 12px;
-  // &:first-child {
-  //   max-height: 800px
-  // }
   .top-content {
     max-width: 100%;
     width: 650px;
@@ -114,7 +109,6 @@
   @include tablet {
     padding-top: 0;
     .top-content {
-      // position: absolute;
       padding-top: 10%;
       margin-left: 10%;
     }

@@ -30,7 +30,7 @@ export const TimelineContent: React.FC<{
       {list.map((listItem, index) => (
         <div
           key={listItem.title}
-          className="timeline-content-block flex flex-row"
+          className="timeline-content-block"
           style={{ opacity: currentStoryIndex === index ? 1 : 0 }}
         >
           <div className="timeline-copy padding-right-3">

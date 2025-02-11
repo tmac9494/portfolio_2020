@@ -3,19 +3,19 @@ import React from "react";
 import { View, Image } from "@react-pdf/renderer";
 import { Skill, skillImages, SkillSorts, sortAlgorithms } from "../../../utils";
 import { pdfStyles } from "../pdfStyles";
-import { PdfRow, PdfHelperText, PdfHeading } from ".";
+import { PdfRow, PdfHelperText, PdfHeadingText } from ".";
 
 export const PdfSkills = ({ skills }: { skills: Skill[] }) => {
   return (
     <View>
-      <PdfHeading
+      <PdfHeadingText
         style={{
           marginBottom: 8,
           borderBottom: "1px solid #fff",
         }}
       >
         Skills:
-      </PdfHeading>
+      </PdfHeadingText>
       {skills.sort(sortAlgorithms[SkillSorts.BestToWorst]).map((skill) => {
         return (
           <View

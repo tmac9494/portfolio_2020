@@ -1,10 +1,10 @@
 import React from "react";
-
 import { View, Image } from "@react-pdf/renderer";
+
 import { pdfStyles } from "../pdfStyles";
 import { PdfRow } from "./PdfRow";
 import { companyImages, Employer } from "../../../utils";
-import { PdfListItem, PdfHelperText, PdfTinyText, PdfHeading } from ".";
+import { PdfListItem, PdfHelperText, PdfTinyText, PdfHeadingText } from ".";
 
 export const PdfJobCard = ({ job }: { job: Employer }) => {
   const firstBullet = job.bullets[0];
@@ -19,7 +19,7 @@ export const PdfJobCard = ({ job }: { job: Employer }) => {
           style={{
             marginBottom: 4,
             paddingBottom: 6,
-            // borderBottom: "1px solid " + pdfStyles.textGray.color,
+            alignItems: "center",
           }}
         >
           <View style={pdfStyles.half}>
@@ -43,14 +43,14 @@ export const PdfJobCard = ({ job }: { job: Employer }) => {
                 />
               </View>
               <View>
-                <PdfHeading
+                <PdfHeadingText
                   style={{
                     ...pdfStyles.experienceTitle,
                     ...pdfStyles.textBlack,
                   }}
                 >
                   {job.title}
-                </PdfHeading>
+                </PdfHeadingText>
                 <PdfHelperText style={pdfStyles.textGray}>
                   {job.company}
                 </PdfHelperText>
@@ -61,7 +61,6 @@ export const PdfJobCard = ({ job }: { job: Employer }) => {
             <PdfTinyText
               style={{
                 ...pdfStyles.textGray,
-                marginTop: 5,
               }}
             >
               {job.startDate} - {job.endDate}

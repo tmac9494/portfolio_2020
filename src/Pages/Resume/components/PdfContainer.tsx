@@ -3,12 +3,14 @@ import { Document, Page, View, Font, Link } from "@react-pdf/renderer";
 
 import { Employer, Skill } from "../../../utils";
 import { pdfStyles } from "../pdfStyles";
-import { PdfJobCard } from "./PdfJobCard";
-import { PdfMyInfo } from "./PdfMyInfo";
-import { PdfSkills } from "./PdfSkills";
-import { PdfHeading } from "./PdfHeading";
-import { PdfText } from "./PdfText";
-import { PdfHelperText } from "./PdfHelperText";
+import {
+  PdfJobCard,
+  PdfMyInfo,
+  PdfSkills,
+  PdfHeadingText,
+  PdfText,
+  PdfHelperText,
+} from ".";
 
 Font.registerHyphenationCallback((word) => [word]);
 
@@ -23,7 +25,10 @@ export const PdfContainer = ({
     <Document>
       <Page size="A4" style={pdfStyles.page}>
         <View style={pdfStyles.container}>
+          {/* Side column colored background */}
           <View style={pdfStyles.fixedColumn} fixed />
+
+          {/* Fixed footer note on second page */}
           <View
             style={pdfStyles.fixedCtoA}
             render={({ pageNumber }) =>
@@ -46,6 +51,7 @@ export const PdfContainer = ({
             fixed
           />
 
+          {/* Small side column */}
           <View style={pdfStyles.left}>
             <View style={{ marginBottom: 18, paddingTop: 5 }}>
               <PdfMyInfo />
@@ -53,16 +59,17 @@ export const PdfContainer = ({
             <PdfSkills skills={skills} />
           </View>
 
+          {/* Larger main column */}
           <View style={pdfStyles.right}>
-            <View style={{ marginBottom: 18 }}>
-              <PdfHeading
+            <View style={{ marginBottom: 20 }}>
+              <PdfHeadingText
                 style={{
                   ...pdfStyles.textBlack,
-                  fontSize: 18,
+                  fontSize: 19,
                 }}
               >
                 Michael Trent McDole
-              </PdfHeading>
+              </PdfHeadingText>
               <PdfText style={pdfStyles.textGray}>
                 Full Stack JavaScript Engineer
               </PdfText>

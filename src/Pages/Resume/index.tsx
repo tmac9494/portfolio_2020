@@ -15,7 +15,6 @@ const Resume = (): ReactElement => {
       },
     })
       .then((res) => {
-        console.log(res?.body);
         return res.json();
       })
       .then((data) => setData(data))
@@ -33,7 +32,6 @@ const Resume = (): ReactElement => {
       },
     })
       .then((res) => {
-        console.log(res?.body);
         return res.json();
       })
       .then((data) => setSkills(data))

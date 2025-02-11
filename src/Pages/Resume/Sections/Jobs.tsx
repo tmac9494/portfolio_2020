@@ -23,7 +23,7 @@ const Jobs = (props: { data: Employer[]; skills: Skill[] }) => {
     <>
       <div
         className="margin-bottom-5 text-center"
-        style={{ position: "relative", zIndex: 2000 }}
+        style={{ position: "relative", zIndex: 10 }}
       >
         <PillTabs<ResumeViewType>
           active={viewType}
@@ -46,23 +46,32 @@ const Jobs = (props: { data: Employer[]; skills: Skill[] }) => {
           <div
             style={{
               position: "relative",
-              zIndex: 1500,
+              zIndex: 10,
             }}
           >
             <Loader>Generating PDF</Loader>
           </div>
         ) : (
           <div
+            id="pdf_result_container"
             className="margin-bottom-5"
             style={{
               position: "relative",
-              zIndex: 1500,
+              zIndex: 10,
             }}
           >
-            <div className="site-content-wrap">
+            <div className="site-content-wrap text-center">
+              <a
+                className="btn download-btn"
+                href={instance.url ?? undefined}
+                download="Trent-McDole.pdf"
+              >
+                Download PDF Resume
+              </a>
+
               <iframe
+                title="Resume"
                 src={instance.url ?? undefined}
-                title="TrentMcdole.pdf"
                 style={{
                   width: "100%",
                   height: "100vh",

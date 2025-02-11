@@ -1,8 +1,27 @@
+@import "../../styles/mixins.scss";
+
+.slider-content {
+  padding-top: 8px;
+  @include tablet {
+    padding-top: 52px;
+  }
+}
+
 .timeline-copy {
-  width: 60%;
+  width: 100%;
+  @include tablet {
+    width: 60%;
+  }
 }
 
 .timeline-images {
-  width: 40%;
-  max-height: 400px;
+  min-height: 200px;
+  width: 100%;
+  @include tablet {
+    width: 40%;
+    max-height: 240px;
+  }
+  @include desktop {
+    max-height: 380px;
+  }
 }

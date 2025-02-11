@@ -15,7 +15,6 @@ const Skills = () => {
       },
     })
       .then((res) => {
-        console.log(res?.body);
         return res.json();
       })
       .then((data) => setData(data))
