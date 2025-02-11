@@ -1,5 +1,5 @@
 import React, { useState, useCallback, PropsWithChildren } from "react";
-import { conditionClass } from "../../../utils";
+import classNames from "classnames";
 
 export const AnimationParent: React.FC<
   PropsWithChildren<{
@@ -9,6 +9,7 @@ export const AnimationParent: React.FC<
     id?: string;
     attributes?: any;
     className?: string;
+    element?: string;
   }>
 > = ({
   isVisible,
@@ -18,6 +19,7 @@ export const AnimationParent: React.FC<
   attributes,
   children,
   className,
+  element = "div",
 }) => {
   const [outHasFinished, setOutHasFinished] = useState(true);
 
@@ -43,14 +45,14 @@ export const AnimationParent: React.FC<
 
   if (!shouldShowChildren) return null;
 
-  return (
-    <div
-      id={id}
-      className={`${isVisible ? "in" : "out"}${conditionClass(className)}`}
-      {...attributes}
-      onAnimationEnd={handleAnimationEnd}
-    >
-      {children}
-    </div>
+  return React.createElement(
+    element,
+    {
+      id: id,
+      className: classNames(isVisible ? "in" : "out", className),
+      onAnimationEnd: handleAnimationEnd,
+      ...attributes,
+    },
+    children
   );
 };

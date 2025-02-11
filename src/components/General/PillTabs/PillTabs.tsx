@@ -2,6 +2,7 @@ import React from "react";
 import classNames from "classnames";
 
 import "./styles.scss";
+import { AnimationParent } from "..";
 
 export type PillTabProps<TabItems> = {
   id: TabItems;
@@ -31,7 +32,13 @@ export const PillTabs = <TabItems,>({
               active === tabProps.id && "active"
             )}
           >
-            <span className="pill-tab-fill abs-center" />
+            <span className="pill-tab-fill abs-center">
+              <AnimationParent
+                isVisible={active === tabProps.id}
+                className="animation"
+                element="span"
+              />
+            </span>
             <button
               className={classNames(
                 "pill-tab",

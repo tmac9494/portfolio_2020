@@ -12,7 +12,7 @@
       "bullets": [
         "Ground up application development on a new product using React JS, Node JS, GraphQL, and TypeScript.",
         "Personal collaboration with lead designer to iterate on UI/UX concerns gained from user research.",
-        "Work with project managers translating difficult to understand finance language into digestible UX goals and functionality.",
+        "Work with project managers translating difficult to understand finance language into digestible UX goals.",
         "Created the financial data visualization portion of the application using D3 with visX.",
         "Unit test implementation with Jest on frontend and backend components."
       ]
@@ -76,7 +76,7 @@
       "title": "Front End Engineer",
       "description": "N/A",
       "bullets": [
-        "Help with refactoring/optimizing React implementation.",
+        "Refactor/Optimize React implementation to use React Hooks.",
         "Work within the Wordpress + React ecosystem.",
         "Work with offshore developers to bring new features to the application."
       ]

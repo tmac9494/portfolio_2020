@@ -2,7 +2,7 @@ import React from "react";
 
 const Intro = (props) => {
   return (
-    <section className="section-container">
+    <section className="section-container" id="resume_intro">
       <div className="top-content">
         <h1>Real Time PDF Resume Generation in React</h1>
         <div className="info">

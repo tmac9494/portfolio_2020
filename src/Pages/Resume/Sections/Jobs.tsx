@@ -4,6 +4,7 @@ import { Employer, Skill } from "../../../utils";
 import { OriginalJobCard, PdfContainer } from "../components";
 import { PillTabs } from "../../../components/General/PillTabs";
 import { usePDF } from "@react-pdf/renderer";
+import { Loader } from "../../../components/General";
 
 enum ResumeViewType {
   PDF = "pdf",
@@ -40,26 +41,36 @@ const Jobs = (props: { data: Employer[]; skills: Skill[] }) => {
         />
       </div>
 
-      {viewType === ResumeViewType.PDF && (
-        <div
-          className="margin-bottom-5"
-          style={{
-            position: "relative",
-            zIndex: 1500,
-          }}
-        >
-          <div className="site-content-wrap">
-            <iframe
-              src={instance.url ?? undefined}
-              title="TrentMcdole.pdf"
-              style={{
-                width: "100%",
-                height: "100vh",
-              }}
-            />
+      {viewType === ResumeViewType.PDF &&
+        (isLoading ? (
+          <div
+            style={{
+              position: "relative",
+              zIndex: 1500,
+            }}
+          >
+            <Loader>Generating PDF</Loader>
           </div>
-        </div>
-      )}
+        ) : (
+          <div
+            className="margin-bottom-5"
+            style={{
+              position: "relative",
+              zIndex: 1500,
+            }}
+          >
+            <div className="site-content-wrap">
+              <iframe
+                src={instance.url ?? undefined}
+                title="TrentMcdole.pdf"
+                style={{
+                  width: "100%",
+                  height: "100vh",
+                }}
+              />
+            </div>
+          </div>
+        ))}
 
       {viewType === ResumeViewType.React && (
         <section className="section-container">
@@ -69,7 +80,11 @@ const Jobs = (props: { data: Employer[]; skills: Skill[] }) => {
             className="resume-content-wrap scrollable custom-scrollbar white-scrollbar"
           >
             {props.data.map((data: Employer) => (
-              <OriginalJobCard data={data} skills={props.skills} />
+              <OriginalJobCard
+                key={data.id}
+                data={data}
+                skills={props.skills}
+              />
             ))}
           </div>
         </section>

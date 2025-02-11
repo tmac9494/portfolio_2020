@@ -6,5 +6,6 @@ export { ScrollShadows } from "./ScrollShadows";
 export { AnimationParent } from "./AnimationParent";
 export * from "./IconAccordion";
 export * from "./PillTabs";
+export * from "./Loader";
 
 export { InOutAnimation, Animation, FancyButton, useDevice };

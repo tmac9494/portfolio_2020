@@ -2,27 +2,35 @@ import { StyleSheet, Font } from "@react-pdf/renderer";
 
 Font.register({
   family: "Roboto",
-  src: "http://fonts.gstatic.com/s/roboto/v16/zN7GBFwfMP4uA6AR0HCoLQ.ttf",
+  src: "https://fonts.gstatic.com/s/roboto/v16/zN7GBFwfMP4uA6AR0HCoLQ.ttf",
 });
 Font.register({
-  family: "Roboto Condensed",
-  src: "http://fonts.gstatic.com/s/robotocondensed/v14/Zd2E9abXLFGSr9G3YK2MsDR-eWpsHSw83BRsAQElGgc.ttf",
+  family: "Nunito",
+  src: "https://fonts.gstatic.com/s/nunito/v8/kpI87QY2ce-mk2ZnKb-r0g.ttf",
 });
 
 const pageMarginY = 14;
 const pageMarginX = 10;
+const smallColumnWidth = "22%";
+const largeColumnWidth = "78%";
 
 export const pdfStyles = StyleSheet.create({
   // layout
-  page: { backgroundColor: "#fff", padding: `${pageMarginY} ${pageMarginX}` },
+  page: {
+    backgroundColor: "#fff",
+    padding: `${pageMarginY} ${pageMarginX}`,
+    position: "relative",
+  },
   container: {
     display: "flex",
     flexDirection: "row",
     width: "100%",
+    position: "relative",
+    zIndex: 1,
   },
   fixedColumn: {
     borderRight: "1px solid #001e3d",
-    width: "22%",
+    width: smallColumnWidth,
     backgroundColor: "#003366",
     position: "absolute",
     minHeight: 3508 /* height of A4 page */,
@@ -33,14 +41,14 @@ export const pdfStyles = StyleSheet.create({
   },
   left: {
     padding: "0 5px",
-    width: "22%",
+    width: smallColumnWidth,
     height: "100%",
     color: "#fff",
     transform: `translateX(${-1 * pageMarginX}px)`,
   },
   right: {
     padding: "0px 5px 0px 8px",
-    width: "78%",
+    width: largeColumnWidth,
     transform: `translateX(${-1 * (pageMarginX / 2)}px)`,
   },
   half: {
@@ -72,15 +80,15 @@ export const pdfStyles = StyleSheet.create({
   },
   helperText: {
     fontSize: 9,
-    fontFamily: "Roboto Condensed",
+    fontFamily: "Nunito",
   },
   tinyText: {
     fontSize: 8,
-    fontFamily: "Roboto Condensed",
+    fontFamily: "Nunito",
   },
   text: {
     fontSize: 10,
-    fontFamily: "Roboto Condensed",
+    fontFamily: "Nunito",
   },
   textBlack: {
     color: "#031112",
@@ -97,9 +105,28 @@ export const pdfStyles = StyleSheet.create({
 
   // experience
   experienceContainer: {
-    marginBottom: 8,
+    paddingBottom: 10,
   },
   experienceTitle: {
     fontSize: 14,
+    fontFamily: "Roboto",
+  },
+
+  // c2a to portfolio
+  fixedCtoA: {
+    position: "absolute",
+    top: -1 * pageMarginY,
+    right: "auto",
+    width: smallColumnWidth,
+    left: -1 * pageMarginX,
+    minHeight: "842px" /* height of A4 page */,
+  },
+
+  fixedCtoAContent: {
+    padding: "4px 8px",
+    position: "absolute",
+    top: "auto",
+    left: 0,
+    bottom: pageMarginY,
   },
 });

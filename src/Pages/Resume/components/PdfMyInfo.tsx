@@ -3,7 +3,6 @@ import React from "react";
 import { View, Image, Link } from "@react-pdf/renderer";
 import { pdfStyles } from "../pdfStyles";
 import myImage from "../../../assets/story/profile.jpg";
-import { PdfHeading } from "./PdfHeading";
 import { PdfHelperText } from "./PdfHelperText";
 
 export const PdfMyInfo = () => {
@@ -17,15 +16,13 @@ export const PdfMyInfo = () => {
       >
         <Image
           style={{
-            width: "60%",
+            width: "80%",
             height: "auto",
             borderRadius: "100%",
             margin: "0 auto 10",
           }}
           src={myImage}
         />
-        <PdfHeading>Trent McDole</PdfHeading>
-        <PdfHelperText>Senior Software Engineer</PdfHelperText>
       </View>
       <PdfHelperText
         style={{

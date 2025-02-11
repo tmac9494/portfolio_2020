@@ -1,6 +1,10 @@
 @import "../../styles/mixins";
 @import "../../styles/colors.scss";
 
+#resume_intro {
+  min-height: 80vh;
+}
+
 #resume_page {
   .resume-content-wrap {
     padding: 0 10px;
@@ -226,8 +230,6 @@
     left: -2vw;
     width: 24vw;
     height: 30vw;
-    svg {
-    }
   }
   #res_circ_md {
     animation-duration: 14 + random(10) + s;

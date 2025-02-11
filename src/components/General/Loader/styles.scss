@@ -1,0 +1,22 @@
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loader-container {
+  max-width: 180px;
+  color: #fff;
+  fill: #fff;
+  margin: 0 auto;
+  .loading-icon {
+    svg {
+      width: 60px;
+      height: auto;
+      animation: rotate 1.2s ease-in-out infinite;
+    }
+  }
+}

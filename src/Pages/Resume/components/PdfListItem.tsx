@@ -2,9 +2,8 @@ import React, { PropsWithChildren } from "react";
 
 import { View } from "@react-pdf/renderer";
 import { pdfStyles } from "../pdfStyles";
-import { PdfRow } from "./PdfRow";
-import { PdfText } from "./PdfText";
 import { PdfStyle } from "../../../utils";
+import { PdfHelperText, PdfRow } from ".";
 
 export const PdfListItem = ({
   children,
@@ -14,7 +13,7 @@ export const PdfListItem = ({
 }>) => {
   return (
     <PdfRow
-      style={{ marginBottom: 4, paddingLeft: 1, paddingRight: 10, ...style }}
+      style={{ marginBottom: 2, paddingLeft: 1, paddingRight: 10, ...style }}
       wrap={false}
     >
       <View
@@ -27,7 +26,9 @@ export const PdfListItem = ({
           marginRight: 4,
         }}
       />
-      <PdfText style={pdfStyles.textDarkGray}>{children}</PdfText>
+      <PdfHelperText style={{ ...pdfStyles.textDarkGray, lineHeight: 0 }}>
+        {children}
+      </PdfHelperText>
     </PdfRow>
   );
 };

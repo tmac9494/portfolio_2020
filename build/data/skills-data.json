@@ -69,6 +69,17 @@
   },
 
   {
+    "title": "Jest",
+    "level": 4,
+    "id": "jest",
+    "tags": ["be", "fe", "fw"],
+    "companies": ["nm", "mit", "evern"],
+    "description": "Description",
+    "accolades": [],
+    "yearsOfExp": 4
+  },
+
+  {
     "title": "JavaScript",
     "level": 5,
     "id": "js",
