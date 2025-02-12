@@ -1,13 +1,16 @@
 @import "../../styles/mixins";
 @import "../../styles/colors";
 
+#skills_intro {
+  min-height: 90vh;
+}
+
 #skills_page {
   min-height: 100%;
   color: $white;
   .top-content {
     max-width: 80%;
     width: 650px;
-    padding: 0 8px;
     .description {
       font-size: 20px;
       margin: 24px 0 32px 0;
@@ -78,7 +81,6 @@
   height: 75%;
   max-width: 1140px;
   @include tablet {
-    margin-left: -35px;
     height: auto;
   }
 }

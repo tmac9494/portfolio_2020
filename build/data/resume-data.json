@@ -28,7 +28,7 @@
       "description": "N/A",
       "bullets": [
         "Worked with the CRIPT team to build the data visualization portion of the CRIPT application.",
-        "Used the VisX framework along with React and TypeScript to create controlled data visualization of Polymer research data.",
+        "Used the VisX, React, and TypeScript to create data visualization of Polymer research data.",
         "Update/Refactor NodeJS and Python code to import the Research data into a CRIPT project.",
         "Worked with product management to design and develop a feature rich UI for researchers to quickly and clearly create visualizations of complex research data."
       ]

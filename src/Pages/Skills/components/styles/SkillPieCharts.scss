@@ -1,0 +1,25 @@
+@import "../../../../styles/colors.scss";
+
+#skill_pie_charts {
+  //   background: $black-surface;
+  //   border-radius: 8px;
+  margin-bottom: 44px;
+  padding: 12px 0;
+
+  .skill-pie-chart-wrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  .skill-pie-footnote {
+    margin-top: 8px;
+    font-size: 12px;
+  }
+
+  .skill-pie-chart {
+    background: $black-surface;
+    padding-top: 12px;
+    border-radius: 8px;
+  }
+}

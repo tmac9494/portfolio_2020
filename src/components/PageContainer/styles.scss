@@ -97,6 +97,8 @@
   .top-content {
     max-width: 100%;
     width: 650px;
+    padding-left: 8px;
+    padding-right: 8px;
   }
   .content-wrap {
     width: 90%;
@@ -111,9 +113,6 @@
     .top-content {
       padding-top: 10%;
       margin-left: 10%;
-    }
-    .content-wrap {
-      margin-left: 35px;
     }
   }
 }

@@ -46,6 +46,16 @@ export const sortAlgorithms = {
   },
 };
 
+export const handleSkillFilter = (skill: Skill, filters: SkillTags[]) => {
+  const filterList = new Set(skill.tags);
+  return filters.reduce((isValid, activeFilter) => {
+    if (isValid) {
+      return filterList.has(activeFilter);
+    }
+    return isValid;
+  }, true);
+};
+
 // skills handler
 export const prepareSkills = (update: SkillContextValue) => {
   if (!update.skillsList) return update;
@@ -58,15 +68,17 @@ export const prepareSkills = (update: SkillContextValue) => {
   };
 
   // reduce active filters array and check for concurrent id mathes
-  const handleFilter = (value: Skill) => {
-    const skillTags = new Set(value.tags);
-    return update.filters.reduce((isValid, activeFilter) => {
-      if (isValid) {
-        return skillTags.has(activeFilter);
-      }
-      return isValid;
-    }, true);
-  };
+  const handleFilter = (value: Skill) =>
+    handleSkillFilter(value, update.filters);
+  // const handleFilter = (value: Skill) => {
+  //   const skillTags = new Set(value.tags);
+  //   return update.filters.reduce((isValid, activeFilter) => {
+  //     if (isValid) {
+  //       return skillTags.has(activeFilter);
+  //     }
+  //     return isValid;
+  //   }, true);
+  // };
 
   // sorts
   const sortValueFromState = update.sort;

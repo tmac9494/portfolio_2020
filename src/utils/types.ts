@@ -142,14 +142,16 @@ export enum SkillLevels {
 }
 
 export type Skill = {
-  /* matches skills-data.json in build */ title: string;
+  /* matches skills-data.json in build */
   id: string;
   level: number;
+  title: string;
   tags: SkillTags[];
   companies: CompanyIds[];
   description: string;
   accolades: string[];
   yearsOfExp: number;
+  skillColor?: string;
 };
 
 export interface SkillContextValue {

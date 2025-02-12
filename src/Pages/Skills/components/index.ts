@@ -5,3 +5,4 @@ export * from "./SkillDescriptionPanel";
 export * from "./SkillKeyTagsPanel";
 export * from "./SkillTabModifier";
 export * from "./SkillTableSearch";
+export * from "./SkillPieCharts";

@@ -23,7 +23,8 @@
       "Built many applications from the ground up using React.",
       "Experience with React+Electron stacks."
     ],
-    "yearsOfExp": 10
+    "yearsOfExp": 10,
+    "skillColor": "#61DBFB"
   },
 
   {
@@ -38,7 +39,8 @@
       "Experience porting React web applications into React Native.",
       "Have launched applications to Google Play & App Store using React Native."
     ],
-    "yearsOfExp": 4
+    "yearsOfExp": 4,
+    "skillColor": "#7cc5d9"
   },
 
   {
@@ -54,7 +56,8 @@
       "Created a secure custom SSO API that integrated with Stanford University's Azure server.",
       "Experience managing, architecting, and building a Node API server in a large company intranet."
     ],
-    "yearsOfExp": 7
+    "yearsOfExp": 7,
+    "skillColor": "#3c873a"
   },
 
   {
@@ -65,7 +68,8 @@
     "companies": ["xpdx", "stnfn", "mit", "nm", "evern", "gcio"],
     "description": "Description",
     "accolades": [],
-    "yearsOfExp": 5
+    "yearsOfExp": 5,
+    "skillColor": "#303030"
   },
 
   {
@@ -76,7 +80,8 @@
     "companies": ["nm", "mit", "evern"],
     "description": "Description",
     "accolades": [],
-    "yearsOfExp": 4
+    "yearsOfExp": 4,
+    "skillColor": "#907f7f"
   },
 
   {
@@ -103,7 +108,8 @@
       "Soley developed multiple JavaScript web applications.",
       "Extensive Experience in JS powered animation techniques."
     ],
-    "yearsOfExp": 10
+    "yearsOfExp": 10,
+    "skillColor": "#ffce00"
   },
 
   {
@@ -117,7 +123,8 @@
       "Experience refactoring old Redux implementations into Redux hooks",
       "Experience refactoring Redux stores into native Context providers."
     ],
-    "yearsOfExp": 5
+    "yearsOfExp": 5,
+    "skillColor": "#764abc"
   },
 
   {
@@ -132,7 +139,8 @@
       "Experience in Typescript + NodeJS environments.",
       "Linkedin Learning certification in React + Typescript."
     ],
-    "yearsOfExp": 4
+    "yearsOfExp": 4,
+    "skillColor": "#007acc"
   },
 
   {
@@ -148,7 +156,8 @@
       "Created a custom 3D world using home made textures with normal maps(github).",
       "Linkedin Learning certification in ThreeJS"
     ],
-    "yearsOfExp": 1
+    "yearsOfExp": 1,
+    "skillColor": "#d9ead3"
   },
 
   {
@@ -159,7 +168,8 @@
     "companies": [],
     "description": "I chose React over Angular long ago, but I love Google and most of their Technology so I can never write it off. I have an understanding of the basics of Angular but would need to put in some learning time before using it professionally.",
     "accolades": ["Not much going on here:)"],
-    "yearsOfExp": 1
+    "yearsOfExp": 1,
+    "skillColor": "#e41e2e"
   },
 
   {
@@ -185,7 +195,8 @@
       "WCAG focused courses through Team Treehouse Tech Degree.",
       "Experience updating web pages/applications to WCAG compliance."
     ],
-    "yearsOfExp": 10
+    "yearsOfExp": 10,
+    "skillColor": "#e34c26"
   },
 
   {
@@ -211,7 +222,8 @@
       "Extensive experience refactoring and optimizing CSS.",
       "Extensive Experience in CSS in JS patterns."
     ],
-    "yearsOfExp": 10
+    "yearsOfExp": 10,
+    "skillColor": "#264de4"
   },
 
   {
@@ -236,7 +248,8 @@
       "Experience with advanced features of Sass(variables, mixins, functions, etc)",
       "Extensive experience refactoring bloated CSS into Sass."
     ],
-    "yearsOfExp": 10
+    "yearsOfExp": 10,
+    "skillColor": "#c69"
   },
 
   {
@@ -249,7 +262,8 @@
     "accolades": [
       "Extensive Experience creating Jquery modules for frontend effects."
     ],
-    "yearsOfExp": 4
+    "yearsOfExp": 4,
+    "skillColor": "#0769ad"
   },
 
   {
@@ -264,7 +278,8 @@
       "Experience with PHP in Wordpress CMS",
       "Experience with PHP in Magento CMS"
     ],
-    "yearsOfExp": 4
+    "yearsOfExp": 4,
+    "skillColor": "#787CB5"
   },
 
   {
@@ -279,7 +294,8 @@
       "Experience with query optimization techniques in the server.",
       "Experience with MongoDB advanced features like: expireAt and populate(mongoose)"
     ],
-    "yearsOfExp": 5
+    "yearsOfExp": 5,
+    "skillColor": "#3FA037"
   },
 
   {
@@ -292,7 +308,8 @@
     "accolades": [
       "Light experience configuring compressed payloads from a SSR environment."
     ],
-    "yearsOfExp": 6
+    "yearsOfExp": 6,
+    "skillColor": "#dedede"
   },
 
   {
@@ -308,7 +325,8 @@
       "Experience using Wordpress with a React web application.",
       "Experience in woocommerce"
     ],
-    "yearsOfExp": 6
+    "yearsOfExp": 6,
+    "skillColor": "#00749C"
   },
 
   {
@@ -322,7 +340,8 @@
       "Extensive experience in custom svg creation for animation.",
       "Experience with texture creation using Illustrator."
     ],
-    "yearsOfExp": 6
+    "yearsOfExp": 6,
+    "skillColor": "#f5c460"
   },
 
   {
@@ -333,7 +352,8 @@
     "companies": ["xpdx", "stnfn", "mit"],
     "description": "My favorite tool for quickly spinning up design ideas, wire frames, and prototypes.",
     "accolades": [],
-    "yearsOfExp": 5
+    "yearsOfExp": 5,
+    "skillColor": "#B378CC"
   },
 
   {
@@ -344,7 +364,8 @@
     "companies": ["xpdx", "stnfn", "svm", "ps", "afm", "mit"],
     "description": "A great tool for automatating image processing and quickly making adjustments to photos for design purposes.",
     "accolades": [],
-    "yearsOfExp": 6
+    "yearsOfExp": 6,
+    "skillColor": "#18152E"
   },
 
   {
@@ -355,7 +376,8 @@
     "companies": ["nm", "evern"],
     "description": "Description",
     "accolades": [],
-    "yearsOfExp": 3
+    "yearsOfExp": 3,
+    "skillColor": "#e535ab"
   },
 
   {
@@ -366,6 +388,7 @@
     "companies": ["nm", "mit"],
     "description": "Description",
     "accolades": [],
-    "yearsOfExp": 3
+    "yearsOfExp": 3,
+    "skillColor": "#ff5a5f"
   }
 ]
